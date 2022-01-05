@@ -1,0 +1,286 @@
+﻿@using EPrescribing.Web.Helpers
+@{
+    Layout = null;
+}
+
+<!-- Mobile Menu start -->
+<div class="mobile-menu-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="mobile-menu">
+                    <nav id="dropdown">
+                        <ul class="mobile-menu-nav">
+                            @if (User.GETDOCTORID() > 0)
+                            {
+                                <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Patient Records", "AllPatients", "Patients")</li>
+                                <li>@Html.ActionLink("Write Prescription", "Index", "Patients")</li>
+                                <li>@Html.ActionLink("Patients Payments", "Patients", "Payments")</li>
+                                <li>@Html.ActionLink("Treatment Templetes", "Index", "TreatmentTemplete")</li>
+                                if (User.GETROLENAME() == "Super Admin")
+                                {
+                                    <li>
+                                        <a data-toggle="collapse" data-target="#admin" href="javascript:void(0)">Admin Settings</a>
+                                        <ul id="admin" class="collapse dropdown-header-top">
+                                            <li>@Html.ActionLink("Doctors", "Index", "Doctors")</li>
+                                            <li>@Html.ActionLink("Designations", "Index", "Designations")</li>
+                                            <li>@Html.ActionLink("Dental Schools", "Index", "DentalSchools")</li>
+                                            <li>@Html.ActionLink("Subscriptions", "Index", "Subscriptions")</li>
+                                            <li>@Html.ActionLink("Pending Subscribed", "Index", "Subscribed")</li>
+                                            <li>@Html.ActionLink("Subscribed Doctors", "Doctors", "Subscribed")</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="collapse" data-target="#medicine" href="javascript:void(0)">Medicine Settings</a>
+                                        <ul id="medicine" class="collapse dropdown-header-top">
+                                            <li>@Html.ActionLink("Generics Name", "Index", "Generics")</li>
+                                            <li>@Html.ActionLink("Brand Name", "Index", "Medicines")</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="collapse" data-target="#treatment" href="javascript:void(0)">Treatment Settings</a>
+                                        <ul id="treatment" class="collapse dropdown-header-top">
+                                            <li>@Html.ActionLink("Pathology", "Index", "Pathologies")</li>
+                                            <li>@Html.ActionLink("Diagnostic Tests", "Index", "Diagnostics")</li>
+                                            <li>@Html.ActionLink("Diseases", "Index", "Diseases")</li>
+                                            <li>@Html.ActionLink("Treatments", "Index", "Treatments")</li>
+                                            <li>@Html.ActionLink("Advices", "Index", "Advices")</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="collapse" data-target="#content" href="javascript:void(0)">Content Settings</a>
+                                        <ul id="content" class="collapse dropdown-header-top">
+                                            <li>@Html.ActionLink("About Section", "Index", "AboutSections")</li>
+                                            <li>@Html.ActionLink("Workflow Section", "Index", "WorkProcess")</li>
+                                            <li>@Html.ActionLink("Service Top", "Index", "ServiceMainSection")</li>
+                                            <li>@Html.ActionLink("Services", "Index", "SingleServiceSection")</li>
+                                            <li>@Html.ActionLink("Team Top", "Index", "TeamMain")</li>
+                                            <li>@Html.ActionLink("Team Members", "Index", "TeamMember")</li>
+                                            <li>@Html.ActionLink("Contact Info", "Index", "ContactSection")</li>
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                            }
+                            <li><a href="@Url.Action("About", "Home")">About</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Mobile Menu end -->
+<!-- Main Menu area start-->
+<div class="main-menu-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="tab-content custom-menu-content">
+                    <div id="Home" class="tab-pane in active notika-tab-menu-bg animated flipInX">
+                        <ul class="notika-main-menu-dropdown">
+                            @if (User.GETDOCTORID() > 0)
+                            {
+                                <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Patient Records", "AllPatients", "Patients")</li>
+                                <li>@Html.ActionLink("Write Prescription", "Index", "Patients")</li>
+                                <li>@Html.ActionLink("Patients Payments", "Patients", "Payments")</li>
+                                <li>@Html.ActionLink("Treatment Templetes", "Index", "TreatmentTemplete")</li>
+                                if (User.GETROLENAME() == "Super Admin")
+                                {
+                                    <li class="nav-item ddlSetup">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle logOff"><span></span>Admin Settings <i class="icoPaddingRight fa fa-arrow-down"></i></a>
+                                        <div role="menu" class="dropdown-menu message-dd chat-dd animated fadeIn">
+
+                                            <div class="hd-message-info ddlMenu">
+                                                <a href="@Url.Action("Index", "Doctors")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Doctors</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "Designations")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Designations</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "DentalSchools")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Dental Schools</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "Subscriptions")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Subscriptions</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "Subscribed")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Pending Subscribed</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Doctors", "Subscribed")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Subscribed Doctors</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item ddlSetup">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle logOff"><span></span>Medicine Settings <i class="icoPaddingRight fa fa-arrow-down"></i></a>
+                                        <div role="menu" class="dropdown-menu message-dd chat-dd odc-medkit animated fadeIn">
+
+                                            <div class="hd-message-info ddlMenu">
+                                                <a href="@Url.Action("Index", "Generics")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Generic Name</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "Medicines")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Brand Name</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item ddlSetup">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle logOff"><span></span>Treatment Settings <i class="icoPaddingRight fa fa-arrow-down"></i></a>
+                                        <div role="menu" class="dropdown-menu message-dd chat-dd odc-treatment animated fadeIn">
+
+                                            <div class="hd-message-info ddlMenu">
+                                                <a href="@Url.Action("Index", "Pathologies")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Pathologies</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "Diagnostics")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Diagnostics Tests</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "Diseases")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Diseases</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "Treatments")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Treatments</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "Advices")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Advices</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="nav-item ddlSetup">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle logOff"><span></span>Content Settings <i class="icoPaddingRight fa fa-arrow-down"></i></a>
+                                        <div role="menu" class="dropdown-menu message-dd chat-dd odc-medkit animated fadeIn">
+
+                                            <div class="hd-message-info ddlMenu">
+                                                <a href="@Url.Action("Index", "AboutSections")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>About Section</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "WorkProcess")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Workflow Section</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "ServiceMainSection")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Service Top</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "SingleServiceSection")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Services</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "TeamMain")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Team Top</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "TeamMember")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Team Members</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <a href="@Url.Action("Index", "ContactSection")">
+                                                    <div class="hd-message-sn topMenu">
+                                                        <div class="hd-mg-ctn">
+                                                            <h3>Contact Info</h3>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                            }
+                            <li>
+                                @Html.ActionLink("About", "About", "Home")
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Menu area End-->

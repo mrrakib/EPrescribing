@@ -1,0 +1,95 @@
+﻿@model EPrescribing.Web.Models.ServiceMainSection
+@{
+    ViewBag.Title = "Add Main Service";
+
+}
+<div class="Medicine-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-plus-symbol"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Main Service Section</h2>
+                                        <p class="text-tagline">Entry main service section data</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @using (Html.BeginForm("Index", "ServiceMainSection", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(a => a.Id)
+                        @Html.HiddenFor(a => a.IsActive)
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.TopTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Top Title" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.TopTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.MainTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Main tagline" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.MainTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1 col-xs-12">
+                                <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                                    <i class="notika-icon notika-file"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            
+        });
+    </script>
+}

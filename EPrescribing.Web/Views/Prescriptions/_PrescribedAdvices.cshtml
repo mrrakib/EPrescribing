@@ -1,0 +1,32 @@
+﻿@using HtmlHelpers.BeginCollectionItem;
+@model EPrescribing.Web.Models.PrescribedAdvice
+
+@{
+    Layout = null;
+}
+<tr class="odc-treatment-advice">
+    @using (Html.BeginCollectionItem("PrescribedAdvices"))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.PrescriptionId)
+        <td style="text-align: left;">
+            <span class="countRow">@(@Model.No + 1)</span>
+        </td>
+        <td>
+            @*<button class="btn btn-sm txtAdviceSgn" type="button">suggestion</button>*@
+            <div class="nk-int-st">
+                @Html.TextBoxFor(model => model.AdviceName, new { @class = "form-control txtAdviceName", @placeholder = "Advice" })
+
+            </div>
+        </td>
+
+        <td class="text-center">
+            <input class="hfLast" type="hidden" value="@Model.No" />
+            <button type="button" title="Remove" id="removePrescribedAdvices" class="btn btn-danger danger-icon-notika waves-effect">
+                <i class="notika-icon notika-trash"></i>
+            </button>
+        </td>
+
+
+    }
+</tr>

@@ -1,0 +1,172 @@
+﻿@model PagedList.IPagedList<EPrescribing.Web.Models.Patient>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Payments";
+
+    if (Request.IsAjaxRequest())
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+    ViewBag.Title = "Index";
+
+    int size = 10;
+
+    if (ViewBag.NoOfRows != null)
+    {
+        size = ViewBag.NoOfRows;
+    };
+    int Nopage = 1;
+    if (ViewBag.page != null)
+    {
+        Nopage = ViewBag.page;
+    };
+    int row = size * Nopage;
+    row = row - size;
+}
+<div class="normal-table-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list">
+                    <!--Start Table Header-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-form"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Payments Records</h2>
+                                        <p class="text-tagline">List of payments records available in system</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("Index", "Patients")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back to Records
+                            </a>
+                        </div>
+                    </div>
+
+                    @using (Ajax.BeginForm("Patients", "Payments", FormMethod.Get, new AjaxOptions
+                    {
+                        UpdateTargetId = "BodyContainer",
+                        InsertionMode = InsertionMode.Replace
+                    }))
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <tr>
+                                        <td width="5%">
+                                            <i class="fa fa-filter" style="margin-right: 5px; color: #aeaeae; font-size: 22px; padding-top: 12px; "></i>
+                                        </td>
+                                        <td width="15%">
+                                            @Html.TextBox("NoOfRows", ViewBag.NoOfRows as string, new { @type = "number", @min = "3", @max = "100", @class = "form-control " })
+                                        </td>
+                                        <td width="60%">
+                                            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control ", placeholder = "Name" })
+                                        </td>
+                                        <td width="25%">
+                                            <label for="nameId">Patient Name </label> @Html.RadioButton("SortingItem", "Name", new { @id = "nameId" })
+                                            <label for="dateId">Date </label> @Html.RadioButton("SortingItem", "Date",true, new { @id = "dateId" })
+                                        </td>
+                                        <td width="5%">
+                                            <button type="submit" class="btn btn-light" style="background-color: #e6e6e6; "><i class="fa fa-search-plus" style="margin-right:5px; color:#808080"></i>Serach</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    }
+
+                    <hr />
+
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                    Patient Name: <strong>@item.Name</strong> <br />
+                                    Patient Age: @item.Age <br />
+                                    Patient-ID: @item.PatientID<br />
+                                    Date: @item.CreatedDate.ToString("dd MMM, yyyy")<br />
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                    <table class="responsive-table">
+                                        <thead>
+                                            <tr class="table-header animated flipInX">
+                                                <th class="col-2">
+                                                    @Html.DisplayNameFor(model => model.First().TotalCharge)
+                                                </th>
+                                                <th class="col-3">
+                                                    @Html.DisplayNameFor(model => model.First().TotalPaid)
+                                                </th>
+
+                                                <th class="col-5">
+                                                    @Html.DisplayNameFor(model => model.First().TotalDue)
+                                                </th>
+                                                <th class="col-6">
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="table-row animated flipInX">
+                                                <td class="col  col-2" data-label="@Html.DisplayNameFor(model => model.First().TotalCharge)">
+                                                    @item.TotalCharge
+                                                </td>
+                                                <td class="col col-3" data-label="@Html.DisplayNameFor(model => model.First().TotalPaid)">
+                                                    @item.TotalPaid
+                                                </td>
+                                                <td class="col  col-5" data-label="@Html.DisplayNameFor(model => model.First().TotalDue)">
+                                                    @item.TotalDue
+                                                </td>
+                                                <td class="col  col-6" data-label="Actions">
+                                                    @if (item.TotalCharge > 0)
+                                                    {
+                                                        <a href="@Url.Action("Details","Payments" ,new { patientId = item.Id })" class="btn btn-info danger-icon-notika waves-effect">
+                                                            <i class="notika-icon notika-star"> View Records</i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="#" class="btn btn-default danger-icon-notika waves-effect" title="Payment not yet completed!" disabled>
+                                                            <i class="notika-icon notika-star"> View Records</i>
+                                                        </a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <strong class="text-center">Data Not Found!</strong>
+                    }
+
+                    <div class="row" style="margin:0px;">
+                        <div class="col-md-12">
+                            <div class="floatright">
+                                @Html.PagedListPager(Model, page => Url.Action("Patients",
+                                            new { page, patientId = ViewBag.PatientId, searchString = ViewBag.SearchString, sortingItem = ViewBag.SortingItem, NoOfRows = ViewBag.NoOfRows }),
+                                                             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "BodyContainer"}))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

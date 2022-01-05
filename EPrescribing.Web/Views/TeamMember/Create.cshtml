@@ -1,0 +1,224 @@
+﻿@model EPrescribing.Web.Models.TeamMember
+
+@{
+    ViewBag.Title = "Add Team Member";
+
+}
+
+<div class="designation-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-plus-symbol"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Team Member</h2>
+                                        <p class="text-tagline">Add Team Member</p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("Index", "TeamMember")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back To List
+                            </a>
+                        </div>
+
+                    </div>
+
+                    @using (Html.BeginForm("Create", "TeamMember", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.ImagePath)
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Member Name" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control", @placeholder = "Designation" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Facebook, new { htmlAttributes = new { @class = "form-control", @placeholder = "Facebook Profile Link" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Facebook, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Twitter, new { htmlAttributes = new { @class = "form-control", @placeholder = "Twitter Profile Link" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Twitter, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Tumblr, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tumblr Profile Link" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Tumblr, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Vimeo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Vimeo Profile Link" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Vimeo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Description", @rows = "4" })
+                                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group ic-cmp-int">
+                                    <div class="form-ic-cmp">
+                                        <i class="notika-icon notika-icon-pro"></i>
+                                    </div>
+                                    <div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
+                                        <h2>Image</h2>
+                                    </div>
+                                    <div class="nk-int-st">
+                                        <div class="fm-cmp-mg">
+                                            <div style="position:absolute"><div style="position: absolute; left:60px;top:-9px"><a class="fa fa-paperclip logoUploader" style=""></a></div></div>
+                                            @if (string.IsNullOrWhiteSpace(Model.ImagePath))
+                                            {
+                                                <img src="@Url.Content("~/Content/images/noImage.jpg")" class="about-pic" />
+                                            }
+                                            else
+                                            {
+                                                <img src="@Url.Content(Model.ImagePath)" class="about-pic" />
+
+                                            }
+
+                                            <input class="file-upload" type="file" accept="image/*" style="display:none" id="image" name="image" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1 col-xs-12">
+                                <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                                    <i class="notika-icon notika-file"></i> Save
+                                </button>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    var validImageTypes = ["image/gif", "image/jpeg", "image/jpg", "image/png"];
+
+                    if ($.inArray(input.files[0].type, validImageTypes) < 0) {
+                        alert('Please select an image file only.');
+                    }
+                    else {
+
+                        var dd = input.files[0].type;
+                        var fileSize = input.files[0].size;
+
+                        if (fileSize > 2000000) {
+                            alert('Image size cannot be greater than 2 MB.');
+                        }
+                        else {
+                            reader.onload = function (e) {
+                                $('.about-pic').attr('src', e.target.result);
+                            }
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+                }
+            }
+
+            $(".file-upload").on('change', function () {
+                readURL(this);
+            });
+
+            $(".logoUploader").on('click', function () {
+                $(".file-upload").click();
+            });
+        });
+    </script>
+}

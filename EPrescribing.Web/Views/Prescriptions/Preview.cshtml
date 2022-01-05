@@ -1,0 +1,578 @@
+﻿@using EPrescribing.Web.Enumerations;
+@using EPrescribing.Web.Helpers;
+@model EPrescribing.Web.ViewModels.VMPreviewPrescription
+@{
+    ViewBag.Title = "Add or Edit Prescription History";
+}
+<div class="Preview-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="wizard-wrap-int">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="wizard-hd" style="margin-bottom: 0">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-support"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn smallScroll">
+                                        <h2 class="smallCaps">@ViewBag.NamePrefix @ViewBag.PatientName &nbsp;<small>(@ViewBag.Age)</small> </h2>
+                                        <h5><span class="smallCaps">Patient Id:</span> @ViewBag.PatientStrId</h5>
+                                        <h5><span class="smallCaps">Mobile No: @ViewBag.MobileNo</span></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("Index", "Patients", new { prescriptionId = Model.PrescriptionId })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back to Record
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <a href="@Url.Action("AddEditPrescriptionHistory","Prescriptions" ,new { prescriptionId = Model.PrescriptionId })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect btn-xs">
+                                History
+                            </a>
+                            <a href="@Url.Action("EditPrescriptionExamination","Prescriptions" ,new { id = Model.PrescriptionId })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect btn-xs">
+                                Examination
+                            </a>
+                            <a href="@Url.Action("EditPrescriptionDone","Prescriptions" ,new { id = Model.PrescriptionId })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect btn-xs">
+                                Treatments
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <hr />
+                        <div class="col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
+                            <div id="preview">
+                                <div class="odc-cc">
+                                    <div class="odc-title">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("AddEditPrescriptionHistory","Prescriptions", new { prescriptionId = Model.PrescriptionId, tab=TabEnum.CheifComplaients.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            Chief Compliants
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        @for (int i = 0; i < Model.CheifComplaients.Where(a => a.IsActive).Count(); i++)
+                                        {
+                                            string className = i == 0 ? "odc-odd" : "odc-even";
+                                            <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-1 odc-details">
+                                                <span>@(i+1). @Model.CheifComplaients[i].Description</span>
+                                            </div>
+                                            <div class="col-md-5 col-sm-12 col-xs-12 previewChief">
+                                                <table class="@className">
+                                                    <tr class="odc-exam-row treat-done">
+                                                        <td>
+                                                            <ul class="prbPosition odc-examination">
+                                                                <li class="upLeft">
+                                                                    @if (Model.CheifComplaients[i].UpperLeft)
+                                                                    {
+                                                                        <span><i class="fa fa-check"></i></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="upRight">
+                                                                    @if (Model.CheifComplaients[i].UpperRight)
+                                                                    {
+                                                                        <span><i class="fa fa-check"></i></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="bottomLeft">
+                                                                    @if (Model.CheifComplaients[i].BottomLeft)
+                                                                    {
+                                                                        <span><i class="fa fa-check"></i></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="bottomRight">
+                                                                    @if (Model.CheifComplaients[i].BottomRight)
+                                                                    {
+                                                                        <span><i class="fa fa-check"></i></span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="odc-title hisotry">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("AddEditPrescriptionHistory","Prescriptions", new { prescriptionId = Model.PrescriptionId, tab=TabEnum.PresentIllnes.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            History of Present Illness
+
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-1 odc-details illness">
+                                            <span>@Model.Prescription.PresentIllnes</span>
+                                        </div>
+
+                                    </div>
+
+                                    <!--Medical History-->
+                                    <div class="odc-title medHistory">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("AddEditPrescriptionHistory","Prescriptions", new { prescriptionId = Model.PrescriptionId, tab=TabEnum.MedicalHistory.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            Medical History
+
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-1 odc-details">
+                                            <span>@Model.Prescription.MedicalHistory</span>
+                                        </div>
+
+                                    </div>
+                                    <!--End Medical History-->
+                                    <!--Drug History-->
+                                    <div class="odc-title">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("AddEditPrescriptionHistory","Prescriptions", new { prescriptionId = Model.PrescriptionId, tab=TabEnum.MedicineHistories.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            Drug History
+
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2 odc-details">
+                                            <table class="responsive-table fullTable">
+                                                @for (int i = 0; i < Model.MedicineHistories.Where(a => a.IsActive).ToList().Count; i++)
+                                                {
+                                                    <tr class="odc-med-prev tbl-bordered">
+                                                        <td data-label="#" class="col-md-1">@(i+1)</td>
+                                                        <td data-label="Medicine Name" class="col-md-7">@Model.MedicineHistories[i].MedicineName</td>
+                                                        <td data-label="Note" class="col-md-4">@Model.MedicineHistories[i].Note</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--End Drug History-->
+                                    <hr class="text-danger" />
+
+                                    <!--Extraoral Examination-->
+                                    <div class="odc-title">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("EditPrescriptionExamination","Prescriptions", new { id = Model.PrescriptionId, tab=TabEnum.OnExaminationExtraoral.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            Extraoral Examination
+
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2 odc-details">
+                                            <table class="responsive-table fullTable">
+                                                @for (int i = 0; i < Model.OnExaminationExtraoral.Where(a => a.IsActive).ToList().Count; i++)
+                                                {
+                                                    <tr class="odc-extra-exam-prev tbl-bordered">
+                                                        <td data-label="#" class="ol-md-2">@(i+1)</td>
+                                                        <td data-label="Description" class="col-md-10">@Model.OnExaminationExtraoral[i].Description</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--End Extraoral Examination-->
+                                    <!--Intraoral Examination-->
+                                    <div class="odc-title">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("EditPrescriptionExamination","Prescriptions", new { id = Model.PrescriptionId, tab=TabEnum.OnExaminationIntraoral.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            Intraoral Examination
+
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        @for (int i = 0; i < Model.OnExaminationIntraoral.Where(a => a.IsActive).Count(); i++)
+                                        {
+                                            <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-1 odc-details">
+                                                <span>@(i+1). @Model.OnExaminationIntraoral[i].Description</span>
+                                            </div>
+                                            <div class="col-md-5 col-sm-12 col-xs-12 previewChief">
+                                                <table class="">
+                                                    <tr class="odc-exam-row treat-done">
+                                                        <td>
+                                                            <ul class="prbPosition odc-examination">
+                                                                <li class="upLeft">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.OnExaminationIntraoral[i].UpperLeft))
+                                                                    {
+                                                                        <span>@Model.OnExaminationIntraoral[i].UpperLeft</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="upRight">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.OnExaminationIntraoral[i].UpperRight))
+                                                                    {
+                                                                        <span>@Model.OnExaminationIntraoral[i].UpperRight</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="bottomLeft">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.OnExaminationIntraoral[i].BottomLeft))
+                                                                    {
+                                                                        <span>@Model.OnExaminationIntraoral[i].BottomLeft</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="bottomRight">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.OnExaminationIntraoral[i].BottomRight))
+                                                                    {
+                                                                        <span>@Model.OnExaminationIntraoral[i].BottomRight</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        }
+                                    </div>
+                                    <!--End Intraoral Examination-->
+                                    <!--Diagnostic Test-->
+                                    <div class="odc-title">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("EditPrescriptionExamination","Prescriptions", new { id = Model.PrescriptionId, tab=TabEnum.DiagnosticTests.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            Diagnostic Test
+
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2 odc-details">
+                                            <table class="responsive-table fullTable">
+                                                @for (int i = 0; i < Model.DiagnosticTests.Where(a => a.IsActive).ToList().Count; i++)
+                                                {
+                                                    <tr class="odc-extra-exam-prev tbl-bordered">
+                                                        <td data-label="#" class="col-md-2">@(i+1)</td>
+                                                        <td data-label="Diagnosis Name" class="col-md-10">@Model.DiagnosticTests[i].DiagnosticName</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--End Diagnostic Test-->
+                                    <!--Differential Diagnosis-->
+                                    <div class="odc-title">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("EditPrescriptionExamination","Prescriptions", new { id = Model.PrescriptionId, tab=TabEnum.DifferentialDiagnostic.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            Differential Diagnosis
+
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2 odc-details">
+                                            <table class="responsive-table fullTable">
+                                                @for (int i = 0; i < Model.DifferentialDiagnosis.Where(a => a.IsActive).ToList().Count; i++)
+                                                {
+                                                    <tr class="odc-extra-exam-prev tbl-bordered">
+                                                        <td data-label="#" class="col-md-2">@(i+1)</td>
+                                                        <td data-label="Disease Name" class="col-md-10">@Model.DifferentialDiagnosis[i].DiseaseName</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--End Differential Diagnosis-->
+                                    <!--Treatment Plan-->
+                                    <div class="odc-title">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("EditPrescriptionExamination","Prescriptions", new { id = Model.PrescriptionId, tab=TabEnum.TreatmentPlans.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            Treatment Plan
+
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        @for (int i = 0; i < Model.TreatmentPlans.Where(a => a.IsActive).Count(); i++)
+                                        {
+                                            <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-1 odc-details">
+                                                <span>@(i+1). @Model.TreatmentPlans[i].TreatmentName</span>
+                                            </div>
+                                            <div class="col-md-5 col-sm-12 col-xs-12 previewChief">
+                                                <table class="">
+                                                    <tr class="odc-exam-row treat-done">
+                                                        <td>
+                                                            <ul class="prbPosition odc-examination">
+                                                                <li class="upLeft">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.TreatmentPlans[i].UpperLeft))
+                                                                    {
+                                                                        <span>@Model.TreatmentPlans[i].UpperLeft</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="upRight">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.TreatmentPlans[i].UpperRight))
+                                                                    {
+                                                                        <span>@Model.TreatmentPlans[i].UpperRight</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="bottomLeft">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.TreatmentPlans[i].BottomLeft))
+                                                                    {
+                                                                        <span>@Model.TreatmentPlans[i].BottomLeft</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="bottomRight">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.TreatmentPlans[i].BottomRight))
+                                                                    {
+                                                                        <span>@Model.TreatmentPlans[i].BottomRight</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        }
+                                    </div>
+                                    <!--End Treatment Plan-->
+
+                                    <hr class="text-danger" />
+
+                                    <!--Treatment Done-->
+                                    <div class="odc-title">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("EditPrescriptionDone","Prescriptions", new { id = Model.PrescriptionId, tab=TabEnum.TreatmentDones.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            Treatment Done
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        @for (int i = 0; i < Model.TreatmentDones.Where(a => a.IsActive).Count(); i++)
+                                        {
+                                            <div class="col-md-5 col-sm-12 col-xs-12 col-md-offset-1 odc-details">
+                                                <span>@(i+1). @Model.TreatmentDones[i].TreatmentName</span>
+                                            </div>
+                                            <div class="col-md-5 col-sm-12 col-xs-12 previewChief">
+                                                <table class="">
+                                                    <tr class="odc-exam-row treat-done">
+                                                        <td>
+                                                            <ul class="prbPosition odc-examination">
+                                                                <li class="upLeft">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.TreatmentDones[i].UpperLeft))
+                                                                    {
+                                                                        <span>@Model.TreatmentDones[i].UpperLeft</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="upRight">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.TreatmentDones[i].UpperRight))
+                                                                    {
+                                                                        <span>@Model.TreatmentDones[i].UpperRight</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="bottomLeft">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.TreatmentDones[i].BottomLeft))
+                                                                    {
+                                                                        <span>@Model.TreatmentDones[i].BottomLeft</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                                <li class="bottomRight">
+                                                                    @if (!String.IsNullOrWhiteSpace(Model.TreatmentDones[i].BottomRight))
+                                                                    {
+                                                                        <span>@Model.TreatmentDones[i].BottomRight</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>-</span>
+                                                                    }
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        }
+                                    </div>
+                                    <!--End Treatment Done-->
+                                    <!--Medicine Prescribed-->
+                                    <div class="odc-title">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("EditPrescriptionDone","Prescriptions", new { id = Model.PrescriptionId, tab=TabEnum.PrescribedMedicines.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            TREATMENT REGIMEN
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        <div class="col-md-8 col-sm-12 col-xs-12 col-md-offset-2 odc-details medPres">
+                                            @Html.Raw(Model.Prescription.MedicinePrescribed)
+                                        </div>
+                                    </div>
+                                    <!--End Medicine Prescribed-->
+                                    <!--Next Appointment-->
+                                    <div class="odc-title">
+                                        <h4 class="smallCaps prev-title">
+                                            <a href="@Url.Action("EditPrescriptionDone","Prescriptions", new { id = Model.PrescriptionId, tab=TabEnum.NextAppointment.ToString() })">
+                                                <i class="icon fa fa-edit"></i>
+                                            </a>
+                                            <i class="icon fa fa-stethoscope odc-prev-edit"></i>
+                                            Next Appointment
+                                        </h4>
+                                    </div>
+                                    <div class="odc-prev-body row">
+                                        <div class="col-md-10 col-sm-12 col-xs-12 col-md-offset-1 odc-details">
+                                            <table class="responsive-table payHistory">
+                                                <tr class="table-header2">
+                                                    <th class="col-2">Charge</th>
+                                                    <th class="col-3">Paid</th>
+                                                    <th class="col-4">Due</th>
+                                                    <th class="col-5">Next Visit</th>
+                                                </tr>
+                                                @if (Model.Prescription.Payment != null)
+                                                {
+                                                    <tr class="odc-payment-prev tbl-bordered">
+                                                        <td data-label="Charge" class="col col-2">@Model.Prescription.Payment.TreatmentCharge</td>
+                                                        <td data-label="Paid" class="col col-3">@Model.Prescription.Payment.PaidAmount</td>
+                                                        <td data-label="Due" class="col col-4">@Model.Prescription.Payment.DueAmount</td>
+                                                        <td data-label="Next Visit" class="col col-5">@(Model.Prescription.NextAppointmentDate?.ToString("dd MMM, yyyy hh:mm tt"))</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--End Next Appointment-->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="checkbox" id="withHeader" name="withHeader" value="true">
+                                    <label for="withHeader"> With Header</label><br>
+                                    <input type="hidden" id="originaUrlId" value="" />
+                                    @if (!string.IsNullOrWhiteSpace(User.GETUSEREMAIL()))
+                                    {
+                                        <a href="@Url.Action("Index","Report", new { prescriptionId = Model.PrescriptionId })" id="prescriptionPrintButton" onclick="return confirm('Please contact your service provider to activate your account! Then you can download a PDF copy.')" class="btn btn-info btn-icon-notika waves-effect smallCaps floatright" target="_blank">
+                                            <i class="notika-icon notika-print"></i> Print Prescription
+                                        </a>
+                                    }
+                                    else if (User.GETISACTIVE())
+                                    {
+                                        <a href="@Url.Action("Index","Report", new { prescriptionId = Model.PrescriptionId })" id="prescriptionPrintButton" class="btn btn-info btn-icon-notika waves-effect smallCaps floatright" target="_blank">
+                                            <i class="notika-icon notika-print"></i> Print Prescription
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("UpdateAccount","Account")" onclick="return confirm('Please update your account details to download a PDF copy, Do you want to update account information!')" class="btn btn-info btn-icon-notika waves-effect smallCaps floatright">
+                                            <i class="notika-icon notika-print"></i> Print Prescription
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            $('#withHeader').click(function () {
+
+                var originaUrl = $("#prescriptionPrintButton").attr("href");
+
+                var isCheckedOrNot = $("#withHeader").is(':checked');
+                if (isCheckedOrNot) {
+                    $("#originaUrlId").val(originaUrl);
+                    $("#prescriptionPrintButton").attr("href", originaUrl + "&withHeader=true");
+                }
+                else {
+                    var original = $("#originaUrlId").val();
+                    $("#prescriptionPrintButton").attr("href", original);
+                }
+            })
+
+        });
+    </script>
+
+}

@@ -1,0 +1,166 @@
+﻿@model EPrescribing.Web.Models.ContactSection
+
+@{
+    ViewBag.Title = "Add Contact Info";
+
+}
+
+<div class="designation-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-plus-symbol"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Contact Info</h2>
+                                        <p class="text-tagline">Add contact info</p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("Index", "ContactSection")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back To List
+                            </a>
+                        </div>
+
+                    </div>
+
+                    @using (Html.BeginForm("Create", "ContactSection", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Contact Title" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Icon, new { htmlAttributes = new { @class = "form-control", @placeholder = "Icon ex: phone" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Icon, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.PhoneNo1, new { htmlAttributes = new { @class = "form-control", @placeholder = "First Phone no" } })
+                                            @Html.ValidationMessageFor(model => model.PhoneNo1, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.PhoneNo2, new { htmlAttributes = new { @class = "form-control", @placeholder = "Second Phone no" } })
+                                            @Html.ValidationMessageFor(model => model.PhoneNo2, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Email1, new { htmlAttributes = new { @class = "form-control", @placeholder = "First Email" } })
+                                            @Html.ValidationMessageFor(model => model.Email1, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Email2, new { htmlAttributes = new { @class = "form-control", @placeholder = "Second Email" } })
+                                            @Html.ValidationMessageFor(model => model.Email2, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @placeholder = "Address", @rows = "4" } )
+                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1 col-xs-12">
+                                <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                                    <i class="notika-icon notika-file"></i> Save
+                                </button>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            
+        });
+    </script>
+}
+

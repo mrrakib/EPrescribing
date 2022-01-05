@@ -1,0 +1,42 @@
+﻿@using EPrescribing.Web.Helpers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewBag.Title | ODC Soft</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon
+        ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico">
+    @Styles.Render("~/Content/themecss")
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <link href="~/css/customstyle.css" rel="stylesheet" />
+    <link href="~/css/customStyle-responsive.css" rel="stylesheet" />
+
+</head>
+
+
+<body>
+    <!-- End Menu Area -->
+    <!--Start Main Body-->
+    <div class="login-content">
+        @RenderBody()
+    </div>
+
+
+
+
+    @Scripts.Render("~/bundles/themejquery")
+    @Scripts.Render("~/bundles/themebootstrap")
+    @Scripts.Render("~/bundles/themejs")
+    @Scripts.Render("~/bundles/login")
+
+    @*<script src="~/Scripts/jquery-ui.js"></script>*@
+
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>

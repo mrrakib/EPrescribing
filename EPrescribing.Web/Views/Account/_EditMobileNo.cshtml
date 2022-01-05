@@ -1,0 +1,76 @@
+﻿@model EPrescribing.Web.ViewModels.VMChangeMobileNo
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("EditMobileNo", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @onSubmit = "return SubmitMobileNo(this)", @class = "form-horizontal", role = "form" }))
+{
+    <div class="wizard-hd">
+        <div class="breadcomb-wp">
+            <div class="breadcomb-icon">
+                <i class="notika-icon notika-social"></i>
+            </div>
+            <div class="breadcomb-ctn">
+                <h2>Change Number</h2>
+                <p class="text-tagline">Please fill up carefully.</p>
+            </div>
+        </div>
+
+    </div>
+    @Html.HiddenFor(model => model.DoctorId, new { @id = "doctorId" });
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-xs-12">
+            <div class="col-md-4">
+                <label>Current Number</label>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+                <div class="form-group ic-cmp-int">
+                    <div class="nk-int-st">
+                        @Html.TextBoxFor(m => m.CurrentMobileNo, new { @readonly="readonly", @id = "txtCurrentNumber", @class = "form-control", @placeholder = "Current Number" })
+                        @Html.ValidationMessageFor(m => m.CurrentMobileNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-xs-12">
+            <div class="col-md-4">
+                <label>New Number</label>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group ic-cmp-int">
+                    <div class="nk-int-st">
+                        @Html.TextBoxFor(m => m.MobileNo, new { @id = "txtMobileNo", @class = "form-control", @placeholder = "New Number" })
+                        @Html.ValidationMessageFor(m => m.MobileNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-xs-12">
+            <div class="col-md-4">
+                <label>Confirm Number</label>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group ic-cmp-int">
+                    <div class="nk-int-st">
+                        @Html.TextBoxFor(m => m.ConfirmMobileNo, new { @id= "txtConfirmMobileNo", @class = "form-control", @placeholder = "Confirm Number" })
+                        @Html.ValidationMessageFor(m => m.ConfirmMobileNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 material-design-btn text-center my-2">
+            <button type="submit" class="btn notika-btn-cyan waves-effect">
+                <i class="notika-icon notika-checked"></i> Save
+            </button>
+        </div>
+    </div>
+}

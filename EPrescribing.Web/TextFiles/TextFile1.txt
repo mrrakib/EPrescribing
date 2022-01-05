@@ -1,0 +1,62 @@
+﻿///////Regular expression Mobile number//////
+
+/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/
+
+ /(^(\+8801|8801|01|008801))[1|3-9]{1}(\d){8}$/
+
+(^([+]{1}[8]{2}|0088)?(01){1}[3-9]{1}\d{8})$
+
+
+function GetLogin(){
+                $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("Login","Home")',
+                        success: function (response) {
+                            $("#loginDiv").html("");
+                            $("#loginDiv").html(response);
+                        },
+                        error: function (ex) {
+
+                        }
+                    });
+        }
+
+        function SubmitLoginForm(form) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Login","Home")',
+                    data: $(form).serialize(),
+                    success: function (response) {
+                        $("#loginDiv").html("");
+                        $("#loginDiv").html(response);
+
+                    },
+                    error: function (ex) {
+
+                    }
+                });
+            return false;
+            }
+        function SubmitOtpForm(form) {
+            var baseUrl = '@Url.Content("~")';
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Otp","Home")',
+                    data: $(form).serialize(),
+                    dataType:'json',
+                    success: function (res) {
+                        debugger;
+                        if (res.Status) {
+                            alert(baseUrl);
+                        }
+                        //$("#loginDiv").html("");
+                        //$("#loginDiv").html(response);
+
+                    },
+                    error: function (ex) {
+
+                    }
+                });
+            return false;
+            }

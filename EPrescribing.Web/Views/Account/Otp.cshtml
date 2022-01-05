@@ -1,0 +1,102 @@
+﻿@using EPrescribing.Web.ViewModels
+@model VMLoginUser
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LoginRegisterLayout.cshtml";
+}
+
+@using (Html.BeginForm("Otp", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "nk-block animated fadeIn", role = "form", @id = "l-login" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(m => m.MobileNo, new { @id = "mobileNo" })
+
+    <div class="nk-form">
+        <div class="input-group text-left">
+            <span class="input-group-addon nk-ic-st-pro">OTP</span>
+            @*<div class="nk-int-st">
+                    @Html.TextBoxFor(m => m.Otp, new { @class = "form-control", @placeholder = "Enter OTP", @data_mask = "9 9 9 9 9 9" })
+
+                </div>
+                @Html.ValidationMessageFor(m => m.Otp, "", new { @class = "text-danger" })*@
+            <div class="nk-int-st">
+                @Html.TextBoxFor(m => m.Otp, new { @id = "otpField", @class = "form-control", @placeholder = "Enter OTP", @data_mask = "9 9 9 9 9 9" })
+
+            </div>
+            @Html.ValidationMessageFor(m => m.Otp, "", new { @class = "text-danger" })
+            <p style="color:green">An OTP was sent to @Model.MobileNo</p>
+        </div>
+        <button type="submit" class="btn btn-login btn-success btn-float odc-otp"><i class="notika-icon notika-right-arrow right-arrow-ant"></i></button>
+    </div>
+
+    <div class="nk-navigation nk-lg-ic odc-login">
+
+        <button class="odc-alternate-login" type="submit">
+            <i class="notika-icon notika-success"></i> <span>Login</span>
+        </button>
+
+        <button class="odc-alternate-login otp-resend" type="button" id="btnResendOtp">
+            <i class="notika-icon notika-mail"></i> <span>Resend OTP</span>
+        </button>
+    </div>
+
+    @*<div class="nk-lg-ic">
+
+
+
+            <button class="btn btn-primary" type="button" id="btnResendOtp">Resend Otp</button>
+
+            <button class="btn btn-info" type="submit" data-show="#l-submit"><i class="notika-icon notika-plus-symbol"></i> <span>Login</span></button>
+        </div>*@
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+
+            $('#otpField').focus();
+
+
+        });
+
+    $(document).on("click", "#btnResendOtp", function () {
+        var mobileNo = $('#mobileNo').val();
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "200",
+            "hideDuration": "200",
+            "timeOut": "5000",
+            "extendedTimeOut": "200",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        $.ajax({
+            url: '@Url.Action("ResendOtp")',
+            type: "GET",
+            dataType: "json",
+            data: { mobileNo: mobileNo},
+                cache: false,
+                    success: function (data) {
+                        if (data) {
+
+                            Command: toastr["success"]("A new OTP Was sent to your number")
+                        } else {
+                            Command: toastr["error"]("Failed to send otp.")
+                        }
+            }
+            });
+    })
+    </script>
+}

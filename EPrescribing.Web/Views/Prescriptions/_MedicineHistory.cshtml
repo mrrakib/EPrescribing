@@ -1,0 +1,41 @@
+﻿@using HtmlHelpers.BeginCollectionItem;
+@model EPrescribing.Web.Models.MedicineHistory
+
+@{
+    Layout = null;
+}
+<tr>
+    @using (Html.BeginCollectionItem("MedicineHistory"))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.PrescriptionId)
+    <td style="text-align: left;">
+        <span class="countRow">@(@Model.No + 1)</span>
+    </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextBoxFor(model => model.GenericName, new { @class = "form-control txtGenericName", @id = "txtGenericName", @placeholder = "Generic" })
+                @Html.HiddenFor(model => model.GenericId, new { @class = "hdnGenericId", @id = "hdnGenericId" })
+            </div>
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextBoxFor(model => model.MedicineName, new { @class = "form-control txtMedicineName", @id = "txtMedicineName", @placeholder = "Medicine name" })
+                
+            </div>
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextBoxFor(model => model.Note, new { @class = "form-control", @placeholder = "Note" })
+            </div>
+        </td>
+        <td>
+            <input class="hfLast" type="hidden" value="@Model.No" />
+            <button type="button" title="Remove" id="removeMedicineHistory" class="btn btn-danger danger-icon-notika waves-effect">
+                <i class="notika-icon notika-trash"></i>
+            </button>
+        </td>
+
+
+    }
+</tr>

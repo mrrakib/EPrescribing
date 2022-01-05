@@ -1,0 +1,139 @@
+﻿<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewBag.Title | ODC Soft</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico">
+    @Styles.Render("~/Content/themecss")
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <link href="~/css/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/css/subscriptionmodel.css" rel="stylesheet" />
+    <link href="~/css/table-responsive.css" rel="stylesheet" />
+
+    @Styles.Render("~/Content/frontCss")
+
+    <link href="~/css/customstyle.css" rel="stylesheet" />
+    <link href="~/css/customStyle-responsive.css" rel="stylesheet" />
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #main-wrapper {
+            padding: 0 0 12%;
+            position: relative;
+            min-height: 100vh
+        }
+
+        div.footer-copyright-area {
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            width: 100%
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="main-wrapper">
+        <!-- Start Header Top Area -->
+        @Html.Partial("_logoBar")
+        <!-- End Header Top Area -->
+        <!-- Start Menu Area -->
+        <div class="frontMenu">
+            @Html.Partial("_mainMenu")
+        </div>
+
+        <!-- End Menu Area -->
+        <!--Start Main Body-->
+        <div id="BodyContainer">
+            @RenderBody()
+        </div>
+
+        <!--End Main Body-->
+        <!-- Start Footer area-->
+        @*@Html.Partial("_footer")*@
+        @Html.Action("GetFooter", "Home")
+    </div>
+
+
+
+
+    <!-- Include All JS -->
+    @Scripts.Render("~/bundles/themejquery")
+    @Scripts.Render("~/bundles/themebootstrap")
+    @Scripts.Render("~/bundles/frontjs")
+    <script src="~/js/charts/Chart.js"></script>
+    <script src="~/js/charts/bar-chart.js"></script>
+    <script src="~/js/toastr/toastr.min.js"></script>
+    <!-- counterup JS
+        ============================================ -->
+    <script src="js/counterup/jquery.counterup.min.js"></script>
+    <script src="js/counterup/waypoints.min.js"></script>
+    @*<script src="js/counterup/counterup-active.js"></script>*@
+    @RenderSection("scripts", required: false)
+    <script>
+        $(function () {
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "200",
+                "hideDuration": "200",
+                "timeOut": "5000",
+                "extendedTimeOut": "200",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            //notification with toastr
+            var saveMsg = '@TempData["save"]';
+            var updateMsg = '@TempData["update"]';
+            var deleteMsg = '@TempData["delete"]';
+            var customMsg = '@TempData["custom"]';
+            var warningMsg = '@TempData["warning"]';
+            var successMsg = '@TempData["success"]';
+            if (saveMsg != '') {
+                Command: toastr["success"]("Data saved successfully!")
+            }
+            if (updateMsg != '') {
+                Command: toastr["success"]("Data updated successfully!")
+            }
+            if (deleteMsg != '') {
+                Command: toastr["error"]("Data deleted successfully!")
+            }
+            if (customMsg != '') {
+                Command: toastr["warning"](customMsg)
+            }
+            if (warningMsg != '') {
+                Command: toastr["error"](warningMsg)
+            }
+            if (successMsg != '') {
+                Command: toastr["success"](successMsg)
+            }
+
+
+            //Command: toastr["success"]("Are you the six fingered man?")
+
+
+        });
+    </script>
+
+</body>
+</html>

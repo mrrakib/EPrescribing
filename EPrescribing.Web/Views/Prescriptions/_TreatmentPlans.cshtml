@@ -1,0 +1,37 @@
+﻿@using HtmlHelpers.BeginCollectionItem;
+@model EPrescribing.Web.Models.TreatmentPlan
+
+@{
+    Layout = null;
+}
+<tr class="odc-exam-row">
+    @using (Html.BeginCollectionItem("TreatmentPlans"))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.PrescriptionId)
+        <td class="odc-sl">
+            <span class="countRow">@(@Model.No + 1)</span>
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextAreaFor(model => model.TreatmentName, new { @class = "form-control txtTreatmentName", @placeholder = "Treatment Name", @rows = "3" })
+            </div>
+        </td>
+        <td>
+            <ul class="prbPosition odc-examination odc-treatment-plans">
+                <li class="upLeft">@Html.TextBoxFor(m => m.UpperLeft)</li>
+                <li class="upRight">@Html.TextBoxFor(m => m.UpperRight)</li>
+                <li class="bottomLeft">@Html.TextBoxFor(m => m.BottomLeft)</li>
+                <li class="bottomRight">@Html.TextBoxFor(m => m.BottomRight)</li>
+            </ul>
+        </td>
+        <td>
+            <input class="hfLast" type="hidden" value="@Model.No" />
+            <button type="button" title="Remove" id="removeTreatmentPlan" class="btn btn-danger danger-icon-notika waves-effect">
+                <i class="notika-icon notika-trash"></i>
+            </button>
+        </td>
+
+
+    }
+</tr>

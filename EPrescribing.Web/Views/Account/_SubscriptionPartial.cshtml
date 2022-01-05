@@ -1,0 +1,23 @@
+﻿@model List<EPrescribing.Web.Models.Subscription>
+
+@{ 
+    Layout = null;
+}
+<div class="col-md-10 col-md-offset-1 text-center">
+    @if (Model != null)
+    {   
+        foreach (var subscription in Model)
+        {     
+            <label class="col-md-3 text-center">           
+                    <input type="radio" name="SubscriptionlId" value="@subscription.Id" checked="@subscription.IsChecked" /> 
+                <div class="front-end box">
+                    <span>
+                        @subscription.Name <br />
+                        <small>@subscription.Description</small>
+                    </span>
+                </div>
+            </label>
+        }
+    }
+</div>
+

@@ -1,0 +1,126 @@
+﻿@using EPrescribing.Web.Helpers
+@{
+    //string user = string.IsNullOrEmpty(AppSession.UserName) ? AppSession.MobileNo : AppSession.UserName;
+}
+<style>
+    .header-profile-pic {
+        max-width: 50px;
+        max-height: 50px;
+        border: 2px solid #e5e5e5;
+        border-radius: 20px;
+        padding: 3px;
+    }
+</style>
+@if (User.GETDOCTORID() > 0)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        @*<ul class="nav navbar-nav notika-top-nav">
+                <li>
+                    <h3>@User.GETMOBILENO()</h3>
+                </li>
+                <li class="nav-item nc-al">
+                    <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link dropdown-toggle logOff">
+                        <i class="fa fa-power-off"></i> Log Off
+                    </a>
+
+                </li>
+            </ul>*@
+        <ul class="nav navbar-nav notika-top-nav">
+            <li class="nav-item">
+                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle logOff">
+                    @*<span><i class="icoPaddingRight notika-icon notika-support"></i></span>*@
+                    @if (string.IsNullOrWhiteSpace(User.GETDOCTORIMAGE()))
+                    {
+                        <span class="icoPaddingRight">
+                            <img src="@Url.Content("~/Content/images/doctor3.jpg")" alt="doctorImage" class="header-profile-pic" />
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="icoPaddingRight">
+                            <img src="@Url.Content("~/Content/Upload/images/"+User.GETDOCTORIMAGE())" alt="doctorImage" class="header-profile-pic" />
+                        </span>
+
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(User.GETUSEREMAIL()) && !string.IsNullOrWhiteSpace(User.GETUSERNAME()))
+                    {
+                        @User.GETUSERNAME()
+                        @*<h4>@User.GETUSEREMAIL()</h4>*@
+                    }
+                    else
+                    {
+                        @User.GETMOBILENO()
+                    }
+                </a>
+                <div role="menu" class="dropdown-menu message-dd chat-dd animated fadeIn">
+                    <div class="hd-message-sn">
+                        @if (!string.IsNullOrWhiteSpace(User.GETUSEREMAIL()) && !string.IsNullOrWhiteSpace(User.GETUSERNAME()))
+                        {
+                            <div>
+                                <h4 style="margin-bottom: 0px;">@User.GETUSERNAME()</h4>
+                                <p style="margin-bottom: 0px;">@User.GETUSEREMAIL()</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <h2>@User.GETMOBILENO()</h2>
+                        }
+
+                    </div>
+                    <div class="hd-message-info">
+                        @if (User.GETISACTIVE())
+                        {
+                            <a href="@Url.Action("AccountInfo", "Account")">
+                                <div class="hd-message-sn topMenu">
+                                    <div class="hd-mg-ctn">
+                                        <i class="fa fa-user"></i>
+                                        <h3>Account Settings</h3>
+
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("UpdateAccount", "Account")">
+                                <div class="hd-message-sn topMenu">
+                                    <div class="hd-mg-ctn">
+                                        <i class="fa fa-user"></i>
+                                        <h3>Update Account</h3>
+
+                                    </div>
+                                </div>
+                            </a>
+                        }
+
+                        <a href="javascript:document.getElementById('logoutForm').submit()">
+                            <div class="hd-message-sn topMenu">
+                                <div class="hd-mg-ctn">
+                                    <i class="fa fa-power-off"></i>
+                                    <h3>Log Out</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    }
+}
+
+
+else
+{
+
+    <ul class="nav navbar-nav notika-top-nav">
+        <li>
+            <a href="@Url.Action("Login", "Account")" class="logInStyle">
+                <i class="fa fa-key"></i> Login
+            </a>
+        </li>
+    </ul>
+}
+

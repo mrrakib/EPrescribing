@@ -1,0 +1,38 @@
+﻿@using HtmlHelpers.BeginCollectionItem;
+@model EPrescribing.Web.Models.ChiefComplaint
+
+@{
+    Layout = null;
+}
+<tr class="postionChanging">
+    @using (Html.BeginCollectionItem("ChiefComplaints"))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.PrescriptionId)
+        <td class="chief-serial">
+            <span class="countRow">@(@Model.No + 1)</span>
+        </td>
+        <td class="chief-problem">
+            <div class="nk-int-st">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Complaints", @rows = "3" })
+            </div>
+        </td>
+        <td class="chief-mark">
+            <ul class="prbPosition">
+                <li class="upLeft">@Html.CheckBoxFor(m => m.UpperLeft)</li>
+                <li class="upRight">@Html.CheckBoxFor(m => m.UpperRight)</li>
+                <li class="bottomLeft">@Html.CheckBoxFor(m => m.BottomLeft)</li>
+                <li class="bottomRight">@Html.CheckBoxFor(m => m.BottomRight)</li>
+            </ul>
+        </td>
+        <td class="text-center">
+            <input class="hfLast" type="hidden" value="@Model.No" />
+            <button type="button" title="Remove" id="removeChiefComplaints" class="btn btn-danger danger-icon-notika waves-effect">
+                <i class="notika-icon notika-trash"></i>
+            </button>
+            @*<button type="button" id="removeChiefComplaints">remove</button>*@
+        </td>
+
+
+    }
+</tr>

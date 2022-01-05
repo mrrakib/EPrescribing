@@ -1,0 +1,225 @@
+﻿@model EPrescribing.Web.Models.Patient
+
+@{
+    ViewBag.Title = "Patient";
+
+}
+
+<div class="designation-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap fixedHeight">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-plus-symbol"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Add Patient</h2>
+                                        <p class="text-tagline">Add Patient</p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("Index", "Patients")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back To List
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-1 col-xs-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group ic-cmp-int">
+
+                                    <div class="nk-int-st" id="status">
+                                        @*<div class="nk-toggle-switch" data-ts-color="cyan">
+                                                <label for="ts5" class="ts-label">New</label>
+                                                <input id="ts5" name="Status" type="checkbox" hidden="hidden">
+
+                                                <label for="ts5" class="ts-helper"></label>
+                                                <label for="ts5" class="ts-label ml-20">Existing</label>
+                                            </div>*@
+
+                                        <div class="wrapper">
+                                            <input type="radio" name="Status" id="option-1" checked>
+                                            <input type="radio" name="Status" id="option-2">
+                                            <label for="option-1" class="option option-1">
+                                                <div class="dot"></div>
+                                                <span style="padding: 5px;">New</span>
+                                            </label>
+                                            <label for="option-2" class="option option-2">
+                                                <div class="dot"></div>
+                                                <span style="padding: 5px;">Existing</span>
+                                            </label>
+                                        </div>
+
+                                        @*@Html.RadioButtonFor(m => m.Status, "N")New
+                                            @Html.RadioButtonFor(m => m.Status, "E")Existing*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group ic-cmp-int">
+
+                                    <div class="nk-int-st">
+                                        <div class="form-group ic-cmp-int">
+                                            <div class="form-ic-cmp">
+                                                <i class="notika-icon notika-calendar"></i>
+                                            </div>
+                                            <div class="nk-int-st">
+                                                @Html.TextBoxFor(model => model.TretmentDate, Model.TretmentDate.ToString("dd/MM/yyyy"), new { @class = "datepicker form-control", @id = "treatmentDate" })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.TretmentDate, "", new { @class = "text-danger" })
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="newPatientForm">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+    $(document).on("change", "#treatmentDate", function () {
+
+        var treatmentDate = $("#treatmentDate").val();
+        //alert(treatmentDate);
+        $("#newTreatmentDate").val(treatmentDate);
+        $("#existingTrearmentDate").val(treatmentDate);
+    })
+
+        $(document).on("change", ".patientBox", function () {
+            $('#btnGetPatient').attr("disabled", false);
+            $('#continueText').html("Continue");
+
+            $('#btnContinueWithOldText').attr("disabled", false);
+            $('#continueWithOldText').html("Continue With Previous Prescription");
+        })
+
+        $(document).ready(function () {
+
+
+            $(document).on("click", "#btnSearch", function () {
+                var mobileNo = $("#mobileNo").val();
+                var patientID = $("#patientID").val();
+                var treatmentDate = $("#treatmentDate").val();
+                if (mobileNo == "" && patientID == "" || mobileNo == null && patientID == null) {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "200",
+                        "hideDuration": "200",
+                        "timeOut": "6000",
+                        "extendedTimeOut": "200",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    Command: toastr["error"]("Mobile Number or Patient ID both can't be empty!");
+
+                    $("#existingPatient").empty();
+                } else {
+                      $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetExistingPatient", "Patients")',
+                        data: { PatientId: patientID, MobileNo: mobileNo, treatmentDate: treatmentDate },
+                        success: function (response) {
+                            $("#existingPatient").html("");
+                            $("#existingPatient").html(response);
+                            $("#existingPatient").show("");
+                        },
+                        error: function (ex) {
+
+                        }
+                    });
+                }
+            });
+
+            //var status = $('input[name=Status]:checked', '#status').val();
+            var status = $('input#option-1:checked').length > 0;
+
+            var actualStatus = "";
+            if (status) {
+                actualStatus = "N";
+            }
+
+            var treatmentDate = $("#treatmentDate").val();
+            //if (status != null && status != "") {
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetPatient", "Patients")',
+                        data: { status: actualStatus, treatmentDate: treatmentDate },
+                        success: function (response) {
+                            $("#newPatientForm").html("");
+                            $("#newPatientForm").html(response);
+                            $("#newPatientForm").addClass("flipInX").show("");
+                        },
+                        error: function (ex) {
+
+                        }
+                    });
+                //}
+            $('#status input[type="radio"]').on('change', function () {
+
+                var status = $('input#option-1:checked').length > 0;
+
+                var actualStatus = "";
+                if (status) {
+                    actualStatus = "N";
+                }
+                //alert(status);
+                //alert($('input[name=status]:checked','#status').val());
+                //var status = $('input[name=Status]:checked', '#status').val();
+                var treatmentDate = $("#treatmentDate").val();
+                //if (status != null && status != "") {
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetPatient", "Patients")',
+                        data: { status: actualStatus, treatmentDate: treatmentDate, },
+                        success: function (response) {
+                            debugger;
+                            $("#newPatientForm").html("");
+                            $("#newPatientForm").html(response);
+                            $("#newPatientForm").show("");
+                        },
+                        error: function (ex) {
+
+                        }
+                    });
+                //}
+
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,173 @@
+﻿
+@model List<EPrescribing.Web.Models.Prescription>
+
+@{
+    if (Request.IsAjaxRequest())
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+    ViewBag.Title = "Index";
+
+    int size = 10;
+
+    if (ViewBag.NoOfRows != null)
+    {
+        size = ViewBag.NoOfRows;
+    };
+    int Nopage = 1;
+    if (ViewBag.page != null)
+    {
+        Nopage = ViewBag.page;
+    };
+    int row = size * Nopage;
+    row = row - size;
+}
+<div class="normal-table-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="wizard-wrap-int">
+
+                    <!--Start Table Header-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="wizard-hd">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-support"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2 class="smallCaps">@ViewBag.NamePrefix @ViewBag.PatientName &nbsp;<small>(@ViewBag.Age)</small> </h2>
+                                        <h5><span class="smallCaps">Patient Id:</span> @ViewBag.PatientStrId</h5>
+                                        <p class="text-tagline">Write examination details of selected patient.</p>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("Create", "Patients")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-plus-symbol"></i> Add New
+                            </a>
+                        </div>
+                    </div>
+
+                    <!--End Table Header-->
+
+
+
+                    <div class="row">
+
+
+                        <table class="responsive-table tblPastTreatmentDone tblPastRecords">
+                            <thead>
+                                <tr class="table-header animated flipInX">
+                                    <th class="col-1">#</th>
+                                    <th class="col-2">Date</th>
+                                    <th class="col-3">Treatment Done</th>
+                                    <th class="col-4 text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    row++;
+                                    <tr class="table-row animated flipInX col-md-12">
+                                        <td class="col col-1" data-label="#">@row</td>
+
+
+
+                                        <td class="col col-2" data-label="Date">@item.CreatedDate.ToString("dd MMM, yyyy")</td>
+                                        <td class="col col-3" data-label="Treatment Done">
+                                            @if (item.TreatmentDones != null)
+                                            {
+                                                <div class="col-md-12">
+                                                    @for (int i = 0; i < item.TreatmentDones.Where(a => a.IsActive).ToList().Count; i++)
+                                                    {
+                                                        <div class="col-md-5 col-sm-12 col-xs-12 pathology-name">
+                                                            <span>@(i+1). @item.TreatmentDones[i].TreatmentName</span><br />
+                                                        </div>
+                                                        <div class="col-md-5 col-sm-12 col-xs-12">
+                                                            <table class="">
+                                                                <tr class="odc-exam-row treat-done">
+                                                                    <td>
+                                                                        <ul class="prbPosition odc-examination">
+                                                                            <li class="upLeft">
+                                                                                @if (!String.IsNullOrWhiteSpace(item.TreatmentDones[i].UpperLeft))
+                                                                                {
+                                                                                    <span>@item.TreatmentDones[i].UpperLeft</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span>-</span>
+                                                                                }
+                                                                            </li>
+                                                                            <li class="upRight">
+                                                                                @if (!String.IsNullOrWhiteSpace(item.TreatmentDones[i].UpperRight))
+                                                                                {
+                                                                                    <span>@item.TreatmentDones[i].UpperRight</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span>-</span>
+                                                                                }
+                                                                            </li>
+                                                                            <li class="bottomLeft">
+                                                                                @if (!String.IsNullOrWhiteSpace(item.TreatmentDones[i].BottomLeft))
+                                                                                {
+                                                                                    <span>@item.TreatmentDones[i].BottomLeft</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span>-</span>
+                                                                                }
+                                                                            </li>
+                                                                            <li class="bottomRight">
+                                                                                @if (!String.IsNullOrWhiteSpace(item.TreatmentDones[i].BottomRight))
+                                                                                {
+                                                                                    <span>@item.TreatmentDones[i].BottomRight</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span>-</span>
+                                                                                }
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            }
+
+                                        </td>
+                                        <td class="col col-4 text-center" data-label="Actions">
+                                            <a href="@Url.Action("Preview","Prescriptions" ,new { prescriptionId = item.Id })" class="btn btn-info danger-icon-notika waves-effect">
+                                                <i class="notika-icon notika-star"> Show Details</i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

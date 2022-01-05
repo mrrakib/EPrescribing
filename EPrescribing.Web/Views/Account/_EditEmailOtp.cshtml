@@ -1,0 +1,44 @@
+﻿@model EPrescribing.Web.ViewModels.VMChangeEmail
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("SubmitEmailOtp", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @onSubmit = "return SubmitEmailOtp(this)", @class = "form-horizontal", role = "form" }))
+{
+    <div class="wizard-hd">
+        <div class="breadcomb-wp">
+            <div class="breadcomb-icon">
+                <i class="notika-icon notika-social"></i>
+            </div>
+            <div class="breadcomb-ctn">
+                <h2>Change Email</h2>
+                <p class="text-tagline">Please fill up carefully.</p>
+            </div>
+        </div>
+
+    </div>
+    @Html.HiddenFor(model => model.DoctorId, new { @id = "doctorId" });
+    @Html.HiddenFor(model => model.CurrentEmail, new { @id = "doctorId" });
+    @Html.HiddenFor(model => model.Email, new { @id = "doctorId" });
+    @Html.HiddenFor(model => model.ConfirmEmail, new { @id = "doctorId" });
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 col-sm-12">
+            <p>A Unique 6-digit number has been sent to your new email address.please enter the number below. [please check SPAM/JUNK]</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2 col-sm-12">
+            @Html.TextBoxFor(m => m.EmailOtp, new {@required="required", @id = "txtEmailOtp", @class = "form-control", @placeholder = "" })
+            @Html.ValidationMessageFor(m => m.EmailOtp, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 material-design-btn text-center my-2">
+            <button type="submit" class="btn notika-btn-cyan waves-effect">
+                <i class="notika-icon notika-checked"></i> Save
+            </button>
+        </div>
+    </div>
+}

@@ -1,0 +1,64 @@
+﻿@using HtmlHelpers.BeginCollectionItem;
+@model EPrescribing.Web.Models.DiagnosticTest
+
+@{
+    Layout = null;
+}
+<tr class="odc-diagnosis-row">
+    @using (Html.BeginCollectionItem("DiagnosticTest"))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.PrescriptionId)
+        <td style="text-align: left;">
+            <span class="countRow">@(@Model.No + 1)</span>
+        </td>
+        @*<td>
+                <div class="nk-int-st">
+                    @Html.TextAreaFor(model => model.CategoryName, new { @class = "form-control txtCategoryName", @placeholder = "Test Category", @cols = "15", @rows = "3" })
+                    @Html.HiddenFor(model => model.CategoryId, new { @class = "hdnCategoryId", @id = "hdnCategoryId" })
+                </div>
+            </td>*@
+        <td>
+            <div class="nk-int-st">
+                <div class="chosen-select-act fm-cmp-mg">
+
+                    @Html.DropDownListFor(model => model.CategoryId, new SelectList(ViewBag.Category, "Id", "TestName", Model.CategoryId), string.Empty, new { @class = "chosen select-me CategoryId", @data_placeholder = "--Category--" })
+                </div>
+
+            </div>
+
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextAreaFor(model => model.DiagnosticName, new { @class = "form-control txtDiagnosticName", @placeholder = "Test Name", @cols = "20", @rows = "2" })
+            </div>
+        </td>
+
+        <td>
+            <input class="hfLast" type="hidden" value="@Model.No" />
+            <div class="nk-int-st">
+
+
+                <button type="button" title="Remove" id="removeDiagnosticTest" class="btn btn-danger danger-icon-notika waves-effect">
+                    <i class="notika-icon notika-trash"></i>
+                </button>
+
+
+
+            </div>
+
+
+
+        </td>
+
+
+    }
+</tr>
+
+<script type="text/javascript">
+
+    $(".chosen")[0] && $(".chosen").chosen({
+        width: "100%",
+        allow_single_deselect: true
+    });
+</script>

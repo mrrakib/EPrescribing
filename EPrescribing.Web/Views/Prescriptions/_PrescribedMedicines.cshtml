@@ -1,0 +1,51 @@
+﻿@using HtmlHelpers.BeginCollectionItem;
+@model EPrescribing.Web.Models.PrescribedMedicine
+
+@{
+    Layout = null;
+}
+<tr class="odc-med-prescribed">
+    @using (Html.BeginCollectionItem("PrescribedMedicines"))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.PrescriptionId)
+        <td class="odc-sl">
+            <span class="countRow">@(@Model.No + 1)</span>
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextBoxFor(model => model.GenericName, new { @class = "form-control txtGenericName", @id = "txtGenericName", @placeholder = "Generic" })
+                @Html.HiddenFor(model => model.GenericId, new { @class = "hdnGenericId", @id = "hdnGenericId" })
+            </div>
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextBoxFor(model => model.MedicineName, new { @class = "form-control txtMedicineName", @id = "txtMedicineName", @placeholder = "Medicine Name" })
+
+            </div>
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextBoxFor(model => model.DailyDose, new { @class = "form-control", @placeholder = "Daily Dose" })
+            </div>
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextBoxFor(model => model.Days, new { @class = "form-control", @placeholder = "Days" })
+            </div>
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control", @placeholder = "Note" })
+            </div>
+        </td>
+        <td>
+            <input class="hfLast" type="hidden" value="@Model.No" />
+            <button type="button" title="Remove" id="removePrescribedMedicines" class="btn btn-danger danger-icon-notika waves-effect">
+                <i class="notika-icon notika-trash"></i>
+            </button>
+        </td>
+
+
+    }
+</tr>

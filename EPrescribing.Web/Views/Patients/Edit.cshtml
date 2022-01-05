@@ -1,0 +1,149 @@
+﻿@model EPrescribing.Web.Models.Patient
+@using EPrescribing.Web.Enumerations;
+@{
+    ViewBag.Title = "Update Patient";
+
+}
+
+<div class="home-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-edit"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Update Patient</h2>
+                                        <p class="text-tagline">Change Patient information if needed</p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("AllPatients", "Patients")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back To List
+                            </a>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm("Edit", "Patients", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(a => a.Id)
+                        @Html.HiddenFor(a => a.IsActive)
+                        @Html.HiddenFor(a => a.CreatedDate)
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.TextBoxFor(model => model.PatientID, new { @class = "form-control", @placeholder = "Name", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(model => model.PatientID, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name" })
+                                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-support"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.RadioButtonFor(m => m.Gender, GenderEnum.Male.ToString(), new { @checked = "checked", @id = "maleId" })  <label for="maleId">Male</label>
+                                            @Html.RadioButtonFor(m => m.Gender, GenderEnum.Female.ToString(), new { @id = "femaleId" }) <label for="femaleId">Female</label>
+                                            @Html.RadioButtonFor(m => m.Gender, GenderEnum.Others.ToString(), new { @id = "othersId" }) <label for="othersId">Others</label>
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control", @placeholder = "Number" } })
+                                            @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Number" } })
+                                            @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1 col-xs-12">
+                                <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                                    <i class="notika-icon notika-file"></i> Update
+                                </button>
+
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

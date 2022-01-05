@@ -1,0 +1,30 @@
+﻿@using HtmlHelpers.BeginCollectionItem;
+@model EPrescribing.Web.Models.DifferentialDiagnosis
+
+@{
+    Layout = null;
+}
+<tr class="odc-differential-row">
+    @using (Html.BeginCollectionItem("DifferentialDiagnosis"))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.PrescriptionId)
+        <td style="text-align: left;">
+            <span class="countRow">@(@Model.No + 1)</span>
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextBoxFor(model => model.DiseaseName, new { @class = "form-control txtDiseaseName", @placeholder = "Disease Name" })
+            </div>
+        </td>
+
+        <td>
+            <input class="hfLast" type="hidden" value="@Model.No" />
+            <button type="button" title="Remove" id="removeDifferentialDiagnosis" class="btn btn-danger danger-icon-notika waves-effect">
+                <i class="notika-icon notika-trash"></i>
+            </button>
+        </td>
+
+
+    }
+</tr>

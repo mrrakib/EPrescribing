@@ -1,0 +1,141 @@
+﻿@model EPrescribing.Web.Models.Doctor
+@{
+    ViewBag.Title = "AccountInfo";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="normal-table-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-form"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Account Settings</h2>
+                                        <p class="text-tagline">Your account info available in system</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("EditAccountInfo",new { id = Model.Id })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-plus-symbol"></i> Edit Account Settings
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+
+                            <div style="text-align:right" class="col-md-4">
+                                Name :
+                            </div>
+                            <div class="col-md-6">
+                                @Model.Name
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+
+                            <div style="text-align:right" class="col-md-4">
+                                CLinic Name :
+                            </div>
+                            <div class="col-md-6">
+                                @Model.ClinicName
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                            <div style="text-align:right" class="col-md-4">
+                                BMDC Refg No :
+                            </div>
+                            <div class="col-md-6">
+                                @Model.BMDCRegistrationNumber
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                            <div style="text-align:right" class="col-md-4">
+
+                                Registered Email Address :
+                            </div>
+
+                            <div class="col-md-6">
+                                @Model.AppUser.Email
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+
+                            <div style="text-align:right" class="col-md-4">
+                                Registered Phone Number :
+                            </div>
+
+                            <div class="col-md-6">
+                                @Model.AppUser.UserName
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                            <div style="text-align:right" class="col-md-4">
+                                You are currently subscribed to :
+                            </div>
+                            <div class="col-md-6">
+                                @if (@Model.Subscription != null)
+                                {
+                                    <span>@Model.Subscription.Name (@Model.Subscription.Description)</span>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (Model.Subscription != null && Model.Subscription.EvaluationPeriodInDay > 0)
+                    {
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+                                <div style="text-align:right" class="col-md-4">
+                                    Subscription Expiry Date :
+                                </div>
+                                <div class="col-md-6">
+                                    @if (DateTime.Now.Date >= Model.SubscriptionExpiredDate)
+                                    {
+                                        <strong style="color:red;">@(Model.SubscriptionExpiredDate?.ToString("dd MMM, yyyy"))</strong>
+                                    }
+                                    else
+                                    {
+                                        <strong>@(Model.SubscriptionExpiredDate?.ToString("dd MMM, yyyy"))</strong>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                            <div style="text-align:right" class="col-md-4">
+                                UPGRADE SUBSCRIPTIONS :
+                            </div>
+                            <div class="col-md-6">
+                                PLEASE CALL- @ViewBag.UpgradeSubscriptionContactNo TO UPGRADE OR CANCEL SUBSCRIPTION
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

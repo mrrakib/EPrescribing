@@ -1,0 +1,102 @@
+﻿@model EPrescribing.Web.Models.Department
+
+@{
+    ViewBag.Title = "Update Department";
+
+}
+
+<div class="Brand-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-edit"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>@ViewBag.Title </h2>
+                                        <p class="text-tagline">@ViewBag.Title information if needed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("Index", "Departments")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back To List
+                            </a>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm("Edit", "Departments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(a => a.Id)
+                        @Html.HiddenFor(a => a.IsActive)
+                        @Html.HiddenFor(a => a.CreatedDate)
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-house"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="fa fa-code"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            <div class="chosen-select-act fm-cmp-mg">
+                                                @Html.DropDownList("CompanyId", null, string.Empty, new { @class = "chosen select-me", @id = "ddlCompanyId", @data_placeholder = "--Company--" })
+                                            </div>
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.CompanyId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1 col-xs-12">
+                                <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                                    <i class="notika-icon notika-file"></i> Update
+                                </button>
+
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

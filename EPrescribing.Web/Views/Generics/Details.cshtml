@@ -1,0 +1,48 @@
+﻿@model EPrescribing.Web.Models.Generic
+
+@{
+    ViewBag.Title = "Generic Details";
+}
+<div class="Disease-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+                    <h4 class="text-tagline">@ViewBag.Title</h4>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.GenericName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.GenericName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedDate)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedDate)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UpdatedDate)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.UpdatedDate)
+                        </dd>
+                    </dl>
+                    <hr />
+                    <p>
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                        @Html.ActionLink("Back to List", "Index")
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

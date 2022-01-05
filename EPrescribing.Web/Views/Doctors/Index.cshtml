@@ -1,0 +1,325 @@
+﻿
+@model PagedList.IPagedList<EPrescribing.Web.Models.Doctor>
+@using PagedList.Mvc;
+@{
+    if (Request.IsAjaxRequest())
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+    ViewBag.Title = "Index";
+    ViewBag.ItemFor = "Doctors";
+
+    int size = 10;
+
+    if (ViewBag.NoOfRows != null)
+    {
+        size = ViewBag.NoOfRows;
+    };
+    int Nopage = 1;
+    if (ViewBag.page != null)
+    {
+        Nopage = ViewBag.page;
+    };
+    int row = size * Nopage;
+    row = row - size;
+}
+<style>
+    .btnActive {
+        color: green;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .btnActive:hover {
+            color: green;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+    .btnInactive {
+        color: red;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .btnInactive:hover {
+            color: red;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+    .btnVerify {
+        color: green;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .btnVerify:hover {
+            color: green;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+
+    .btnNotVerify {
+        color: red;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .btnNotVerify:hover {
+            color: red;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+</style>
+<div class="normal-table-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list">
+
+                    <!--Start Table Header-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-form"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>@ViewBag.ItemFor List</h2>
+                                        <p class="text-tagline">@ViewBag.ItemFor available in system</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <!--End Table Header-->
+                    @using (Ajax.BeginForm("Index", "Doctors", FormMethod.Get, new AjaxOptions
+                    {
+                        UpdateTargetId = "BodyContainer",
+                        InsertionMode = InsertionMode.Replace
+                    }))
+                    {
+
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <table class="table">
+                                    <tr>
+                                        <td width="5%">
+                                            <i class="fa fa-filter" style="margin-right: 5px; color: #aeaeae; font-size: 22px; padding-top: 12px; "></i>
+                                        </td>
+                                        <td width="20%">
+                                            @Html.TextBox("NoOfRows", ViewBag.NoOfRows as string, new { @type = "number", @min = "3", @max = "100", @class = "form-control " })
+                                        </td>
+                                        <td width="65%">
+                                            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control ", placeholder = "Name" })
+                                        </td>
+                                        <td width="10%">
+                                            <button type="submit" class="btn btn-light" style="background-color: #e6e6e6; "><i class="fa fa-search-plus" style="margin-right:5px; color:#808080"></i>Serach</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    }
+
+                    <table class="responsive-table doctortable">
+                        <thead>
+                            <tr class="table-header animated flipInX">
+                                <th class="col-1">SL#</th>
+                                <th class="col-2">
+                                    Number
+                                </th>
+                                <th class="col-3">
+                                    Name
+                                </th>
+                                <th class="col-4">
+                                    School
+                                </th>
+                                <th class="col-5">
+                                    BMDC Reg No
+                                </th>
+                                <th class="col-6">
+                                    Clinic
+                                </th>
+                                <th class="col-7 text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                row++;
+
+                                <tr class="table-row animated flipInX">
+                                    <td class="col col-1" data-label="SL#">@row</td>
+                                    <td class="col col-2" data-label="Contact Number">
+                                        @item.AppUser.UserName
+                                    </td>
+                                    <td class="col col-3" data-label="Name">
+                                        @item.Name
+                                    </td>
+                                    <td class="col col-4" data-label="Name">
+                                        @(item.DentalSchool!=null? item.DentalSchool.Name:"")
+                                    </td>
+                                    <td class="col col-5" data-label="Name">
+
+                                        @if (!string.IsNullOrWhiteSpace(item.BMDCRegistrationNumber) && !item.IsBMDCVerified)
+                                        {
+                                            <span>@item.BMDCRegistrationNumber - </span>
+                                            <span>
+                                                <a style="" myUrl="@Url.Action("VerifyBMDCRegNo", new { id = item.Id,page=Nopage,searchString=ViewBag.CurrentFilter,NoOfRows=ViewBag.NoOfRows })" class="btnNotVerify" title="Recognize" onclick="return VerifyBMDCReg(this)">
+                                                    Un Recognized
+                                                </a>
+                                            </span>
+                                        }
+                                        else if (!string.IsNullOrWhiteSpace(item.BMDCRegistrationNumber) && item.IsBMDCVerified)
+                                        {
+                                            <span>@item.BMDCRegistrationNumber - </span>
+                                            <span>
+                                                <a style="" myUrl="@Url.Action("VerifyBMDCRegNo", new { id = item.Id,page=Nopage,searchString=ViewBag.CurrentFilter,NoOfRows=ViewBag.NoOfRows })" class="btnVerify" title="Un Recognize"  onclick="return VerifyBMDCReg(this)">
+                                                    Recognized
+                                                </a>
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span>@item.BMDCRegistrationNumber</span>
+                                        }
+                                    </td>
+                                    <td class="col col-6" data-label="Clinic">
+                                        @item.ClinicName
+                                    </td>
+                                    <td class="col col-7 text-center button-icon-btn-cl" data-label="Actions">
+                                        @if (item.IsActive)
+                                        {
+                                            <a style="" myUrl="@Url.Action("DeactivateDoctor", new { id = item.Id,page=Nopage,searchString=ViewBag.CurrentFilter,NoOfRows=ViewBag.NoOfRows })" class="btnActive" title="Deactivate" onclick="return DeActivateDoctor(this)">
+                                                Active
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a style="" myUrl="@Url.Action("ActivateDoctor", new { id = item.Id,page=Nopage,searchString=ViewBag.CurrentFilter,NoOfRows=ViewBag.NoOfRows })" class="btnInactive" title="Activate " onclick="return ActivateDoctor(this)">
+                                                InActive
+                                            </a>
+
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="row" style="margin:0px;">
+                        <div class="col-md-12">
+                            <div class="floatright">
+                                @Html.PagedListPager(Model, page => Url.Action("Index",
+                                            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, NoOfRows = ViewBag.NoOfRows }),
+                                                             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "BodyContainer"}))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        
+        $(document).on("click", ".btnActive2", function () {
+            var url = $(this).attr('myUrl');
+                var appUrl = '@System.Configuration.ConfigurationManager.AppSettings["baseurl"]';
+                $.confirm({
+                    title: 'Are you sure to deactivate?',
+                    content: '',
+                    animation: 'scale',
+                    icon: 'fa fa-warning',
+                    type: 'red',
+                    closeIcon: true,
+                    boxWidth: '30%',
+                    useBootstrap: false,
+                    buttons: {
+                        Yes: {
+                            btnClass: 'btn-danger',
+                            action: function () {
+                                window.location.href = appUrl + url;
+                            }
+                        },
+                        No: function () {
+
+                        }
+                    }
+                });
+
+
+            })
+    $(document).on("click", ".btnInactive2", function () {
+            var url = $(this).attr('myUrl');
+                var appUrl = '@System.Configuration.ConfigurationManager.AppSettings["baseurl"]';
+                $.confirm({
+                    title: 'Are you sure to activate?',
+                    content: '',
+                    animation: 'scale',
+                    icon: 'fa fa-warning',
+                    type: 'red',
+                    closeIcon: true,
+                    boxWidth: '30%',
+                    useBootstrap: false,
+                    buttons: {
+                        Yes: {
+                            btnClass: 'btn-danger',
+                            action: function () {
+                                window.location.href = appUrl + url;
+                            }
+                        },
+                        No: function () {
+
+                        }
+                    }
+                });
+
+
+        })
+    $(document).on("click", ".btnVerify2,.btnNotVerify2", function () {
+
+            var url = $(this).attr('myUrl');
+                var appUrl = '@System.Configuration.ConfigurationManager.AppSettings["baseurl"]';
+                $.confirm({
+                    title: 'Are you sure?',
+                    content: '',
+                    animation: 'scale',
+                    icon: 'fa fa-warning',
+                    type: 'red',
+                    closeIcon: true,
+                    boxWidth: '30%',
+                    useBootstrap: false,
+                    buttons: {
+                        Yes: {
+                            btnClass: 'btn-danger',
+                            action: function () {
+                                window.location.href = appUrl + url;
+                            }
+                        },
+                        No: function () {
+
+                        }
+                    }
+                });
+
+
+        })
+    </script>
+}
+
+

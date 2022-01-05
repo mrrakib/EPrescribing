@@ -1,0 +1,54 @@
+﻿@model EPrescribing.Web.ViewModels.VMChangeMobileNo
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("SubmitMobileNoOtp", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @onSubmit = "return SubmitMobileNoOtp(this)", @class = "form-horizontal", role = "form" }))
+{
+    <div class="wizard-hd">
+        <div class="breadcomb-wp">
+            <div class="breadcomb-icon">
+                <i class="notika-icon notika-social"></i>
+            </div>
+            <div class="breadcomb-ctn">
+                <h2>Change Pnone Number</h2>
+                <p class="text-tagline">Please fill up carefully.</p>
+            </div>
+        </div>
+
+    </div>
+    @Html.HiddenFor(model => model.DoctorId, new { @id = "doctorId" });
+    @Html.HiddenFor(model => model.CurrentMobileNo, new { @id = "doctorId" });
+    @Html.HiddenFor(model => model.MobileNo, new { @id = "doctorId" });
+    @Html.HiddenFor(model => model.ConfirmMobileNo, new { @id = "doctorId" });
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4 text-right">
+                <label style="margin-top:10px;">New Number</label>
+            </div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.MobileNo, new { @readonly = "readonly", @class = "form-control", @placeholder = "" })
+                @Html.ValidationMessageFor(m => m.MobileNo, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4 text-right">
+                <label style="margin-top:10px;">OTP</label>
+            </div>
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.MobileNoOtp, new { @required = "required", @id = "txtMobileNoOtp", @class = "form-control", @placeholder = "" })
+                @Html.ValidationMessageFor(m => m.MobileNoOtp, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 material-design-btn text-center my-2">
+            <button type="submit" class="btn notika-btn-cyan waves-effect">
+                <i class="notika-icon notika-checked"></i> Save
+            </button>
+        </div>
+    </div>
+}

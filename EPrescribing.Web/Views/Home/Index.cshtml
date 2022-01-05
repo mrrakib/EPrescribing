@@ -1,0 +1,931 @@
+﻿@using EPrescribing.Web.Models;
+@using EPrescribing.Web.Helpers;
+@using EPrescribing.Web.ViewModels;
+
+@model EPrescribing.Web.ViewModels.VMHomeIndex
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    AboutSection about = Model.AboutSection;
+    WorkProcess work = Model.WorkProcess;
+    ServiceMainSection mainService = Model.ServiceMain;
+    List<SingleServiceSection> serviceList = Model.ServiceList;
+    TeamMainSection teamMain = Model.TeamMainSection;
+    List<TeamMember> teamMembers = Model.TeamMembers;
+    List<ContactSection> contactSections = Model.ContactSections;
+    VMStatistics statistics = Model.statistics;
+}
+
+@if (User.GETDOCTORID() > 0)
+{
+    <div class="normal-table-area">
+        <div class="container">
+            <div class="row" style="margin-bottom: 2%">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow">
+                        <div class="website-traffic-ctn">
+                            <h2>
+                                @if (statistics != null)
+                                {
+                                    <span class="counter">@statistics.TodayTotalPaidAmount</span>
+                                }
+                                else
+                                {
+                                    <span class="counter">0</span>
+                                }
+                                Tk
+                            </h2>
+                            <p>Todays Paid</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow">
+                        <div class="website-traffic-ctn">
+                            <h2>
+                                @if (statistics != null)
+                                {
+                                    <span class="counter">@statistics.TodayTotalDueAmount</span>
+                                }
+                                else
+                                {
+                                    <span class="counter">0</span>
+                                }
+                                Tk
+                            </h2>
+                            <p>Todays Due</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30">
+                        <div class="website-traffic-ctn">
+                            <h2>
+                                @if (statistics != null)
+                                {
+                                    <span class="counter">@statistics.TotalPaidAmount</span>
+                                }
+                                else
+                                {
+                                    <span class="counter">0</span>
+                                }
+                                Tk
+                            </h2>
+                            <p>Total Paid</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30">
+                        <div class="website-traffic-ctn">
+                            <h2>
+                                @if (statistics != null)
+                                {
+                                    <span class="counter">@statistics.TotalDueAmount</span>
+                                }
+                                else
+                                {
+                                    <span class="counter">0</span>
+                                }
+                                Tk
+                            </h2>
+                            <p>Total Due</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 2%">
+                <div class="col-lg-6 col-md-3 col-sm-12">
+                    <div class="bar-chart-wp">
+                        <canvas height="140vh" width="180vw" id="todayPaidDue"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-3 col-sm-12">
+                    <div class="bar-chart-wp">
+                        <canvas height="140vh" width="180vw" id="monthlyPaidDue"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="bar-chart-wp">
+                        <canvas height="140vh" width="180vw" id="barchart5"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <!-- ABOUT_SECTION AREA  -->
+    if (Model != null && about != null)
+    {
+        <div class="witr_about_area" id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 col-md-12 col-sm-12">
+                        @if (Model != null && about != null && !string.IsNullOrEmpty(about.ImagePath))
+                        {
+                            <img src="@Url.Content(about.ImagePath)" alt="">
+                        }
+                        else
+                        {
+                            <img src="~/frontassets/images/about.png" alt="">
+                        }
+                    </div>
+                    <div class="col-lg-7 col-md-12 col-sm-12">
+                        <div class="witr_text_widget">
+                            <div class="witr_text_widget_inner">
+                                <!-- text top -->
+                                <h1>
+                                    <span>
+                                        @if (Model != null && about != null && !string.IsNullOrEmpty(about.TopTitle))
+                                        {
+                                            <span>@about.TopTitle</span>
+                                        }
+                                        else
+                                        {
+                                            <span>About Us</span>
+                                        }
+
+                                    </span>
+                                </h1>
+                                <!-- text middle -->
+                                <h3>
+                                    @if (Model != null && about != null && !string.IsNullOrEmpty(about.MainTitle))
+                                    {
+                                        <span>@about.MainTitle</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Discover the Great Benefits of Our Choose !</span>
+                                    }
+
+                                </h3>
+                                <!-- content -->
+                                <p>
+                                    @if (Model != null && about != null && !string.IsNullOrEmpty(about.Description))
+                                    {
+                                        <span>@about.Description</span>
+                                    }
+                                    else
+                                    {
+                                        <span>
+                                            The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures.
+                                        </span>
+                                    }
+
+                                </p>
+                            </div>
+                            <div class="em-service2 sleft ">
+                                <div class="em_service_content ">
+                                    <div class="em_single_service_text">
+                                        <div class="text_box">
+                                            <div class="service_top_text all_icon_color">
+                                                <div class="em-service-icon">
+                                                    @if (Model != null && about != null && !string.IsNullOrEmpty(about.ListOneIcon))
+                                                    {
+                                                        <i class="icofont-@about.ListOneIcon"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="icofont-recycle"></i>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                            <div class="em-service-inner">
+                                                <div class="em-service-title">
+                                                    @if (Model != null && about != null)
+                                                    {
+                                                        <h3>
+                                                            @about.ListOneTitle
+                                                        </h3>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h3>
+                                                            Affordable & Reliable
+                                                        </h3>
+                                                    }
+
+                                                </div>
+                                                <div class="em-service-desc">
+                                                    @if (Model != null && about != null)
+                                                    {
+                                                        <p>@about.ListOneDescription </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Lorem ipsum dolor sit amen, consectetuer adipescent alit, seed dam nonarmy. </p>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="em-service2 sleft ">
+                                <div class="em_service_content ">
+                                    <div class="em_single_service_text">
+                                        <div class="text_box">
+                                            <div class="service_top_text all_icon_color">
+                                                <div class="em-service-icon">
+                                                    @if (Model != null && about != null && !string.IsNullOrEmpty(about.ListSecondIcon))
+                                                    {
+                                                        <i class="icofont-@about.ListSecondIcon"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="icofont-tags"></i>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="em-service-inner">
+                                                <div class="em-service-title">
+                                                    @if (Model != null && about != null)
+                                                    {
+                                                        <h3>
+                                                            @about.ListSecondTitle
+                                                        </h3>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h3>24/7 Care</h3>
+                                                    }
+                                                </div>
+                                                <div class="em-service-desc">
+                                                    @if (Model != null && about != null)
+                                                    {
+                                                        <p>@about.ListSecondDescription </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Lorem ipsum dolor sit amen, consectetuer adipescent alit, seed dam nonarmy. </p>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- END ABOUT_SECTION AREA  -->
+    <!--process_area-->
+    if (Model != null && work != null && !string.IsNullOrEmpty(work.TopTitle))
+    {
+        <div class="cleanmaster_process_area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="witr_section_title">
+                            <div class="witr_section_title_inner text-center">
+                                <h2>@work.TopTitle</h2>
+                                <h3>@work.MainTitle</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="inner_cleanmaster_process-area">
+                    <div class="row cleanmaster_top">
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="service-item service-item2 text-center">
+                                <div class="text_box all_icon_color">
+                                    <i class="icofont-@work.ProcessOneIcon"></i>
+                                    <h3>@work.ProcessOneTitle </h3>
+                                    <p>@work.ProcessOneDesc </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="service-item service-item2 text-center">
+                                <div class="text_box all_icon_color">
+                                    <i class="icofont-@work.ProcessTwoIcon"></i>
+                                    <h3>@work.ProcessTwoTitle</h3>
+                                    <p>@work.ProcessTwoDesc </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="service-item service-item2 text-center">
+                                <div class="text_box all_icon_color">
+                                    <i class="icofont-@work.ProcessThreeIcon"></i>
+                                    <h3>@work.ProcessThreeTitle</h3>
+                                    <p>@work.ProcessThreeDesc </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    
+    <!--end process_area-->
+    <!-- service_area	 -->
+    if (Model != null && mainService != null && !string.IsNullOrEmpty(mainService.TopTitle))
+    {
+        <div class="cleanmaster_service_area" id="service">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="witr_section_title">
+                            <div class="witr_section_title_inner witr_section_title_inner2 text-center">
+                                <h2>@mainService.TopTitle</h2>
+                                <h3>@mainService.MainTitle</h3>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cleanmaster_top">
+                    @if (serviceList != null && serviceList.Count > 0)
+                    {
+                        foreach (var service in serviceList)
+                        {
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="service-item service-item3 text-center">
+                                    <div class="text_box all_icon_color">
+                                        <i class="icofont-@service.Icon"></i>
+                                        <h3>@service.Title  </h3>
+                                        <p>@service.Description </p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="service-item service-item3 text-center">
+                                <div class="text_box all_icon_color">
+                                    <i class="icofont-home"></i>
+                                    <h3>House Clean  </h3>
+                                    <p>We provide janitorial and specialized is ing services for all types and sizes. </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="service-item service-item3 text-center">
+                                <div class="text_box all_icon_color">
+                                    <i class="icofont-flora"></i>
+                                    <h3>Floor Cleaning</h3>
+                                    <p>We provide janitorial and specialized is ing services for all types and sizes. </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="service-item service-item3 text-center">
+                                <div class="text_box all_icon_color">
+                                    <i class="icofont-brand-windows"></i>
+                                    <h3>Window Cleaning</h3>
+                                    <p>We provide janitorial and specialized is ing services for all types and sizes. </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    
+
+    <!-- end service_area	 -->
+    <!-- team_area -->
+    if (Model != null && teamMain != null && !string.IsNullOrEmpty(teamMain.TopTitle))
+    {
+        <div class="cleanmaster_team_area">
+            <div class="container">
+                <div class="row">
+                    <div class=" col-lg-12">
+                        <div class="witr_section_title">
+                            <div class="witr_section_title_inner text-center">
+                                <h2>@teamMain.TopTitle</h2>
+                                <h3>@teamMain.MainTitle</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row cleanmaster_top">
+                    @if (teamMembers != null && teamMembers.Count > 0)
+                    {
+                        foreach (var member in teamMembers)
+                        {
+                            <div class=" col-lg-4 col-md-6 col-sm-12">
+                                <div class="team-part all_color_team">
+                                    <div class="witr_team_sec_3">
+                                        @if (!string.IsNullOrEmpty(member.ImagePath))
+                                        {
+                                            <img src="@Url.Content(member.ImagePath)" alt="" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/frontassets/images/team-1.jpg" alt="" />
+                                        }
+
+                                        <div class="witr_team_content3 text-center all_team_icon_o_color">
+                                            <h5>@member.Name </h5>
+                                            <span>@member.Designation </span>
+                                            <p>@member.Description </p>
+                                            <ul class="witr_pots_team_s">
+                                                <li>
+                                                    @if (!string.IsNullOrEmpty(member.Facebook))
+                                                    {
+                                                        <a href="@member.Facebook"><i class="icofont-facebook"></i></a>
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(member.Twitter))
+                                                    {
+                                                        <a href="@member.Twitter"><i class="icofont-twitter"></i></a>
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(member.Tumblr))
+                                                    {
+                                                        <a href="@member.Tumblr"><i class="icofont-tumblr"></i></a>
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(member.Vimeo))
+                                                    {
+                                                        <a href="@member.Vimeo"><i class="icofont-vimeo"></i></a>
+                                                    }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="team-social all_team_s_color all_icon_bg_color">
+                                            <ul class="witr_pots_team_s">
+                                                <li>
+                                                    @if (!string.IsNullOrEmpty(member.Facebook))
+                                                    {
+                                                        <a href="@member.Facebook"><i class="icofont-facebook"></i></a>
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(member.Twitter))
+                                                    {
+                                                        <a href="@member.Twitter"><i class="icofont-twitter"></i></a>
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(member.Tumblr))
+                                                    {
+                                                        <a href="@member.Tumblr"><i class="icofont-tumblr"></i></a>
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(member.Vimeo))
+                                                    {
+                                                        <a href="@member.Vimeo"><i class="icofont-vimeo"></i></a>
+                                                    }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+                    else
+                    {
+                        <div class=" col-lg-4 col-md-6 col-sm-12">
+                            <div class="team-part all_color_team">
+                                <div class="witr_team_sec_3">
+                                    <img src="~/frontassets/images/team-1.jpg" alt="" />
+                                    <div class="witr_team_content3 text-center all_team_icon_o_color">
+                                        <h5>Energy Mintu </h5>
+                                        <span>Founder </span>
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. </p>
+                                        <ul class="witr_pots_team_s">
+                                            <li>
+                                                <a href="#"><i class="icofont-facebook"></i></a>
+                                                <a href="#"><i class="icofont-twitter"></i></a>
+                                                <a href="#"><i class="icofont-tumblr"></i></a>
+                                                <a href="#"><i class="icofont-vimeo"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="team-social all_team_s_color all_icon_bg_color">
+                                        <ul class="witr_pots_team_s">
+                                            <li>
+                                                <a href="#"><i class="icofont-facebook"></i></a>
+                                                <a href="#"><i class="icofont-twitter"></i></a>
+                                                <a href="#"><i class="icofont-tumblr"></i></a>
+                                                <a href="#"><i class="icofont-vimeo"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-lg-4 col-md-6 col-sm-12">
+                            <div class="team-part all_color_team">
+                                <div class="witr_team_sec_3">
+                                    <img src="~/frontassets/images/team-2.jpg" alt="" />
+                                    <div class="witr_team_content3 text-center all_team_icon_o_color">
+                                        <h5>Patrick Griffin</h5>
+                                        <span>Senior Cleaner </span>
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. </p>
+                                        <ul class="witr_pots_team_s">
+                                            <li>
+                                                <a href="#"><i class="icofont-facebook"></i></a>
+                                                <a href="#"><i class="icofont-twitter"></i></a>
+                                                <a href="#"><i class="icofont-tumblr"></i></a>
+                                                <a href="#"><i class="icofont-vimeo"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="team-social all_team_s_color all_icon_bg_color">
+                                        <ul class="witr_pots_team_s">
+                                            <li>
+                                                <a href="#"><i class="icofont-facebook"></i></a>
+                                                <a href="#"><i class="icofont-twitter"></i></a>
+                                                <a href="#"><i class="icofont-tumblr"></i></a>
+                                                <a href="#"><i class="icofont-vimeo"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=" col-lg-4 col-md-6 col-sm-12">
+                            <div class="team-part all_color_team">
+                                <div class="witr_team_sec_3">
+                                    <img src="~/frontassets/images/team-3.jpg" alt="" />
+                                    <div class="witr_team_content3 text-center all_team_icon_o_color">
+                                        <h5>Sabiya Sultan </h5>
+                                        <span>Cleaner </span>
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy. </p>
+                                        <ul class="witr_pots_team_s">
+                                            <li>
+                                                <a href="#"><i class="icofont-facebook"></i></a>
+                                                <a href="#"><i class="icofont-twitter"></i></a>
+                                                <a href="#"><i class="icofont-tumblr"></i></a>
+                                                <a href="#"><i class="icofont-vimeo"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="team-social all_team_s_color all_icon_bg_color">
+                                        <ul class="witr_pots_team_s">
+                                            <li>
+                                                <a href="#"><i class="icofont-facebook"></i></a>
+                                                <a href="#"><i class="icofont-twitter"></i></a>
+                                                <a href="#"><i class="icofont-tumblr"></i></a>
+                                                <a href="#"><i class="icofont-vimeo"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+    
+    <!-- end team_area -->
+    <!-- cleanmaster_service_content_area -->
+
+    if (Model != null && contactSections != null && contactSections.Count > 0)
+    {
+        <div class="cleanmaster_service_content_area" id="contact">
+            <div class="container">
+                <div class="row">
+                    <div class="cleanmaster_top col-lg-12 col-md-12 col-sm-12">
+                        @foreach (var contact in contactSections)
+                        {
+                            <div class="em-service2 sleft all_color_service">
+                                <div class="em_service_content">
+                                    <div class="em_single_service_text">
+                                        <div class="text_box">
+                                            <div class="service_top_text all_icon_color">
+                                                <div class="em-service-icon">
+                                                    <i class="icofont-@contact.Icon"></i>
+
+                                                </div>
+                                            </div>
+                                            <div class="em-service-inner">
+                                                <div class="em-service-title">
+                                                    <h3>@contact.Title </h3>
+
+                                                </div>
+                                                <div class="em-service-desc">
+                                                    @if (!string.IsNullOrEmpty(contact.Address))
+                                                    {
+                                                        <p>@contact.Address</p>
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(contact.PhoneNo1))
+                                                    {
+                                                        <p>@contact.PhoneNo1</p>
+                                                        if (!string.IsNullOrEmpty(contact.PhoneNo2))
+                                                        {
+                                                            <p>@contact.PhoneNo2</p>
+                                                        }
+                                                    }
+                                                    else if (!string.IsNullOrEmpty(contact.Email1))
+                                                    {
+                                                        <p>@contact.Email1</p>
+                                                        if (!string.IsNullOrEmpty(contact.Email2))
+                                                        {
+                                                            <p>@contact.Email2</p>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="cleanmaster_service_content_area" id="contact">
+            <div class="container">
+                <div class="row">
+                    <div class=" col-lg-12">
+                        <div class="witr_section_title">
+                            <div class="witr_section_title_inner text-center">
+                                <h3>Contact Information</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="cleanmaster_top col-lg-12 col-md-12 col-sm-12">
+                        <div class="em-service2 sleft all_color_service">
+                            <div class="em_service_content">
+                                <div class="em_single_service_text">
+                                    <div class="text_box">
+                                        <div class="service_top_text all_icon_color">
+                                            <div class="em-service-icon">
+                                                <i class="icofont-location-pin"></i>
+
+                                            </div>
+                                        </div>
+                                        <div class="em-service-inner">
+                                            <div class="em-service-title">
+                                                <h3>Office Location </h3>
+
+                                            </div>
+                                            <div class="em-service-desc">
+                                                <p> Riverside Building, County Hall, Bishop's, London SE1 7PB, United Kingdom </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="em-service2 sleft all_color_service">
+                            <div class="em_service_content ">
+                                <div class="em_single_service_text">
+                                    <div class="text_box">
+                                        <div class="service_top_text all_icon_color">
+                                            <div class="em-service-icon">
+                                                <i class="icofont-phone"></i>
+
+                                            </div>
+                                        </div>
+                                        <div class="em-service-inner">
+                                            <div class="em-service-title">
+                                                <h3>Phone Number</h3>
+
+                                            </div>
+                                            <div class="em-service-desc">
+                                                <p>+ (786) 1234-567-8900</p>
+                                                <p>+ (786) 1234-567-8901 </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="em-service2 sleft all_color_service">
+                            <div class="em_service_content ">
+                                <div class="em_single_service_text">
+                                    <div class="text_box">
+                                        <div class="service_top_text all_icon_color">
+                                            <div class="em-service-icon">
+                                                <i class="icofont-email"></i>
+                                            </div>
+                                        </div>
+                                        <div class="em-service-inner">
+                                            <div class="em-service-title">
+                                                <h3>Office Location </h3>
+
+                                            </div>
+                                            <div class="em-service-desc">
+                                                <p>demo@example.com </p>
+                                                <p>info@example.com </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <!-- end cleanmaster_service_content_area -->
+}
+
+@section Scripts {
+    <script>
+        (function ($) {
+            "use strict";
+
+            /*----------------------------------------*/
+            /*  6.  Today Paid vs Due
+            /*----------------------------------------*/
+            var ctx = document.getElementById("todayPaidDue");
+            var todayPaidDue = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Today"],
+                    datasets: [{
+                        label: 'Paid',
+                        data: [@statistics.TodayTotalPaidAmount, 0],
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                        ],
+                    }, {
+                        label: 'Due',
+                        data: [@statistics.TodayTotalDueAmount],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Paid vs Due (Daily)'
+                    }
+                }
+            });
+
+
+            /*----------------------------------------*/
+            /*  7.  Monthly Paid vs Due
+            /*----------------------------------------*/
+            var ctx = document.getElementById("monthlyPaidDue");
+            var monthlyPaidDue = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["This Month"],
+                    datasets: [{
+                        label: 'Paid',
+                        data: [@statistics.CurrentMonthPaid, 0],
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgb(50,205,50, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                        ],
+                    }, {
+                        label: 'Due',
+                        data: [@statistics.CurrentMonthDue],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Paid vs Due (Monthly)'
+                    }
+                }
+            });
+
+            /*----------------------------------------*/
+            /*  5.  Paid vs Due
+            /*----------------------------------------*/
+            var ctx = document.getElementById("barchart5");
+            var barchart5 = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                        label: 'Paid',
+                        data: [@statistics.YearlyPaid],
+                        borderWidth: 1,
+                        backgroundColor: [
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                            'rgb(50,205,50, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 162, 235, 1)',
+                        ],
+                    }, {
+                        label: 'Due',
+                        data: [@statistics.YearlyDue],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                            'rgba(255,99,132,1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Paid vs Due'
+                    }
+                }
+            });
+
+        })(jQuery);
+    </script>
+}

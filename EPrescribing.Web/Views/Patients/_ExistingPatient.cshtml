@@ -1,0 +1,83 @@
+﻿@model List<EPrescribing.Web.ViewModels.VMExistingPatient>
+
+@{
+    ViewBag.Title = "Patient";
+    Layout = null;
+    int count = 0;
+}
+
+<div class="col-md-12 col-xs-12">
+    @if (Model != null && Model.Any())
+    {
+        using (Html.BeginForm("AddEditPrescriptionHistory", "Prescriptions", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row middle patients">
+                @foreach (var item in Model)
+                {
+                    @Html.Hidden("TretmentDate", item.TretmentDate.ToString("dd/MM/yyyy"), new { @id = "existingTrearmentDate" })
+                    @Html.Hidden("isContinueWithPrescription", false, new { @id = "isContinueWithPrescriptionId" })
+                    count++;
+
+                    <label class="col-md-6 col-sm-12 col-xs-12 text-center patientBox">
+
+                        <input type="radio" name="PatientIntId" value="@item.PatientIntId" />
+                        <div class="front-end box">
+                            <table>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>:</th>
+                                    <td class="font-caps">@item.Name</td>
+                                </tr>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.First().Gender)</th>
+                                    <th>:</th>
+                                    <td class="font-caps">@item.Gender</td>
+                                </tr>
+                                <tr>
+                                    <th>Age</th>
+                                    <th>:</th>
+                                    <td>@item.Age</td>
+                                </tr>
+                                <tr>
+                                    <th>Last Seen On</th>
+                                    <th>:</th>
+                                    <td>@item.LastSeenDate</td>
+                                </tr>
+                                <tr>
+                                    <th>Patient ID</th>
+                                    <th>:</th>
+                                    <td>@item.PatientID</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </label>
+                }
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <button disabled type="button" id="btnContinueWithOldText" class="btn btn-info btn-icon-notika waves-effect smallCaps floatright btnSearch">
+                        <i class="notika-icon notika-file"></i> <span id="continueWithOldText">Continue With Previous Prescription</span>
+                    </button>
+                    <button disabled type="submit" id="btnGetPatient" class="btn btn-info btn-icon-notika waves-effect smallCaps floatright btnSearch">
+                        <i class="notika-icon notika-file"></i> <span id="continueText">Please Select</span>
+                    </button>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <strong style="margin-left: 10%;">The patient's not found!</strong>
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#btnContinueWithOldText').click(function () {
+            $('#isContinueWithPrescriptionId').val(true);
+
+            $("form").submit();
+        });
+    })
+</script>

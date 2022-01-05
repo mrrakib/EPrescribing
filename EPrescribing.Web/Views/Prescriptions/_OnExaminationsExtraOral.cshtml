@@ -1,0 +1,31 @@
+﻿@using HtmlHelpers.BeginCollectionItem;
+@model EPrescribing.Web.Models.OnExamination
+
+@{
+    Layout = null;
+}
+<tr>
+    @using (Html.BeginCollectionItem("OnExaminations"))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.PrescriptionId)
+        <td style="text-align: left;">
+            <span class="countRow">@(@Model.No + 1)</span>
+        </td>
+        <td>
+            <div class="nk-int-st">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "", @rows = "3" })
+                @Html.HiddenFor(model => model.Status)
+            </div>
+        </td>
+
+        <td>
+            <input class="hfLast" type="hidden" value="@Model.No" />
+            <button type="button" title="Remove" id="removeOnExaminationsExtraOral" class="btn btn-danger danger-icon-notika waves-effect">
+                <i class="notika-icon notika-trash"></i>
+            </button>
+        </td>
+
+
+    }
+</tr>

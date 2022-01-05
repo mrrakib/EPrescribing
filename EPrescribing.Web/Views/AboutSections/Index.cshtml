@@ -1,0 +1,226 @@
+﻿@model EPrescribing.Web.Models.AboutSection
+@{
+    ViewBag.Title = "Add About";
+
+}
+<div class="Medicine-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-plus-symbol"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>About Section</h2>
+                                        <p class="text-tagline">Entry about section data</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm("Index", "AboutSections", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("ListOneIcon", "tooth")
+                        @Html.Hidden("ListSecondIcon", "tags")
+                        @Html.HiddenFor(a => a.Id)
+                        @Html.HiddenFor(a => a.IsActive)
+                        @Html.HiddenFor(a => a.ImagePath)
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.TopTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Top Title" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.TopTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.MainTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Main tagline" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.MainTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Description", @rows = "5" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.ListOneTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "List one title" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ListOneTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.ListSecondTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "List second title" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ListSecondTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.TextAreaFor(model => model.ListOneDescription, new { @class = "form-control", @placeholder = "List one description", @rows = "5" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ListOneDescription, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.TextAreaFor(model => model.ListSecondDescription, new { @class = "form-control", @placeholder = "List second description", @rows = "5" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ListSecondDescription, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-icon-pro"></i>
+                                        </div>
+                                        <div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
+                                            <h2>Image</h2>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            <div class="fm-cmp-mg">
+                                                <div style="position:absolute"><div style="position: absolute; left:60px;top:-9px"><a class="fa fa-paperclip logoUploader" style=""></a></div></div>
+                                                @if (string.IsNullOrWhiteSpace(Model.ImagePath))
+                                                {
+                                                    <img src="@Url.Content("~/Content/images/noImage.jpg")" class="about-pic" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="@Url.Content(Model.ImagePath)" class="about-pic" />
+                                                }
+                                                <input class="file-upload" type="file" accept="image/*" style="display:none" id="image" name="image" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1 col-xs-12">
+                                <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                                    <i class="notika-icon notika-file"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    var ValidImageTypes = ["image/gif", "image/jpeg", "image/jpg", "image/png"];
+                    debugger;
+                    if ($.inArray(input.files[0].type, ValidImageTypes) < 0) {
+                        alert('Please select an image file only.');
+                    }
+                    else {
+
+                        var dd = input.files[0].type;
+                        var fileSize = input.files[0].size;
+                        if (fileSize > 2000000) {
+                            alert('Image size cannot be greater than 2 MB.');
+                        }
+                        else {
+                            reader.onload = function (e) {
+                                $('.about-pic').attr('src', e.target.result);
+                            }
+
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+                }
+            }
+
+            $(".file-upload").on('change', function () {
+                readURL(this);
+            });
+
+            $(".logoUploader").on('click', function () {
+                $(".file-upload").click();
+            });
+        });
+    </script>
+}

@@ -1,0 +1,179 @@
+﻿
+@model PagedList.IPagedList<EPrescribing.Web.ViewModels.VMPatientRecord>
+@using PagedList.Mvc;
+@{
+    if (Request.IsAjaxRequest())
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+    ViewBag.Title = "Index";
+
+    int size = 10;
+
+    if (ViewBag.NoOfRows != null)
+    {
+        size = ViewBag.NoOfRows;
+    };
+    int Nopage = 1;
+    if (ViewBag.page != null)
+    {
+        Nopage = ViewBag.page;
+    };
+    int row = size * Nopage;
+    row = row - size;
+}
+
+<style>
+    #formTreatmentRecords {
+        display: inline;
+    }
+</style>
+<div class="normal-table-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list">
+
+                    <!--Start Table Header-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-form"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Patients Records</h2>
+                                        <p class="text-tagline">List of patients records available in system</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("Create", "Patients")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-plus-symbol"></i> Write Prescription
+                            </a>
+                        </div>
+                    </div>
+
+                    <!--End Table Header-->
+
+                    @using (Ajax.BeginForm("Index", "Patients", FormMethod.Get, new AjaxOptions
+                    {
+                        UpdateTargetId = "BodyContainer",
+                        InsertionMode = InsertionMode.Replace
+                    }))
+                    {
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <tr>
+                                        <td width="5%">
+                                            <i class="fa fa-filter" style="margin-right: 5px; color: #aeaeae; font-size: 22px; padding-top: 12px; "></i>
+                                        </td>
+                                        <td width="20%">
+                                            @Html.TextBox("NoOfRows", ViewBag.NoOfRows as string, new { @type = "number", @min = "3", @max = "100", @class = "form-control " })
+                                        </td>
+                                        <td width="45%">
+                                            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control ", placeholder = "Name" })
+                                        </td>
+                                        <td width="20%">
+                                            @Html.DropDownList("SearchStatus", null, new { @class = "form-control " })
+                                        </td>
+                                        <td width="10%">
+                                            <button type="submit" class="btn btn-light" style="background-color: #e6e6e6; "><i class="fa fa-search-plus" style="margin-right:5px; color:#808080"></i>Serach</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-sm-12">
+                        <table class="responsive-table tblPatientRecords">
+                            <thead>
+                                <tr class="table-header animated flipInX col-md-12">
+                                    <th class="col-1" style="width:2%;">#</th>
+                                    <th class="col-2">Name</th>
+                                    <th class="col-3">Number</th>
+                                    <th class="col-4">Next Visit</th>
+                                    <th class="col-5">Patient ID</th>
+                                    <th class="col-6">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    row++;
+                                    <tr class="table-row animated flipInX col-md-12 data-row odc-bg-row">
+                                        <td class="col col-1" style="width:2%;" data-label="#">@row</td>
+
+
+                                        <td class="col col-2" data-label="Name">@item.PatientName (@item.Age)</td>
+                                        <td class="col col-3" data-label="Number">@item.MobileNo</td>
+                                        <td class="col col-4" data-label="Next Visit">@item.NextVisitDate</td>
+                                        <td class="col col-5" data-label="Patient ID">@item.PatientStringID</td>
+                                        <td class="col col-6" data-label="Date">@item.Date.ToString("dd MMM, yyyy")</td>
+                                        
+                                    </tr>
+                                    <tr class="table-row animated flipInX col-md-12 tbl-actions material-design-btn">
+                                        <td class="col text-center full-col" data-label="Actions">
+
+                                            @if (item.Status == "H")
+                                            {
+                                                <a href="@Url.Action("EditPrescriptionExamination","Prescriptions" ,new { id = item.PrescriptionId })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect btn-xs">
+                                                    Incomplete (History)
+                                                </a>
+                                            }
+                                            @if (item.Status == "E")
+                                            {
+                                                <a href="@Url.Action("EditPrescriptionDone","Prescriptions" ,new { id = item.PrescriptionId })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect btn-xs">
+                                                    Incomplete (Examination)
+                                                </a>
+                                            }
+                                            <a href="@Url.Action("Preview","Prescriptions" ,new { prescriptionId = item.PrescriptionId })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect btn-xs">
+                                                Preview
+                                            </a>
+                                            @using (Html.BeginForm("PastTreatmentDone", "Prescriptions", FormMethod.Post, new { @id = "formTreatmentRecords", role = "form" }))
+                                            {
+                                                <input hidden name="patientId" value="@item.PatientId" />
+                                                <button type="submit" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect btn-xs">Treatment Records</button>
+                                            }
+                                            <a href="@Url.Action("Patients","Payments" ,new { patientId = item.PatientId })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect btn-xs">
+                                                Payments
+                                            </a>
+                                            @if (item.Status == "H" || item.Status == "E")
+                                            {
+                                                <a onclick="return DeleteItem(this)"  class="btn notika-btn-red waves-effect delBtn" deleteUrl="@Url.Action("Delete","Patients")/@item.PrescriptionId">
+                                                    <i class="notika-icon notika-trash"> Delete</i>
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row" style="margin:0px;">
+                        <div class="col-md-12">
+                            <div class="floatright">
+                                @Html.PagedListPager(Model, page => Url.Action("Index",
+                                            new { page, sortOrder = ViewBag.CurrentSort, SearchStatus = ViewBag.SearchStatusId, currentFilter = ViewBag.CurrentFilter, NoOfRows = ViewBag.NoOfRows }),
+                                                             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "BodyContainer"}))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

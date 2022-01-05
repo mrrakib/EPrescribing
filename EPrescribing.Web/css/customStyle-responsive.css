@@ -1,0 +1,573 @@
+﻿@media (min-width: 992px) and (max-width: 1169px) {
+
+    ul.prbPosition li input[type=checkbox] {
+        width: 25px;
+        height: 25px;
+    }
+
+    /*Styles for problem positions*/
+    ul.prbPosition li input[type=checkbox] {
+        width: 20px;
+        height: 20px;
+    }
+
+    ul.prbPosition {
+        list-style: none;
+        position: relative
+    }
+
+        ul.prbPosition li {
+            float: left;
+        }
+
+            ul.prbPosition li.bottomRight {
+                left: 33px;
+            }
+
+            ul.prbPosition li.bottomLeft {
+                position: absolute;
+                content: "";
+                top: 25px;
+                left: 0;
+            }
+
+            ul.prbPosition li.upLeft {
+                position: absolute;
+                content: "";
+                top: -12px;
+                left: 0;
+            }
+
+            ul.prbPosition li.upRight {
+                position: absolute;
+                content: "";
+                top: -12px;
+                left: 25%;
+            }
+
+        ul.prbPosition::before {
+            content: "";
+            position: absolute;
+            top: 21px;
+            border: 1px solid #000;
+            width: 55%;
+            left: -11px;
+        }
+
+        ul.prbPosition::after {
+            top: 20px;
+            width: 54%;
+            left: -7px;
+        }
+
+        /*End accordion*/
+        /*Examination positioning*/
+        ul.prbPosition.odc-examination li.bottomRight {
+            top: 18px;
+            left: 42%;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination li.bottomLeft {
+            top: 18px;
+            left: 7%;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination li.upLeft {
+            top: -25px;
+            left: 7%;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination li.upRight {
+            top: -25px;
+            left: 42%;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination::before {
+            width: 73%;
+        }
+
+        ul.prbPosition.odc-examination::after {
+            width: 44%;
+            left: 18%;
+        }
+    /*End examination*/
+
+    /*Login*/
+    .nk-navigation.odc-login a.odc-alternate-login.email-login {
+        width: 30%;
+    }
+    /*End Login*/
+
+    /*For subscribed index*/
+    .responsive-table.subscribed .table-header {
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+    /*End subscribed*/
+
+    /* Preview */
+    .previewChief table {
+        
+    }
+    /* End Preview */
+
+}
+
+
+/* Tablet desktop :768px. */
+@media (min-width: 768px) and (max-width: 991px) {
+
+    /*Mobile menu broken problem*/
+    .sale-statistic-inner, .statistic-right-area, .email-statis-inner, .recent-post-wrapper, .blog-inner-list, .realtime-wrap, .add-todo-list, .notika-chat-list, .recent-signup-inner, .ongoing-task-inner, .contact-inner, .contact-form, .widget-tabs-int, .visitor-sv-tm-int, .search-engine-int, .alert-inner, .color-wrap, .wizard-wrap-int, .dropdown-list, .modals-list, .accordion-wn-wp, .tooltips-inner, .popovers-list, .typography-list, .typography-heading, .typography-inline-pro, .tpgp-helper, .contact-list, .inbox-left-sd, .inbox-text-list, .view-mail-list, .normal-table-list, .data-table-list, .form-element-list, .range-slider-wrap, .datepicker-int, .colorpicker-int, .summernote-wrap, .dropdone-nk, .form-example-wrap, .invoice-wrap, .google-map-single, .data-map-single, .image-cropper-wp, .nk-cd-ed-wp, .bar-chart-wp, .line-chart-wp, .area-chart-wp, .flot-chart-wp, .wb-traffic-inner, .notika-icon-int {
+        margin-top: 5%;
+    }
+    /*End mobile*/
+
+    ul.prbPosition li input[type=checkbox] {
+        width: 25px;
+        height: 25px;
+    }
+
+    /*Styles for problem positions*/
+    ul.prbPosition li input[type=checkbox] {
+        width: 20px;
+        height: 20px;
+    }
+
+    ul.prbPosition {
+        list-style: none;
+        position: relative
+    }
+
+        ul.prbPosition li {
+            float: left;
+        }
+
+            ul.prbPosition li.bottomRight {
+                left: 35px;
+            }
+
+            ul.prbPosition li.bottomLeft {
+                position: absolute;
+                content: "";
+                top: 25px;
+                left: 0;
+            }
+
+            ul.prbPosition li.upLeft {
+                position: absolute;
+                content: "";
+                top: -12px;
+                left: 0;
+            }
+
+            ul.prbPosition li.upRight {
+                position: absolute;
+                content: "";
+                top: -12px;
+                left: 31%;
+            }
+
+        ul.prbPosition::before {
+            top: 20px;
+            width: 60%;
+            left: -7px;
+        }
+
+        ul.prbPosition::after {
+            top: 20px;
+            width: 60%;
+            left: -5px;
+        }
+        /*End accordion*/
+        /*Examination positioning*/
+        ul.prbPosition.odc-examination li.bottomRight {
+            left: 42%;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination li.bottomLeft {
+            left: 7%;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination li.upLeft {
+            left: 7%;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination li.upRight {
+            left: 42%;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination::before {
+            width: 73%;
+            left: 3%;
+        }
+
+        ul.prbPosition.odc-examination::after {
+            width: 45%;
+            left: 17%;
+        }
+    /*End examination*/
+
+    /*Login*/
+    .nk-navigation.odc-login a.odc-alternate-login.email-login {
+        width: 30%;
+    }
+    /*End Login*/
+
+    /*For subscribed index*/
+    .responsive-table.subscribed .table-header {
+        font-size: 11px;
+        letter-spacing: 0;
+    }
+    /*End subscribed*/
+
+    /* Preview */
+    .previewChief table {
+        float: right;
+        position: relative;
+        top: -50px;
+    }
+    /* End Preview */
+}
+
+
+/* small mobile :320px. */
+@media (max-width: 767px) {
+    /*Mobile menu broken problem*/
+    .sale-statistic-inner, .statistic-right-area, .email-statis-inner, .recent-post-wrapper, .blog-inner-list, .realtime-wrap, .add-todo-list, .notika-chat-list, .recent-signup-inner, .ongoing-task-inner, .contact-inner, .contact-form, .widget-tabs-int, .visitor-sv-tm-int, .search-engine-int, .alert-inner, .color-wrap, .wizard-wrap-int, .dropdown-list, .modals-list, .accordion-wn-wp, .tooltips-inner, .popovers-list, .typography-list, .typography-heading, .typography-inline-pro, .tpgp-helper, .contact-list, .inbox-left-sd, .inbox-text-list, .view-mail-list, .normal-table-list, .data-table-list, .form-element-list, .range-slider-wrap, .datepicker-int, .colorpicker-int, .summernote-wrap, .dropdone-nk, .form-example-wrap, .invoice-wrap, .google-map-single, .data-map-single, .image-cropper-wp, .nk-cd-ed-wp, .bar-chart-wp, .line-chart-wp, .area-chart-wp, .flot-chart-wp, .wb-traffic-inner, .notika-icon-int {
+        margin-top: 5%;
+    }
+    /*End mobile*/
+
+    .button-icon-btn-cl .btn {
+        padding: 5px 9px;
+    }
+
+    .form-example-wrap.fixedHeight {
+        min-height: 500px;
+    }
+    /*.custom-menu-content ul.notika-main-menu-dropdown li .message-dd.chat-dd {
+        left: 27%;
+    }*/
+
+    ul.prbPosition li input[type=checkbox] {
+        width: 18px;
+        height: 18px;
+    }
+
+    /*Login*/
+    .nk-navigation.odc-login a.odc-alternate-login.email-login {
+        width: 30%;
+    }
+    /*End Login*/
+    /*For subscribed index*/
+    .responsive-table.subscribed .table-header {
+        font-size: 11px;
+        letter-spacing: 0;
+    }
+    /*End subscribed*/
+}
+
+/* Large Mobile :480px. */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+    /*Mobile menu broken problem*/
+    .sale-statistic-inner, .statistic-right-area, .email-statis-inner, .recent-post-wrapper, .blog-inner-list, .realtime-wrap, .add-todo-list, .notika-chat-list, .recent-signup-inner, .ongoing-task-inner, .contact-inner, .contact-form, .widget-tabs-int, .visitor-sv-tm-int, .search-engine-int, .alert-inner, .color-wrap, .wizard-wrap-int, .dropdown-list, .modals-list, .accordion-wn-wp, .tooltips-inner, .popovers-list, .typography-list, .typography-heading, .typography-inline-pro, .tpgp-helper, .contact-list, .inbox-left-sd, .inbox-text-list, .view-mail-list, .normal-table-list, .data-table-list, .form-element-list, .range-slider-wrap, .datepicker-int, .colorpicker-int, .summernote-wrap, .dropdone-nk, .form-example-wrap, .invoice-wrap, .google-map-single, .data-map-single, .image-cropper-wp, .nk-cd-ed-wp, .bar-chart-wp, .line-chart-wp, .area-chart-wp, .flot-chart-wp, .wb-traffic-inner, .notika-icon-int {
+        margin-top: 18%;
+    }
+    /*End mobile*/
+
+    .button-icon-btn-cl .btn {
+        padding: 5px 9px;
+    }
+
+    .form-example-wrap.fixedHeight {
+        min-height: 500px;
+    }
+
+    /*Styles for problem positions*/
+    ul.prbPosition li input[type=checkbox] {
+        width: 18px;
+        height: 18px;
+    }
+
+    ul.prbPosition {
+        list-style: none;
+        position: relative
+    }
+
+        ul.prbPosition li {
+            float: left;
+        }
+
+            ul.prbPosition li.bottomRight {
+                top: 18px;
+                left: 48%;
+            }
+
+            ul.prbPosition li.bottomLeft {
+                top: 18px;
+            }
+
+            ul.prbPosition li.upLeft {
+                position: absolute;
+                content: "";
+                top: -12px;
+                left: 0;
+            }
+
+            ul.prbPosition li.upRight {
+                left: 48%;
+            }
+
+        ul.prbPosition::before {
+            top: 15px;
+            width: 100%;
+            left: -8px;
+        }
+
+        ul.prbPosition::after {
+            top: 13px;
+            width: 90%;
+            left: -4px;
+        }
+        /*End accordion*/
+        /*Examination positioning*/
+        ul.prbPosition.odc-examination li.bottomRight {
+            left: 42%;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination li.bottomLeft {
+            left: 0;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination li.upLeft {
+            left: 0;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination li.upRight {
+            left: 42%;
+            width: 100%;
+        }
+
+        ul.prbPosition.odc-examination::before {
+            width: 80%;
+            left: -5%
+        }
+
+        ul.prbPosition.odc-examination::after {
+            top: 12px;
+            width: 85%;
+            left: -6%;
+        }
+
+        ul.prbPosition.odc-examination li input[type=text] {
+            width: 30%;
+            text-align: center;
+            padding: 0;
+        }
+
+    tr.odc-exam-row td {
+        padding: 4%;
+    }
+    /*End examination*/
+
+    /*Login*/
+    .nk-navigation.odc-login a.odc-alternate-login.email-login {
+        width: 35%;
+    }
+    /*End Login*/
+    /*For subscribed index*/
+    .responsive-table.subscribed .table-header {
+        font-size: 11px;
+        letter-spacing: 0;
+    }
+    /*End subscribed*/
+
+    /* Preview */
+    .previewChief table {
+        float: right;
+        position: relative;
+        top: -50px;
+    }
+    /* End Preview */
+}
+
+
+@media only screen and (min-width: 360px) and (max-width: 480px) {
+    /*Login*/
+    .nk-navigation.odc-login a.odc-alternate-login.email-login {
+        width: 40%;
+    }
+    /*End Login*/
+    /*For subscribed index*/
+    .responsive-table.subscribed .table-header {
+        font-size: 11px;
+        letter-spacing: 0;
+    }
+    /*End subscribed*/
+
+    /* Preview */
+    #preview h4.prev-title {
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+    .breadcomb-ctn.smallScroll h2, h5 {
+        font-size: 10px;
+    }
+    .smallCaps small {
+        font-size: 9px;
+    }
+
+    .btn-primary.primary-icon-notika, .btn-info.info-icon-notika, .btn-success.success-icon-notika, .btn-warning.warning-icon-notika, .btn-danger.danger-icon-notika, .btn-teal.teal-icon-notika, .btn-orange.orange-icon-notika, .btn-cyan.cyan-icon-notika, .btn-lightgreen.lightgreen-icon-notika, .btn-lime.lime-icon-notika, .btn-amber.amber-icon-notika, .btn-gray.gray-icon-notika, .btn-lightblue.lightblue-icon-notika, .btn-deeporange.deeporange-icon-notika {
+        font-size: 8px;
+    }
+
+    .odc-details span {
+        font-size: 8px;
+    }
+
+    tr.odc-exam-row.treat-done td {
+        width: 90px;
+        padding: 25px 10px;
+    }
+    div.odc-details:first-child {
+        margin-top: 2%;
+        position: relative;
+        top: 0;
+    }
+
+    /*div.odc-details.illness {
+        top: -70px;
+    }*/
+
+    /*div.odc-details {
+        margin-top: 2%;
+        position: relative;
+        top: -40px;
+    }*/
+
+    div.previewChief table {
+        float: right;
+        position: relative;
+        top: -50px;
+        left: 44px;
+    }
+    /*div.previewChief table.odc-even {
+        float: right;
+        position: relative;
+        top: -90px;
+        left: 44px;
+    }
+    #preview .odc-title.hisotry, #preview .odc-title.medHistory {
+        top: -70px;
+    }*/
+    .responsive-table.fullTable tr {
+        padding: 0;
+        font-size: 9px;
+    }
+    .odc-details.medPres {
+        font-size: 9px;
+    }
+    table.payHistory {
+        font-size: 9px;
+    }
+    /* End Preview */
+}
+
+@media only screen and (min-width: 280px) and (max-width: 359px) {
+    /*Login*/
+    .nk-navigation.odc-login a.odc-alternate-login.email-login {
+        width: 40%;
+    }
+    /*End Login*/
+    /*For subscribed index*/
+    .responsive-table.subscribed .table-header {
+        font-size: 11px;
+        letter-spacing: 0;
+    }
+    /*End subscribed*/
+
+    /* Preview */
+    #preview h4.prev-title {
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+    .breadcomb-ctn.smallScroll h2, h5 {
+        font-size: 10px;
+    }
+
+    .smallCaps small {
+        font-size: 9px;
+    }
+
+    .btn-primary.primary-icon-notika, .btn-info.info-icon-notika, .btn-success.success-icon-notika, .btn-warning.warning-icon-notika, .btn-danger.danger-icon-notika, .btn-teal.teal-icon-notika, .btn-orange.orange-icon-notika, .btn-cyan.cyan-icon-notika, .btn-lightgreen.lightgreen-icon-notika, .btn-lime.lime-icon-notika, .btn-amber.amber-icon-notika, .btn-gray.gray-icon-notika, .btn-lightblue.lightblue-icon-notika, .btn-deeporange.deeporange-icon-notika {
+        font-size: 8px;
+    }
+
+    .odc-details span {
+        font-size: 8px;
+    }
+
+    tr.odc-exam-row.treat-done td {
+        width: 90px;
+        padding: 25px 10px;
+    }
+
+    div.odc-details:first-child {
+        margin-top: 2%;
+        position: relative;
+        top: 0;
+    }
+
+    /*div.odc-details.illness {
+        top: -70px;
+    }*/
+
+    /*div.odc-details {
+        margin-top: 2%;
+        position: relative;
+        top: -40px;
+    }*/
+
+    div.previewChief table {
+        float: right;
+        position: relative;
+        top: -50px;
+        left: 44px;
+    }
+    /*div.previewChief table.odc-even {
+        float: right;
+        position: relative;
+        top: -90px;
+        left: 44px;
+    }
+    #preview .odc-title.hisotry, #preview .odc-title.medHistory {
+        top: -70px;
+    }*/
+    .responsive-table.fullTable tr {
+        padding: 0;
+        font-size: 9px;
+    }
+
+    .odc-details.medPres {
+        font-size: 9px;
+    }
+
+    table.payHistory {
+        font-size: 9px;
+    }
+    /* End Preview */
+}

@@ -1,0 +1,742 @@
+﻿@using EPrescribing.Web.Enumerations;
+@model EPrescribing.Web.Models.Prescription
+@{
+    ViewBag.Title = "CreatePrescriptionHistory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var tab = ViewBag.Tab;
+
+}
+
+<link href="~/css/patient-accordion.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="wizard-wrap-int">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="wizard-hd">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-support"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2 class="smallCaps">@ViewBag.NamePrefix @ViewBag.PatientName &nbsp;<small>(@ViewBag.Age)</small> </h2>
+                                    <h5><span class="smallCaps">Patient Id:</span> @ViewBag.PatientStrId</h5>
+                                    <p class="text-tagline">Write examination details of selected patient.</p>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 breadcomb-list">
+                        @using (Html.BeginForm("PastTreatmentDone", "Prescriptions", FormMethod.Post, new { @class = "form-horizontal floatLeft odc-history", role = "form" }))
+                        {
+                            <input hidden name="patientId" value="@Model.PatientId" />
+                            if (ViewBag.PastDoneCount as int? > 0)
+                            {
+                                <button type="submit" class="btn btn-deeporange deeporange-icon-notika waves-effect smallCaps">Past Treatment Done</button>
+                            }
+                        }
+                        @if (string.IsNullOrEmpty(tab))
+                        {
+                            <a href="@Url.Action("Index", "Patients")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back to Records
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Preview", "Prescriptions", new { prescriptionId = Model.Id })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back to Preview
+                            </a>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xs-12 col-sm-12 col-md-offset-1">
+                        @using (Html.BeginForm("EditPrescriptionExamination", "Prescriptions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(m => m.Id, new { @id = "prescriptionId" })
+                            @Html.HiddenFor(m => m.PatientId)
+                            @Html.HiddenFor(m => m.DoctorId)
+                            @Html.HiddenFor(m => m.PaymentId)
+                            @Html.HiddenFor(m => m.NextAppointmentDate)
+                            @Html.HiddenFor(m => m.PreviousPrescriptionId)
+                            @Html.HiddenFor(m => m.PresentIllnes)
+                            @Html.HiddenFor(m => m.MedicalHistory)
+                            @Html.HiddenFor(m => m.MedicinePrescribed)
+                            @Html.HiddenFor(m => m.AdvicePrescribed)
+                            @Html.HiddenFor(m => m.Status)
+                            @Html.HiddenFor(m => m.IsActive)
+                            @Html.HiddenFor(m => m.TreatmentCharge)
+                            @Html.HiddenFor(a => a.CreatedDate)
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                            <div class="accordion-stn mg-t-30">
+                                <input type="hidden" name="tab" id="tab" value="@tab" />
+                                <div id="accordion">
+                                    <div class="panel-group" data-collapse-color="nk-purple" id="accordionPurple" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-collapse notika-accrodion-cus">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordionPurple" href="#accordionPurple-one" aria-expanded="true" id="@TabEnum.OnExaminationExtraoralId.ToString()">
+                                                        <i class="icon fa fa-eye"></i>
+                                                        EXTRAORAL EXAMINATION
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="accordionPurple-one" class="collapse in" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <table class="tbl" id="OnExaminationsExtraOraTabel" style="width: 100%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="OnExaminationsExtraOralDetails">
+                                                            @{var onexaminationExtraOral = Model.OnExaminations.Where(e => e.IsActive && e.Status == "Extraoral").ToList();
+                                                            }
+                                                            @if (onexaminationExtraOral != null && onexaminationExtraOral.Count() > 0)
+                                                            {
+
+                                                                for (int i = 0; i < onexaminationExtraOral.Count; i++)
+                                                                {
+                                                                    onexaminationExtraOral[i].No = i;
+                                                                    @Html.Partial("~/Views/Prescriptions/_OnExaminationsExtraOral.cshtml", onexaminationExtraOral[i])
+                                                                }
+                                                            }
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+
+                                                                <td colspan="3">
+                                                                    <button type="button" title="Add More" id="addOnExaminationsExtraOral" class="btn btn-teal teal-icon-notika waves-effect floatright">
+                                                                        <i class="notika-icon notika-plus-symbol"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+
+
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-collapse notika-accrodion-cus">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionPurple" href="#accordionPurple-two" aria-expanded="false" id="@TabEnum.OnExaminationIntraoralId.ToString()">
+                                                        <i class="icon fa fa-qrcode"></i>
+                                                        INTRAORAL EXAMINATION
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="accordionPurple-two" class="collapse" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <table class="tbl" id="OnExaminationsIntraOralTabel" style="width: 100%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="OnExaminationsIntraOralDetails">
+                                                            @{var onexaminationIntraOral = Model.OnExaminations.Where(e => e.IsActive && e.Status == "Intraoral").ToList();
+                                                            }
+                                                            @if (onexaminationIntraOral != null && onexaminationIntraOral.Count() > 0)
+                                                            {
+
+                                                                for (int i = 0; i < onexaminationIntraOral.Count; i++)
+                                                                {
+                                                                    onexaminationIntraOral[i].No = i;
+                                                                    @Html.Partial("~/Views/Prescriptions/_OnExaminationsIntraOral.cshtml", onexaminationIntraOral[i])
+                                                                }
+                                                            }
+
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="4">
+                                                                    <button type="button" title="Add More" id="addOnExaminationsIntraOral" class="btn btn-teal teal-icon-notika waves-effect floatright">
+                                                                        <i class="notika-icon notika-plus-symbol"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-collapse notika-accrodion-cus">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionPurple" href="#accordionPurple-three" aria-expanded="false" id="@TabEnum.DiagnosticTestsId.ToString()">
+                                                        <i class="icon fa fa-search-plus"></i>
+                                                        DIAGNOSTIC TEST
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="accordionPurple-three" class="collapse" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <table class="tbl" id="DiagnosticTestTabel" style="width: 100%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="DiagnosticTestDetails">
+                                                            @if (Model.DiagnosticTest != null && Model.DiagnosticTest.Count() > 0)
+                                                            {
+                                                                for (int i = 0; i < Model.DiagnosticTest.Count; i++)
+                                                                {
+                                                                    Model.DiagnosticTest[i].No = i;
+                                                                    @Html.Partial("~/Views/Prescriptions/_DiagnosticTests.cshtml", Model.DiagnosticTest[i])
+                                                                }
+                                                            }
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="5">
+                                                                    <button type="button" title="Add More" id="addDiagnosticTest" class="btn btn-teal teal-icon-notika waves-effect floatright">
+                                                                        <i class="notika-icon notika-plus-symbol"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-collapse notika-accrodion-cus">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionPurple" href="#accordionPurple-four" aria-expanded="false" id="@TabEnum.DifferentialDiagnosticId.ToString()">
+                                                        <i class="icon fa fa-stethoscope "></i>
+                                                        DIFFERENTIAL DIAGNOSIS
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="accordionPurple-four" class="collapse" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <fieldset class="smallCaps">Differential Diagnosis</fieldset>
+                                                    <table class="tbl" id="DifferentialDiagnosisTabel" style="width: 100%;">
+
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="DifferentialDiagnosisDetails">
+                                                            @if (Model.DifferentialDiagnosis != null && Model.DifferentialDiagnosis.Count() > 0)
+                                                            {
+                                                                for (int i = 0; i < Model.DifferentialDiagnosis.Count; i++)
+                                                                {
+                                                                    Model.DifferentialDiagnosis[i].No = i;
+                                                                    @Html.Partial("~/Views/Prescriptions/_DifferentialDiagnosis.cshtml", Model.DifferentialDiagnosis[i])
+                                                                }
+                                                            }
+
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="5">
+                                                                    <button type="button" title="Add More" id="addDifferentialDiagnosis" class="btn btn-teal teal-icon-notika waves-effect floatright">
+                                                                        <i class="notika-icon notika-plus-symbol"></i>
+                                                                    </button>
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tfoot>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-collapse notika-accrodion-cus">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionPurple" href="#accordionPurple-five" aria-expanded="false" id="@TabEnum.TreatmentPlansId.ToString()">
+                                                        <i class="icon fa fa-s"></i>
+                                                        TREATMENT PLAN
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="accordionPurple-five" class="collapse" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <table class="tbl" id="TreatmentPlanTabel" style="width: 100%;">
+
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="TreatmentPlanDetails">
+                                                            @if (Model.TreatmentPlans != null && Model.TreatmentPlans.Count() > 0)
+                                                            {
+                                                                for (int i = 0; i < Model.TreatmentPlans.Count; i++)
+                                                                {
+                                                                    Model.TreatmentPlans[i].No = i;
+                                                                    @Html.Partial("~/Views/Prescriptions/_TreatmentPlans.cshtml", Model.TreatmentPlans[i])
+                                                                }
+                                                            }
+
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="4">
+                                                                    <button type="button" title="Add More" id="addTreatmentPlan" class="btn btn-teal teal-icon-notika waves-effect floatright">
+                                                                        <i class="notika-icon notika-plus-symbol"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-11 col-md-offset-1 col-xs-12">
+                                    <button type="submit" class="btn btn-info btn-icon-notika waves-effect floatright smallCaps">
+                                        <i class="notika-icon notika-file"></i> Save & Review
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script>
+
+          $(document).ready(function () {
+                var tab = '#@ViewBag.Tab' + 'Id';
+              if (tab != null &&tab != '#OnExaminationExtraoralId') {
+                    $(tab).click();
+                }
+          });
+
+    var prescriptionId = $('#prescriptionId').val();
+
+    $(document).on('focus', '.txtPathologyName', function () {
+            var row = $(this).closest("tr");
+            $(this).autocomplete({
+                html: true,
+                minLength:2,
+                source: function (request, response) {
+
+
+                    $.ajax({
+                        global: false,
+                        url: "@Url.Action("AutoCompletePathology")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            debugger;
+                            response($.map(data, function (val, item) {
+                                return {
+                                    label: val.Name,
+                                    value: val.Name,
+                                }
+
+                            }))
+                        }
+                    })
+                },
+
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                }
+            })
+    })
+    $(document).on('focus', '.txtCategoryName', function () {
+            var row = $(this).closest("tr");
+            $(this).autocomplete({
+                html: true,
+                minLength:2,
+                source: function (request, response) {
+                    row.find('.hdnCategoryId').val('0').trigger("change");
+
+                    $.ajax({
+                        global: false,
+                        url: "@Url.Action("AutoCompleteDiagnosticCategory")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            debugger;
+                            response($.map(data, function (val, item) {
+                                return {
+                                    label: val.TestName,
+                                    value: val.TestName,
+                                    categoryId: val.Id,
+
+                                }
+
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    row.find(".hdnCategoryId").val(ui.item.categoryId);
+                },
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                }
+            })
+    })
+    $(document).on('change', '.CategoryId', function () {
+        var row = $(this).closest("tr");
+        row.find('.txtDiagnosticName').val('');
+    })
+    //    $(document).on('blur', '.txtGenericName', function () {
+    //        var row = $(this).closest("tr");
+    //        var myid = 0;
+    //        if ($.isNumeric(row.find('.hdnCategoryId').val())) {
+    //            myid = parseInt(row.find('.hdnCategoryId').val());
+    //    }
+    //    if (myid == 0) {
+    //        $(this).val('');
+    //        $('.hdnCategoryId').val('');
+    //    }
+    //});//autocomplete Generic end
+    $(document).on('focus', '.txtDiagnosticName', function () {
+        var row = $(this).closest("tr");
+        var categoryId = 0;
+        if ($.isNumeric(row.find('.CategoryId').val())) { categoryId = parseInt(row.find('.CategoryId').val()) }
+            $(this).autocomplete({
+                html: true,
+                minLength:2,
+                source: function (request, response) {
+
+
+                    $.ajax({
+                        global: false,
+                        url: "@Url.Action("AutoCompleteDiagnostic")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { categoryId: categoryId, term: request.term },
+                        success: function (data) {
+                            debugger;
+                            response($.map(data, function (val, item) {
+                                return {
+                                    label: val.TestName,
+                                    value: val.TestName,
+
+                                }
+
+                            }))
+                        }
+                    })
+                },
+
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                }
+            })
+        })
+    $(document).on('focus', '.txtDiseaseName', function () {
+            var row = $(this).closest("tr");
+            $(this).autocomplete({
+                html: true,
+                minLength:2,
+                source: function (request, response) {
+
+
+                    $.ajax({
+                        global: false,
+                        url: "@Url.Action("AutoCompleteDisease")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            debugger;
+                            response($.map(data, function (val, item) {
+                                return {
+                                    label: val.Name,
+                                    value: val.Name,
+                                }
+
+                            }))
+                        }
+                    })
+                },
+
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                }
+            })
+    })
+    $(document).on('focus', '.txtTreatmentName', function () {
+            var row = $(this).closest("tr");
+            $(this).autocomplete({
+                html: true,
+                minLength:2,
+                source: function (request, response) {
+
+
+                    $.ajax({
+                        global: false,
+                        url: "@Url.Action("AutoCompleteTreatment")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            debugger;
+                            response($.map(data, function (val, item) {
+                                return {
+                                    label: val.Name,
+                                    value: val.Name,
+                                }
+
+                            }))
+                        }
+                    })
+                },
+
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                }
+            })
+        })
+
+
+        $(document).on("click", "#addTreatmentPlan", function () {
+            var lastRow = $("tbody#TreatmentPlanDetails").find("tr:last");
+            var lastRowNo = lastRow.find('.hfLast').val();
+            var rowCount = $('tbody#TreatmentPlanDetails tr').length;
+            if (rowCount == 0) {
+                lastRowNo = -1;
+            }
+
+                $.ajax({
+                    url: '@Url.Action("AddNewTreatmentPlan")',
+                    data: { prescriptionId: prescriptionId, no: lastRowNo },
+                cache: false,
+                    success: function (html) {
+                        if (rowCount == 0) {
+                            $("tbody#TreatmentPlanDetails").html(html)
+                        }
+                        else {
+                            lastRow.append().after(html);
+                        }
+                }
+            });
+    });
+
+    $(document).on("click", "#removeTreatmentPlan", function () {
+        var row = $(this).closest("tr");
+        row.remove();
+        var i = 0;
+        $("#TreatmentPlanDetails tr").each(function () {
+            var row = $(this).closest("tr");
+            row.find('.countRow').text(i + 1);
+            row.find('.hfLast').val(i);
+
+            //
+            i++;
+        })
+
+        });
+    //-----------------
+        $(document).on("click", "#addDifferentialDiagnosis", function () {
+            var lastRow = $("tbody#DifferentialDiagnosisDetails").find("tr:last");
+            var lastRowNo = lastRow.find('.hfLast').val();
+            var rowCount = $('tbody#DifferentialDiagnosisDetails tr').length;
+            if (rowCount == 0) {
+                lastRowNo = -1;
+            }
+
+                $.ajax({
+                    url: '@Url.Action("AddNewDifferentialDiagnosis")',
+                    data: { prescriptionId: prescriptionId, no: lastRowNo },
+                cache: false,
+                    success: function (html) {
+                        if (rowCount == 0) {
+                            $("tbody#DifferentialDiagnosisDetails").html(html)
+                        }
+                        else {
+                            lastRow.append().after(html);
+                        }
+                }
+            });
+    });
+
+    $(document).on("click", "#removeDifferentialDiagnosis", function () {
+        var row = $(this).closest("tr");
+        row.remove();
+        var i = 0;
+        $("#DifferentialDiagnosisDetails tr").each(function () {
+            var row = $(this).closest("tr");
+            row.find('.countRow').text(i + 1);
+            row.find('.hfLast').val(i);
+
+            //
+            i++;
+        })
+
+    });
+    //-----------------
+        $(document).on("click", "#addDiagnosticTest", function () {
+            var lastRow = $("tbody#DiagnosticTestDetails").find("tr:last");
+            var lastRowNo = lastRow.find('.hfLast').val();
+            var rowCount = $('tbody#DiagnosticTestDetails tr').length;
+            if (rowCount == 0) {
+                lastRowNo = -1;
+            }
+                $.ajax({
+                    url: '@Url.Action("AddNewDiagnosticTest")',
+                    data: { prescriptionId: prescriptionId, no: lastRowNo  },
+                cache: false,
+                    success: function (html) {
+                        if (rowCount == 0) {
+                            $("tbody#DiagnosticTestDetails").html(html)
+                        }
+                        else {
+                            lastRow.append().after(html);
+                        }
+
+                }
+            });
+    });
+
+    $(document).on("click", "#removeDiagnosticTest", function () {
+        var row = $(this).closest("tr");
+        row.remove();
+        var i = 0;
+        $("#DiagnosticTestDetails tr").each(function () {
+            var row = $(this).closest("tr");
+            row.find('.countRow').text(i + 1);
+            row.find('.hfLast').val(i);
+
+            //
+            i++;
+        })
+
+    });
+    //----------------
+        $(document).on("click", "#addOnExaminationsIntraOral", function () {
+            var lastRow = $("tbody#OnExaminationsIntraOralDetails").find("tr:last");
+            var lastRowNo = lastRow.find('.hfLast').val();
+            var rowCount = $('tbody#OnExaminationsIntraOralDetails tr').length;
+            if (rowCount == 0) {
+                lastRowNo = -1;
+            }
+                $.ajax({
+                    url: '@Url.Action("AddNewOnExaminationIntraOral")',
+                    data: { prescriptionId: prescriptionId, no: lastRowNo },
+                cache: false,
+                    success: function (html) {
+                        if (rowCount == 0) {
+                            $("tbody#OnExaminationsIntraOralDetails").html(html)
+                        }
+                        else {
+                            lastRow.append().after(html);
+                        }
+                }
+            });
+    });
+
+    $(document).on("click", "#removeOnExaminationsIntraOral", function () {
+        var row = $(this).closest("tr");
+        row.remove();
+        var i = 0;
+        $("#OnExaminationsIntraOralDetails tr").each(function () {
+            var row = $(this).closest("tr");
+            row.find('.countRow').text(i + 1);
+            row.find('.hfLast').val(i);
+
+            //
+            i++;
+        })
+
+    });
+    //-------------
+
+        $(document).on("click", "#addOnExaminationsExtraOral", function () {
+            var lastRow = $("tbody#OnExaminationsExtraOralDetails").find("tr:last");
+            var lastRowNo = lastRow.find('.hfLast').val();
+            var rowCount = $('tbody#OnExaminationsExtraOralDetails tr').length;
+            if (rowCount == 0) {
+                lastRowNo = -1;
+            }
+                $.ajax({
+                    url: '@Url.Action("AddNewOnExaminationExtraOral")',
+                    data: { prescriptionId: prescriptionId, no: lastRowNo  },
+                cache: false,
+                    success: function (html) {
+                        if (rowCount == 0) {
+                            $("tbody#OnExaminationsExtraOralDetails").html(html)
+                        }
+                        else {
+                            lastRow.append().after(html);
+                        }
+                }
+            });
+    });
+
+    $(document).on("click", "#removeOnExaminationsExtraOral", function () {
+        var row = $(this).closest("tr");
+        row.remove();
+        var i = 0;
+        $("#OnExaminationsExtraOralDetails tr").each(function () {
+            var row = $(this).closest("tr");
+            row.find('.countRow').text(i + 1);
+            row.find('.hfLast').val(i);
+
+            //
+            i++;
+        })
+
+            });
+</script>
+}

@@ -1,0 +1,117 @@
+﻿@model EPrescribing.Web.ViewModels.VMChangeDesignation
+@{
+    Layout = null;
+}
+@using (Html.BeginForm("EditDesignation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @onSubmit = "return SubmitClinicInfo(this)", @class = "form-horizontal", role = "form" }))
+{
+    <div class="wizard-hd">
+        <div class="breadcomb-wp">
+            <div class="breadcomb-icon">
+                <i class="notika-icon notika-social"></i>
+            </div>
+            <div class="breadcomb-ctn">
+                <h2>Update Designation</h2>
+                <p class="text-tagline">Please fill up carefully.</p>
+            </div>
+        </div>
+
+    </div>
+    @Html.HiddenFor(model => model.DoctorId, new { @id = "doctorId" });
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group ic-cmp-int">
+                    <div class="form-ic-cmp">
+                        <i class="notika-icon notika-support"></i>
+                    </div>
+
+                    <div class="nk-int-st">
+                        <div class="chosen-select-act fm-cmp-mg">
+                            @Html.DropDownList("DesignationId", null, string.Empty, new { @class = "chosen select-me", @id = "designationId", @data_placeholder = "--Designation--" })
+                            @Html.ValidationMessageFor(m => m.DesignationId, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-xs-12">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" hidden id="divRegNumb">
+                <div class="form-group ic-cmp-int">
+                    <div class="form-ic-cmp">
+                        <i class="notika-icon notika-edit"></i>
+                    </div>
+                    <div class="nk-int-st">
+                        @Html.TextBoxFor(m => m.BMDCRegistrationNumber, new { @class = "form-control", @id = "txtBMDCRegnumb", autocomplete = "off", @placeholder = "BMDC Registration number" })
+                        @Html.ValidationMessageFor(m => m.BMDCRegistrationNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 material-design-btn text-center my-2">
+            <button type="submit" class="btn notika-btn-cyan waves-effect">
+                <i class="notika-icon notika-checked"></i> Save
+            </button>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+
+    $(".chosen")[0] && $(".chosen").chosen({
+        width: "100%",
+        allow_single_deselect: true
+    });
+
+    var doctorId = $("#doctorId").val();
+            var designationId = $("#designationId").val();
+
+    if (designationId > 0) {
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("IsStudentOrIntern", "Account")',
+            data: { designationId: designationId },
+            success: function (response) {
+                if (response) {
+
+                    $("#divRegNumb").hide();
+                    $("#txtBMDCRegnumb").val('');
+                } else {
+                    $("#divRegNumb").show();
+                }
+            },
+            error: function (ex) {
+
+            }
+        });
+    }
+    $(document).on("change", "#designationId", function () {
+        var doctorId = $("#doctorId").val();
+        var designationId = $("#designationId").val();
+        if (designationId > 0) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("IsStudentOrIntern", "Account")',
+                data: { designationId: designationId },
+                success: function (response) {
+                    if (response) {
+
+                        $("#divRegNumb").hide();
+                        $("#txtBMDCRegnumb").val('');
+                    } else {
+                        $("#divRegNumb").show();
+                    }
+                },
+                error: function (ex) {
+
+                }
+            });
+        }
+    })
+</script>

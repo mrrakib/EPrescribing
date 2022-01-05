@@ -1,0 +1,417 @@
+﻿@using EPrescribing.Web.Enumerations;
+@model EPrescribing.Web.Models.Prescription
+@{
+    ViewBag.Title = "CreatePrescriptionHistory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var tab = ViewBag.Tab;
+}
+<link href="~/css/patient-accordion.css" rel="stylesheet" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="wizard-wrap-int">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="wizard-hd">
+                            <div class="breadcomb-wp">
+                                <div class="breadcomb-icon">
+                                    <i class="notika-icon notika-support"></i>
+                                </div>
+                                <div class="breadcomb-ctn">
+                                    <h2 class="smallCaps">@ViewBag.NamePrefix @ViewBag.PatientName &nbsp;<small>(@ViewBag.Age)</small> </h2>
+                                    <h5><span class="smallCaps">Patient Id:</span> @ViewBag.PatientStrId</h5>
+                                    <p class="text-tagline">Write history details of selected patient.</p>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 breadcomb-list">
+                        @using (Html.BeginForm("PastTreatmentDone", "Prescriptions", FormMethod.Post, new { @class = "form-horizontal floatLeft odc-history", role = "form" }))
+                        {
+                            <input hidden name="patientId" value="@Model.PatientId" />
+                            if (ViewBag.PastDoneCount as int? > 0)
+                            {
+                                <button type="submit" class="btn btn-deeporange deeporange-icon-notika waves-effect smallCaps">Past Treatment Done</button>
+                            }
+
+                        }
+                        @if (string.IsNullOrEmpty(tab))
+                        {
+                            <a href="@Url.Action("Index", "Patients")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back to Records
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Preview", "Prescriptions", new { prescriptionId = Model.Id })" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back to Preview
+                            </a>
+                        }
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
+                        @using (Html.BeginForm("AddEditPrescriptionHistory", "Prescriptions", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(m => m.Id, new { @id = "prescriptionId" })
+                            @Html.HiddenFor(m => m.PatientId)
+                            @Html.HiddenFor(m => m.DoctorId)
+                            @Html.HiddenFor(m => m.PaymentId)
+                            @Html.HiddenFor(m => m.NextAppointmentDate)
+                            @Html.HiddenFor(m => m.PreviousPrescriptionId)
+                            @Html.HiddenFor(m => m.MedicinePrescribed)
+                            @Html.HiddenFor(m => m.AdvicePrescribed)
+                            @Html.HiddenFor(m => m.Status)
+                            @Html.HiddenFor(m => m.IsActive)
+                            @Html.HiddenFor(a => a.CreatedDate)
+                            @Html.Hidden("isContinueWithPrescription", (bool)ViewBag.isContinueWithPrescription)
+
+                            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                            <div class="accordion-stn mg-t-30">
+                                <input type="hidden" name="tab" id="tab" value="@tab" />
+                                <div id="accordion">
+                                    <div class="panel-group" data-collapse-color="nk-purple" id="accordionPurple" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-collapse notika-accrodion-cus">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordionPurple" href="#accordionPurple-one" aria-expanded="true" id="@TabEnum.CheifComplaientsId.ToString()">
+                                                        <i class="icon fa fa-stethoscope"></i>
+                                                        CHIEF COMPLAINTS
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="accordionPurple-one" class="collapse in" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <table class="tbl" id="ChiefComplaintsTabel" style="width: 100%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ChiefComplaintsDetails">
+                                                            @if (Model.ChiefComplaints != null && Model.ChiefComplaints.Count() > 0)
+                                                            {
+                                                                for (int i = 0; i < Model.ChiefComplaints.Count; i++)
+                                                                {
+                                                                    Model.ChiefComplaints[i].No = i;
+
+                                                                    @Html.Partial("~/Views/Prescriptions/_ChiefComplaints.cshtml", Model.ChiefComplaints[i])
+                                                                }
+                                                            }
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="5">
+                                                                    <button type="button" title="Add More" id="addChiefComplaint" class="btn btn-teal teal-icon-notika waves-effect floatright">
+                                                                        <i class="notika-icon notika-plus-symbol"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-collapse notika-accrodion-cus">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionPurple" href="#accordionPurple-two" aria-expanded="false" id="@TabEnum.PresentIllnesId.ToString()">
+                                                        <i class="icon fa fa-heartbeat"></i>
+                                                        HISTORY OF PRESENT ILLNESS
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="accordionPurple-two" class="collapse" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <div class="nk-int-st">
+                                                        @Html.TextAreaFor(model => model.PresentIllnes, new { @class = "form-control", @placeholder = "Illness Problem", @rows = "4" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-collapse notika-accrodion-cus">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionPurple" href="#accordionPurple-three" aria-expanded="false" id="@TabEnum.MedicalHistoryId.ToString()">
+                                                        <i class="icon fa fa-ambulance"></i>
+                                                        MEDICAL HISTORY
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="accordionPurple-three" class="collapse" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <div class="nk-int-st">
+                                                        @Html.TextAreaFor(model => model.MedicalHistory, new { @class = "form-control", @placeholder = "Medical Problem", @rows = "4" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-collapse notika-accrodion-cus">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionPurple" href="#accordionPurple-four" aria-expanded="false" id="@TabEnum.MedicineHistoriesId.ToString()">
+                                                        <i class="icon fa fa-medkit"></i>
+                                                        DRUG HISTORY
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="accordionPurple-four" class="collapse" role="tabpanel">
+                                                <div class="panel-body">
+                                                    <table class="tbl drugHistory" id="MedicineHistoryTabel" style="width: 100%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Generic</th>
+                                                                <th>Medicine</th>
+                                                                <th>Note</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="MedicineHistoryDetails">
+                                                            @if (Model.MedicineHistory != null && Model.MedicineHistory.Count() > 0)
+                                                            {
+                                                                for (int i = 0; i < Model.MedicineHistory.Count; i++)
+                                                                {
+                                                                    Model.MedicineHistory[i].No = i;
+                                                                    @Html.Partial("~/Views/Prescriptions/_MedicineHistory.cshtml", Model.MedicineHistory[i])
+                                                                }
+                                                            }
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="5">
+                                                                    <button type="button" title="Add More" id="addMedicineHistory" class="btn btn-teal teal-icon-notika waves-effect floatright">
+                                                                        <i class="notika-icon notika-plus-symbol"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11 col-md-offset-1 col-xs-12">
+                                    <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps floatright">
+                                        <i class="notika-icon notika-file"></i> Save & Continue
+                                    </button>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            var tab = '#@tab' + 'Id';
+            debugger;
+            if (tab!=null && tab != '#CheifComplaientsId') {
+                $(tab).click();
+            }
+        });
+
+    var prescriptionId = $('#prescriptionId').val();
+
+
+    $(document).on('focus', '.txtGenericName', function () {
+            var row = $(this).closest("tr");
+            $(this).autocomplete({
+                html: true,
+                minLength:2,
+                source: function (request, response) {
+                    row.find('.hdnGenericId').val('0').trigger("change");
+
+                    $.ajax({
+                        global: false,
+                        url: "@Url.Action("AutoCompleteGeneric")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            debugger;
+                            response($.map(data, function (val, item) {
+                                return {
+                                    label: val.GenericName,
+                                    value: val.GenericName,
+                                    genericId: val.Id,
+
+                                }
+
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    row.find(".hdnGenericId").val(ui.item.genericId);
+                },
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                }
+            })
+    })
+        $(document).on('change', '.hdnGenericId', function () {
+        var row = $(this).closest("tr");
+        row.find('.txtMedicineName').val('');
+    })
+        $(document).on('blur', '.txtGenericName', function () {
+            var row = $(this).closest("tr");
+            var myid = 0;
+            if ($.isNumeric(row.find('.hdnGenericId').val())) {
+                myid = parseInt(row.find('.hdnGenericId').val());
+        }
+        if (myid == 0) {
+            $(this).val('');
+            $('.hdnGenericId').val('');
+        }
+    });//autocomplete Generic end
+    $(document).on('focus', '.txtMedicineName', function () {
+        var row = $(this).closest("tr");
+
+        var genericId = 0;
+        if ($.isNumeric(row.find('#hdnGenericId').val())) { genericId = parseInt(row.find('#hdnGenericId').val()) }
+            $(this).autocomplete({
+                html: true,
+                minLength:2,
+                source: function (request, response) {
+                    row.find('.hdnMedicineId').val('0').trigger("change");
+
+                    $.ajax({
+                        global: false,
+                        url: "@Url.Action("AutoCompleteMedicine")",
+                        type: "POST",
+                        dataType: "json",
+                        data: { genericId: genericId, term: request.term },
+                        success: function (data) {
+                            debugger;
+                            response($.map(data, function (val, item) {
+                                return {
+                                    label: val.Name,
+                                    value: val.Name,
+                                    medicineId: val.Id,
+
+                                }
+
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    row.find(".hdnMedicineId").val(ui.item.medicineId);
+
+                },
+
+                messages: {
+                    noResults: '',
+                    results: function (resultsCount) { }
+                }
+            })
+        })
+
+
+
+
+        $(document).on("click", "#addChiefComplaint", function () {
+            
+            var lastRow = $("tbody#ChiefComplaintsDetails").find("tr:last");
+            var lastRowNo = lastRow.find('.hfLast').val();
+            var rowCount = $('tbody#ChiefComplaintsDetails tr').length;
+            if (rowCount == 0) {
+                lastRowNo = -1;
+            }
+                $.ajax({
+                    url: '@Url.Action("AddNewChiefComplaint")',
+                    data: { prescriptionId: prescriptionId, no:lastRowNo },
+                cache: false,
+                    success: function (html) {
+                        if (rowCount == 0) {
+                            $("tbody#ChiefComplaintsDetails").html(html)
+                        }
+                        else {
+                            lastRow.append().after(html);
+                        }
+                }
+            });
+    });
+
+        $(document).on("click", "#removeChiefComplaints", function () {
+            var row = $(this).closest("tr");
+            row.remove();
+            var i = 0;
+            $("#ChiefComplaintsDetails tr").each(function () {
+                var row = $(this).closest("tr");
+                row.find('.countRow').text(i + 1);
+                row.find('.hfLast').val(i);
+
+                //
+                i++;
+            })
+        });
+
+        $(document).on("click", "#addMedicineHistory", function () {
+            var lastRow = $("tbody#MedicineHistoryDetails").find("tr:last");
+            var lastRowNo = lastRow.find('.hfLast').val();
+            var rowCount = $('tbody#MedicineHistoryDetails tr').length;
+            if (rowCount == 0) {
+                lastRowNo = -1;
+            }
+                $.ajax({
+                    url: '@Url.Action("AddNewMedicineHistory")',
+                    data: { prescriptionId: prescriptionId, no: lastRowNo},
+                cache: false,
+                    success: function (html) {
+                        if (rowCount == 0) {
+                            $("tbody#MedicineHistoryDetails").html(html)
+                        }
+                        else {
+                            lastRow.append().after(html);
+                        }
+                }
+            });
+    });
+
+    $(document).on("click", "#removeMedicineHistory", function () {
+        var row = $(this).closest("tr");
+        row.remove();
+        var i = 0;
+        $("#MedicineHistoryDetails tr").each(function () {
+            var row = $(this).closest("tr");
+            row.find('.countRow').text(i + 1);
+            row.find('.hfLast').val(i);
+
+            //
+            i++;
+        })
+
+            });
+    </script>
+}

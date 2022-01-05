@@ -1,0 +1,33 @@
+﻿@using EPrescribing.Web.Helpers
+@{
+    Layout = null;
+}
+
+
+<div class="header-top-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="logo-area">
+                    @*<a href="@Url.Action("Index", "Home")"><img src="~/img/logo/logo.png" alt="" /></a>*@
+                    <a href="@Url.Action("Index", "Home")" class="odcBrand">
+                        @if (!string.IsNullOrWhiteSpace(User.GETCLINICNAME()))
+                        {
+                            <span>@User.GETCLINICNAME()</span>
+                        }
+                        else
+                        {
+                            <span>ODC Soft</span>
+                        }
+
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                <div class="header-top-menu">
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

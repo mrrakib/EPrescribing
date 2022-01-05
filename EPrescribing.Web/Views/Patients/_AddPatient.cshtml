@@ -1,0 +1,112 @@
+﻿@using EPrescribing.Web.Enumerations;
+@model EPrescribing.Web.Models.Patient
+
+@{
+    ViewBag.Title = "Add Patient";
+    Layout = null;
+}
+
+<div>
+    @using (Html.BeginForm("Create", "Patients", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row" hidden>
+            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group ic-cmp-int">
+
+                        <div class="nk-int-st" id="status">
+                            @*<input type="radio" name="status" value="N">New
+                                <input type="radio" name="status" value="E">Existing*@
+                            @Html.RadioButtonFor(m => m.Status, "N")New
+                            @Html.RadioButtonFor(m => m.Status, "E")Existing
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group ic-cmp-int">
+                        <div class="form-ic-cmp">
+                            <i class="notika-icon notika-ip-locator"></i>
+                        </div>
+                        <div class="nk-int-st">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name", @id = "Name" } })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group ic-cmp-int">
+                        <div class="form-ic-cmp">
+                            <i class="notika-icon notika-support"></i>
+                        </div>
+                        <div class="nk-int-st">
+                            @Html.RadioButtonFor(m => m.Gender, GenderEnum.Male.ToString(), new { @checked = "checked", @id = "maleId" })  <label for="maleId">Male</label>
+                            @Html.RadioButtonFor(m => m.Gender, GenderEnum.Female.ToString(), new { @id = "femaleId" }) <label for="femaleId">Female</label>
+                            @Html.RadioButtonFor(m => m.Gender, GenderEnum.Others.ToString(), new { @id = "othersId" }) <label for="othersId">Others</label>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group ic-cmp-int">
+                        <div class="form-ic-cmp">
+                            <i class="notika-icon notika-promos"></i>
+                        </div>
+                        <div class="nk-int-st">
+                            @Html.Hidden("TretmentDate", Model.TretmentDate.ToString("dd/MM/yyyy"), new { @id = "newTreatmentDate" })
+                            @Html.TextBoxFor(model => model.Age, new { @class = "form-control", @placeholder = "Age" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group ic-cmp-int">
+                        <div class="form-ic-cmp">
+                            <i class="notika-icon notika-phone"></i>
+                        </div>
+                        <div class="nk-int-st">
+                            @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control", @placeholder = "Contact Number" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-1 col-xs-12">
+                <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                    <i class="notika-icon notika-file"></i> Save
+                </button>
+
+            </div>
+        </div>
+
+    }
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")

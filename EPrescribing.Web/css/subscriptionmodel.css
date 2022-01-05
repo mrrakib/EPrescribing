@@ -1,0 +1,158 @@
+﻿.middle input[type=radio],
+.middle.patients input[type=radio] {
+    display: none;
+}
+
+    .middle input[type=radio]:checked + .box {
+        background-color: #007e90;
+    }
+
+        .middle input[type=radio]:checked + .box span {
+            color: white;
+            transform: translateY(70px);
+        }
+
+            .middle input[type=radio]:checked + .box span:before {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+
+.middle .box {
+    width: 160px;
+    height: 160px;
+    background-color: #fff;
+    -moz-box-shadow: 0px 0px 15px 5px #ddd;
+    -webkit-box-shadow: 0px 0px 15px 5px #ddd;
+    box-shadow: 0px 0px 15px 5px #ddd;
+    transition: all 250ms ease;
+    will-change: transition;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    font-weight: 900;
+}
+
+    .middle .box:active {
+        transform: translateY(10px);
+    }
+
+    .middle .box span {
+        position: absolute;
+        transform: translate(0, 60px);
+        left: 0;
+        right: 0;
+        transition: all 300ms ease;
+        font-size: 1em;
+        user-select: none;
+        color: #007e90;
+        top: -12%;
+    }
+
+        .middle .box span:before {
+            font-size: 1.7em;
+            font-family: FontAwesome;
+            display: block;
+            transform: translateY(-80px);
+            opacity: 0;
+            transition: all 300ms ease-in-out;
+            font-weight: normal;
+            color: white;
+        }
+
+.middle .front-end span:before {
+    content: "\f0d6";
+}
+
+.middle .back-end span:before {
+    content: "\f0d6";
+}
+
+.middle p {
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+}
+
+    .middle p a {
+        text-decoration: underline;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .middle p span:after {
+        content: "";
+        font-family: FontAwesome;
+        color: yellow;
+    }
+
+.col-md-6.col-md-offset-3.material-design-btn.text-center.my-2 {
+    margin-top: 1%;
+}
+
+ul.wizard-nav-ac li a {
+    height: 45px;
+    width: 45px;
+    background: #05445E;
+    margin-right: 15px;
+}
+
+ul.wizard-nav-ac li i {
+    font-size: 15px;
+    line-height: 45px;
+}
+
+.wizard-cts-st .nav.nav-pills:not([data-tab-color]) > li > a:after {
+    background: #05445E;
+}
+
+
+.middle.patients input[type=radio]:checked + .box {
+    background-color: rgba(0, 126, 144, .5);
+    color: #fff !important;
+}
+
+.middle.patients input[type=radio] + .box {
+    margin: 5% 0;
+}
+
+.middle.patients .box {
+    width: 90%;
+    background-color: #fff;
+    -moz-box-shadow: 0px 0px 15px 5px #ddd;
+    -webkit-box-shadow: 0px 0px 15px 5px #ddd;
+    box-shadow: 0px 0px 15px 5px #ddd;
+    transition: all 250ms ease;
+    will-change: transition;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    font-weight: 700;
+}
+
+    .middle.patients .box table {
+        position: absolute;
+        top: 10%;
+        left: 5%;
+    }
+
+        .middle.patients .box table tr, .middle.patients .box table td, .middle.patients .box table th {
+            padding: 0.5%
+        }
+
+            .middle.patients .box table th:first-child {
+                min-width: 107px;
+                font-variant: small-caps;
+            }
+
+            .middle.patients .box table td:last-child {
+                min-width: 250px;
+                text-align: left;
+                font-weight: 300;
+                padding-left: 10px
+            }
+
+            .middle.patients .box table td.font-caps {
+                text-transform: uppercase
+            }

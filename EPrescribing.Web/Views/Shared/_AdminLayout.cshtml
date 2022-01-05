@@ -1,0 +1,432 @@
+﻿@using EPrescribing.Web.Helpers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewBag.Title | ODC Soft</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon
+        ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico">
+    @Styles.Render("~/Content/themecss")
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <link href="~/css/subscriptionmodel.css" rel="stylesheet" />
+    <link href="~/css/table-responsive.css" rel="stylesheet" />
+    <link href="~/css/customstyle.css" rel="stylesheet" />
+    <link href="~/css/customStyle-responsive.css" rel="stylesheet" />
+
+    <link href="~/Content/summernote/summernote.min.css" rel="stylesheet" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #main-wrapper {
+            padding: 0 0 12%;
+            position: relative;
+            min-height: 100vh
+        }
+
+        div.footer-copyright-area {
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            width: 100%
+        }
+
+        .ui-autocomplete {
+            max-height: 100px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+        }
+        /* IE 6 doesn't support max-height
+        * we use height instead, but this forces the menu to always be this tall
+        */
+        * html .ui-autocomplete {
+            height: 100px;
+        }
+
+        .ajax-loading {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: #000000;
+            background: rgba(0,0,0,0.5);
+            z-index: 99999;
+            text-align: center;
+        }
+
+        .helper {
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+        /* For summernote override unordered and order list */
+        .note-editable ul {
+            list-style: disc !important;
+            list-style-position: inside !important;
+        }
+
+        .note-editable ol {
+            list-style: decimal !important;
+            list-style-position: inside !important;
+        }
+    </style>
+   
+</head>
+
+
+<body>
+    <div id="main-wrapper">
+        <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+        <!-- Start Header Top Area -->
+        @Html.Partial("_logoBar")
+        <!-- End Header Top Area -->
+        <!-- Start Menu Area -->
+        @Html.Partial("_mainMenu")
+        <!-- End Menu Area -->
+        <!--Start Main Body-->
+        <div id="BodyContainer">
+            @RenderBody()
+        </div>
+
+        <!--End Main Body-->
+        <!-- Start Footer area-->
+        @*@Html.Partial("_footer")*@
+        @Html.Action("GetFooter", "Home")
+        <div class="ajax-loading">
+            <span class="helper"></span><img class="loader-image" src="~/Content/img/ajax-loading-c13.gif">
+        </div>
+    </div>
+
+    @*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+    <script src="~/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery-price-slider.js"></script>
+    <script src="~/js/jquery.scrollUp.min.js"></script>
+    <script src="~/js/meanmenu/jquery.meanmenu.js"></script>
+    <script src="~/js/counterup/jquery.counterup.min.js"></script>
+    <script src="~/js/counterup/waypoints.min.js"></script>
+    <script src="~/js/counterup/counterup-active.js"></script>
+    <script src="~/js/sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/js/sparkline/sparkline-active.js"></script>
+    <script src="~/js/flot/jquery.flot.js"></script>
+    <script src="~/js/flot/jquery.flot.resize.js"></script>
+    <script src="~/js/flot/curvedLines.js"></script>
+    <script src="~/js/flot/flot-active.js"></script>
+    <script src="~/js/knob/jquery.knob.js"></script>
+    <script src="~/js/knob/jquery.appear.js"></script>
+    <script src="~/js/knob/knob-active.js"></script>
+
+    <script src="~/js/charts/Chart.js"></script>
+    <script src="~/js/charts/bar-chart.js"></script>
+
+    <script src="~/js/wave/waves.min.js"></script>
+    <script src="~/js/wave/wave-active.js"></script>
+    <script src="~/js/toastr/toastr.min.js"></script>
+    <script src="~/js/wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/js/wizard/wizard-active.js"></script>
+    <script src="~/js/todo/jquery.todo.js"></script>
+    <script src="~/js/jasny-bootstrap.min.js"></script>
+    <script src="~/js/chosen/chosen.jquery.js"></script>
+    <script src="~/js/plugins.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/js/jquery-confirm/jquery-confirm.min.js"></script>
+    <script src="~/Content/summernote/summernote.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+    <script>
+    $(function () {
+
+        $(document).on('focus', '.Amount', function () {
+            var value = $(this).val();
+            if (value == 0) {
+                $(this).val('');
+            }
+        })
+        $(document).on('blur', '.Amount', function () {
+            var value = $(this).val();
+            if (value == '') {
+                $(this).val(0);
+            }
+        })
+
+        $(".ajax-loading").hide();
+        $(document).ajaxStart(function () {
+            $(".ajax-loading").show();
+        });
+
+        $(document).ajaxStop(function () {
+            $(".ajax-loading").hide();
+            //setTimeout(function () {
+            //    $(".ajax-loading").hide();
+            //}, 1000)
+        });
+
+            $.validator.addMethod('date', function (value, element) {
+                if (this.optional(element)) {
+                    return true;
+                }
+                var valid = true;
+                try {
+                    $.datepicker.parseDate('dd/mm/yy', value);
+                }
+                catch (err) {
+                    valid = false;
+                }
+                return valid;
+            });
+
+
+
+        });
+
+function DeleteItem(obj) {
+    var url = $(obj).attr('deleteUrl');
+    var appUrl = '@System.Configuration.ConfigurationManager.AppSettings["baseurl"]';
+    $.confirm({
+        title: 'Are you sure to delete this item?',
+        content: 'This action can\'t revert!',
+        animation: 'scale',
+        icon: 'fa fa-warning',
+        type: 'red',
+        closeIcon: true,
+        boxWidth: '30%',
+        useBootstrap: false,
+        buttons: {
+            Yes: {
+                btnClass: 'btn-danger',
+                action: function () {
+                    window.location.href = appUrl + url;
+                }
+            },
+            No: function () {
+
+            }
+        }
+    });
+    }
+function CancelSubscription(obj) {
+    var url = $(obj).attr('cancelUrl');
+    var appUrl = '@System.Configuration.ConfigurationManager.AppSettings["baseurl"]';
+    $.confirm({
+        title: 'Are you sure to cancel current subscription?',
+        content: 'This action can\'t revert!',
+        animation: 'scale',
+        icon: 'fa fa-warning',
+        type: 'red',
+        closeIcon: true,
+        boxWidth: '30%',
+        useBootstrap: false,
+        buttons: {
+            Yes: {
+                btnClass: 'btn-danger',
+                action: function () {
+                    window.location.href = appUrl + url;
+                }
+            },
+            No: function () {
+
+            }
+        }
+    });
+ }
+
+function ActivateDoctor(obj) {
+    var url = $(obj).attr('myUrl');
+                var appUrl = '@System.Configuration.ConfigurationManager.AppSettings["baseurl"]';
+                $.confirm({
+                    title: 'Are you sure to activate?',
+                    content: '',
+                    animation: 'scale',
+                    icon: 'fa fa-warning',
+                    type: 'red',
+                    closeIcon: true,
+                    boxWidth: '30%',
+                    useBootstrap: false,
+                    buttons: {
+                        Yes: {
+                            btnClass: 'btn-danger',
+                            action: function () {
+                                window.location.href = appUrl + url;
+                            }
+                        },
+                        No: function () {
+
+                        }
+                    }
+                });
+}
+    function DeActivateDoctor(obj) {
+        var url = $(obj).attr('myUrl');
+                var appUrl = '@System.Configuration.ConfigurationManager.AppSettings["baseurl"]';
+                $.confirm({
+                    title: 'Are you sure to deactivate?',
+                    content: '',
+                    animation: 'scale',
+                    icon: 'fa fa-warning',
+                    type: 'red',
+                    closeIcon: true,
+                    boxWidth: '30%',
+                    useBootstrap: false,
+                    buttons: {
+                        Yes: {
+                            btnClass: 'btn-danger',
+                            action: function () {
+                                window.location.href = appUrl + url;
+                            }
+                        },
+                        No: function () {
+
+                        }
+                    }
+                });
+    }
+
+    function VerifyBMDCReg(obj) {
+        var url = $(obj).attr('myUrl');
+                var appUrl = '@System.Configuration.ConfigurationManager.AppSettings["baseurl"]';
+                $.confirm({
+                    title: 'Are you sure?',
+                    content: '',
+                    animation: 'scale',
+                    icon: 'fa fa-warning',
+                    type: 'red',
+                    closeIcon: true,
+                    boxWidth: '30%',
+                    useBootstrap: false,
+                    buttons: {
+                        Yes: {
+                            btnClass: 'btn-danger',
+                            action: function () {
+                                window.location.href = appUrl + url;
+                            }
+                        },
+                        No: function () {
+
+                        }
+                    }
+                });
+    }
+    $(document).ready(function () {
+        $(".ajax-loading").hide();
+            $('body').on('focus', ".datepicker", function () {
+                $(this).datepicker({
+                    dateFormat: "dd/mm/yy"
+                    , changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-100:+100"
+                });
+            });
+
+
+
+            //$("input[data-val-date]").removeAttr("data-val-date");
+            $(".datepicker").not(".noplaceholder").attr("placeholder", "dd/mm/yyyy");
+
+
+            $(".delBtn2").click(function (e) {
+                var url = $(this).attr('deleteUrl');
+                var appUrl = '@System.Configuration.ConfigurationManager.AppSettings["baseurl"]';
+                $.confirm({
+                    title: 'Are you sure to delete this item?',
+                    content: 'This action can\'t revert!',
+                    animation: 'scale',
+                    icon: 'fa fa-warning',
+                    type: 'red',
+                    closeIcon: true,
+                    boxWidth: '30%',
+                    useBootstrap: false,
+                    buttons: {
+                        Yes: {
+                            btnClass: 'btn-danger',
+                            action: function () {
+                                window.location.href = appUrl + url;
+                            }
+                        },
+                        No: function () {
+
+                        }
+                    }
+                });
+
+
+            })
+        })
+    //$(window).on('beforeunload', function () {
+    //            $(".ajax-loading").show();
+    //        });
+        $(function () {
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "200",
+                "hideDuration": "200",
+                "timeOut": "5000",
+                "extendedTimeOut": "200",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            //notification with toastr
+            var saveMsg = '@TempData["save"]';
+            var updateMsg = '@TempData["update"]';
+            var deleteMsg = '@TempData["delete"]';
+            var customMsg = '@TempData["custom"]';
+            var warningMsg = '@TempData["warning"]';
+            var successMsg = '@TempData["success"]';
+            if (saveMsg != '') {
+                Command: toastr["success"]("Data saved successfully!")
+            }
+            if (updateMsg != '') {
+                Command: toastr["success"]("Data updated successfully!")
+            }
+            if (deleteMsg != '') {
+                Command: toastr["error"]("Data deleted successfully!")
+            }
+            if (customMsg != '') {
+                Command: toastr["warning"](customMsg)
+            }
+            if (warningMsg != '') {
+                Command: toastr["error"](warningMsg)
+            }
+            if (successMsg != '') {
+                Command: toastr["success"](successMsg)
+            }
+
+
+            //Command: toastr["success"]("Are you the six fingered man?")
+
+
+        });
+
+    </script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+﻿@model EPrescribing.Web.Models.FooterContent
+@{
+    ViewBag.Title = "Add Footer Content";
+
+}
+<div class="Medicine-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-plus-symbol"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Footer Content</h2>
+                                        <p class="text-tagline">Add Footer Content data</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @using (Html.BeginForm("Index", "FooterContent", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(a => a.Id)
+                        @Html.HiddenFor(a => a.IsActive)
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                                <div class="col-md-8 col-sm-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.FooterText, new { htmlAttributes = new { @class = "form-control", @placeholder = "Footer text" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.FooterText, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Facebook, new { htmlAttributes = new { @class = "form-control", @placeholder = "Facebook Profile Link" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Facebook, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Twitter, new { htmlAttributes = new { @class = "form-control", @placeholder = "Twitter Profile Link" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Twitter, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Tumblr, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tumblr Profile Link" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Tumblr, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Vimeo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Vimeo Profile Link" } })
+
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Vimeo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1 col-xs-12">
+                                <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                                    <i class="notika-icon notika-file"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            
+        });
+    </script>
+}

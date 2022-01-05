@@ -1,0 +1,55 @@
+﻿@model EPrescribing.Web.Models.Department
+
+@{
+    ViewBag.Title = "Department Details";
+}
+<div class="Advice-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+                    <h4 class="text-tagline">@ViewBag.Title</h4>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Company.CompanyName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Company.CompanyName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CreatedDate)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CreatedDate)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.UpdatedDate)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.UpdatedDate)
+                        </dd>
+                    </dl>
+                    <hr />
+                    <p>
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                        @Html.ActionLink("Back to List", "Index")
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

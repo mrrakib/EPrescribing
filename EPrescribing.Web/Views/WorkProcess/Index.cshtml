@@ -1,0 +1,175 @@
+﻿@model EPrescribing.Web.Models.WorkProcess
+@{
+    ViewBag.Title = "Add Work process";
+
+}
+<div class="Medicine-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-plus-symbol"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Work Process Section</h2>
+                                        <p class="text-tagline">Entry work process section data</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @using (Html.BeginForm("Index", "WorkProcess", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("ProcessOneIcon", "calendar")
+                        @Html.Hidden("ProcessTwoIcon", "stethoscope-alt")
+                        @Html.Hidden("ProcessThreeIcon", "slightly-smile")
+                        @Html.HiddenFor(a => a.Id)
+                        @Html.HiddenFor(a => a.IsActive)
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.TopTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Top Title" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.TopTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.MainTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Main tagline" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.MainTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.ProcessOneTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "First process title" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ProcessOneTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.ProcessTwoTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Second process title" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ProcessTwoTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.ProcessThreeTitle, new { htmlAttributes = new { @class = "form-control", @placeholder = "Third process title" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ProcessThreeTitle, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-sm-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.TextAreaFor(model => model.ProcessOneDesc, new { @class = "form-control", @placeholder = "First Description", @rows = "3" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ProcessOneDesc, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.TextAreaFor(model => model.ProcessTwoDesc, new { @class = "form-control", @placeholder = "Second Description", @rows = "3" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ProcessTwoDesc, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-form"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.TextAreaFor(model => model.ProcessThreeDesc, new { @class = "form-control", @placeholder = "Third Description", @rows = "3" })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.ProcessThreeDesc, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1 col-xs-12">
+                                <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                                    <i class="notika-icon notika-file"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            
+        });
+    </script>
+}

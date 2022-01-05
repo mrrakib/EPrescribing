@@ -1,0 +1,141 @@
+﻿@model EPrescribing.Web.Models.Company
+
+@{
+    ViewBag.Title = "Add Company";
+
+}
+
+<div class="Company-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-example-wrap">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-plus-symbol"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>@ViewBag.Title</h2>
+                                        <p class="text-tagline">@ViewBag.Title profile</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("Index", "Companies")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-left-arrow"></i> Back To List
+                            </a>
+                        </div>
+
+                    </div>
+
+                    @using (Html.BeginForm("Create", "Companies", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-house"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="fa fa-code"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.CompanyCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Code" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.CompanyCode, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-calendar"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @if (Model != null && Model.OperationStartDate.HasValue)
+                                            {
+                                                @Html.TextBoxFor(model => model.OperationStartDate, Model.OperationStartDate.Value.ToString("dd/MM/yyyy"), new { @class = "datepicker form-control", @id = "OperationStartDate" })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(model => model.OperationStartDate, "dd/MM/yyyy", new { @class = "datepicker form-control", @id = "OperationStartDate" })
+                                            }
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.OperationStartDate, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group ic-cmp-int">
+                                        <div class="form-ic-cmp">
+                                            <i class="notika-icon notika-dollar"></i>
+                                        </div>
+                                        <div class="nk-int-st">
+                                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount" } })
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1 col-xs-12">
+                                <button type="submit" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                                    <i class="notika-icon notika-file"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#CompanyName').focus();
+        });
+    </script>
+}

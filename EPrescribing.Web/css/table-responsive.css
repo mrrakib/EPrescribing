@@ -1,0 +1,262 @@
+﻿/*@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap');*/
+/*@import url('https://fonts.googleapis.com/css2?family=Gluten:wght@600&display=swap');*/
+
+table.responsive-table {
+    width: 100%;
+}
+
+.responsive-table tr {
+    border-radius: 3px;
+    padding: 5px 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.responsive-table .table-header {
+    background-color: rgba(70,174,198, 1);
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    color: white;
+    font-variant: small-caps;
+}
+
+.responsive-table .table-row {
+    background-color: #ffffff;
+    -moz-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+/*.responsive-table .table-row:nth-child(even) {
+        background-color: #009688;
+    }*/
+
+.responsive-table .col-1 {
+    flex-basis: 4%;
+}
+
+.responsive-table .col-2 {
+    flex-basis: 20%;
+}
+
+.responsive-table .col-3 {
+    flex-basis: 20%;
+}
+
+.responsive-table .col-4 {
+    flex-basis: 15%;
+}
+
+.responsive-table .col-5 {
+    flex-basis: 20%;
+}
+
+.responsive-table .col-6 {
+    flex-basis: 20%;
+}
+
+/*for patient record index*/
+.responsive-table.tblPatientRecords .col-1 {
+    flex-basis: 4%;
+}
+
+.responsive-table.tblPatientRecords .col-2 {
+    flex-basis: 25%;
+}
+
+.responsive-table.tblPatientRecords .col-3 {
+    flex-basis: 15%;
+}
+
+.responsive-table.tblPatientRecords .col-4 {
+    flex-basis: 15%;
+}
+
+.responsive-table.tblPatientRecords .col-5 {
+    flex-basis: 20%;
+}
+
+.responsive-table.tblPatientRecords .col-6 {
+    flex-basis: 15%;
+}
+/*.responsive-table.tblPatientRecords tr.tbl-actions .col-6 {
+    flex-basis: 100%;
+}*/
+/*for doctor index*/
+.responsive-table.doctortable .col-1 {
+    flex-basis: 4%;
+}
+
+.responsive-table.doctortable .col-2 {
+    flex-basis: 15%;
+}
+
+.responsive-table.doctortable .col-3 {
+    flex-basis: 15%;
+}
+
+.responsive-table.doctortable .col-4 {
+    flex-basis: 20%;
+}
+
+.responsive-table.doctortable .col-5 {
+    flex-basis: 30%;
+}
+
+.responsive-table.doctortable .col-6 {
+    flex-basis: 20%;
+}
+
+.responsive-table.doctortable .col-7 {
+    flex-basis: 10%;
+}
+/*End doctor index*/
+.responsive-table .table-row.data-row {
+    background-color: #ffffff;
+    -moz-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 0px 9px 0px rgb(0 0 0 / 10%);
+    box-shadow: 0px -1px 8px 1px rgb(0 0 0 / 10%);
+    -webkit-align-items: center;
+    align-items: center;
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+tr.col-md-12.tbl-actions {
+    /*background-color: rgba(0, 150, 136, 0.7);*/
+    -moz-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 0px 9px 0px rgb(0 0 0 / 10%);
+    box-shadow: 0px 4px 5px 0px rgb(0 0 0 / 10%);
+    -webkit-align-items: center;
+}
+
+td.col.full-col {
+    flex-basis: 100%;
+}
+
+td.full-col .btn-teal.teal-icon-notika {
+    border: 1px solid #009688;
+    background: transparent;
+    color: black;
+}
+
+    td.full-col .btn-teal.teal-icon-notika:hover {
+        background: #009688;
+        border: 1px solid #009688;
+        color: white;
+    }
+
+.responsive-table .table-row.data-row.odc-bg-row {
+    /*background-color: rgba(0, 150, 136, 0.7);*/
+    font-size: 17px;
+    letter-spacing: 0.1em;
+    /*color: white;*/
+    padding: 20px 30px;
+    /*font-family: 'Gluten';*/
+    font-weight: 600
+}
+
+td.full-col.notika-btn-teal, .btn-teal.teal-icon-notika {
+    background: #66b8b0;
+}
+
+.responsive-table.tblPatientRecords tr {
+    border-radius: 0;
+}
+/*End patient record index*/
+
+/*for patient record index*/
+.responsive-table.tblPastTreatmentDone .col-1 {
+    flex-basis: 4%;
+}
+
+.responsive-table.tblPastTreatmentDone .col-2 {
+    flex-basis: 10%;
+}
+
+.responsive-table.tblPastTreatmentDone .col-3 {
+    flex-basis: 40%;
+}
+
+.responsive-table.tblPastTreatmentDone .col-4 {
+    flex-basis: 10%;
+}
+
+.responsive-table.tblPastTreatmentDone.tblPastRecords .col-3 {
+    flex-basis: 60%;
+}
+/*End patient record index*/
+
+/*Pending subscription*/
+.responsive-table.subscribed .col-1 {
+    flex-basis: 2%;
+}
+
+.responsive-table.subscribed .col-2 {
+    flex-basis: 20%;
+}
+
+.responsive-table.subscribed .col-3 {
+    flex-basis: 14%;
+}
+
+.responsive-table.subscribed .col-4 {
+    flex-basis: 20%;
+}
+
+.responsive-table.subscribed .col-5 {
+    flex-basis: 15%;
+}
+
+.responsive-table.subscribed .col-6 {
+    flex-basis: 17%;
+}
+.responsive-table.subscribed .col-7 {
+    flex-basis: 8%;
+}
+.responsive-table.subscribed .col-8 {
+    flex-basis: 8%;
+}
+/*End pending subscription*/
+
+/*Payment history*/
+.responsive-table.payHistory .col-5 {
+    flex-basis: 30%;
+}
+/*End history*/
+
+@media all and (max-width: 767px) {
+    .responsive-table .table-header {
+        display: none;
+    }
+
+    .responsive-table tr {
+        display: block;
+    }
+
+    .responsive-table .col {
+        flex-basis: 100%;
+    }
+
+    .responsive-table .col {
+        display: flex;
+        padding: 10px 0;
+    }
+
+        .responsive-table .col:before {
+            color: #6c7a89;
+            padding-right: 10px;
+            content: attr(data-label);
+            flex-basis: 50%;
+            text-align: right;
+        }
+
+    .responsive-table tr.tbl-actions .col {
+        display: block;
+        padding: 10px 0;
+    }
+}

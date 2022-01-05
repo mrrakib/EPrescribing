@@ -1,0 +1,46 @@
+﻿@model EPrescribing.Web.ViewModels.VMPatient
+
+@{
+    ViewBag.Title = "Patient";
+    Layout = null;
+}
+
+<div>
+   
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group ic-cmp-int">
+                    <div class="form-ic-cmp">
+                        <i class="notika-icon notika-house"></i>
+                    </div>
+                    <div class="nk-int-st">
+                        @Html.TextBoxFor(model => model.PatientId, new { @class = "form-control", @placeholder = "Patient ID", @data_mask = "9999-9999-9999", @id = "patientID" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group ic-cmp-int">
+                    <div class="form-ic-cmp">
+                        <i class="notika-icon notika-phone"></i>
+                    </div>
+                    <div class="nk-int-st">
+                        @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control", id = "mobileNo", @placeholder = "Mobile No" })
+                    </div>                       
+                    @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-2 col-xs-12">
+                <button type="button" id="btnSearch" class="btn btn-info btn-icon-notika waves-effect smallCaps">
+                    <i class="notika-icon notika-search"></i> Search
+                </button>
+
+            </div>
+        </div>
+    </div>
+    <div class="row" id="existingPatient">
+
+    </div>
+</div>

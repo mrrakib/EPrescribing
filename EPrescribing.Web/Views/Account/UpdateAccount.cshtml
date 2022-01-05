@@ -1,0 +1,434 @@
+﻿@using EPrescribing.Web.Models
+@model Doctor
+@{
+    ViewBag.Title = "Account Update";
+    var subscriptions = Model.Subscriptions;
+}
+<link href="~/css/subscriptionmodel.css" rel="stylesheet" />
+<style>
+    .logoUploader {
+        font-size: 32px;
+        color: yellowgreen;
+        cursor: pointer;
+    }
+
+        .logoUploader:hover {
+            font-size: 32px;
+            color: #00ff90;
+            cursor: pointer;
+        }
+
+    .profile-pic {
+        max-width: 120px;
+        max-height: 120px;
+        display: block;
+        border: 2px solid #e5e5e5;
+        padding: 3px;
+    }
+</style>
+<div class="home-area">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="wizard-wrap-int">
+                    <div class="wizard-hd">
+                        <div class="breadcomb-wp">
+                            <div class="breadcomb-icon">
+                                <i class="notika-icon notika-social"></i>
+                            </div>
+                            <div class="breadcomb-ctn">
+                                <h2>Update Profile</h2>
+                                <p class="text-tagline">Please fill up your profile details carefully.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="rootwizard">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <div class="container-pro wizard-cts-st">
+                                    <ul class="tabs">
+                                        <li><a href="#tab1" data-toggle="tab">Basic Info</a></li>
+                                        <li><a href="#tab2" data-toggle="tab">Academic Info</a></li>
+                                        <li><a href="#tab3" data-toggle="tab">Clinic Info</a></li>
+                                        <li><a href="#tab4" data-toggle="tab">Subscription</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        @using (Html.BeginForm("UpdateAccount", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.HiddenFor(model => model.Id, new { @id = "doctorId" });
+                            @Html.HiddenFor(model => model.IsActive);
+                            @Html.HiddenFor(model => model.CreatedDate);
+                            <div class="tab-content">
+                                <div class="tab-pane wizard-ctn fixed-height animated flipInX" id="tab1">
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-support"></i>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        @Html.TextBoxFor(m => m.Name, new { @id = "txtName", @class = "form-control", autocomplete = "off", @required = "required", @placeholder = "Full Name" })
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-phone"></i>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        @Html.TextBoxFor(m => m.MobileNo, new { @id = "txtMobileNo", @class = "form-control", autocomplete = "off", @readonly = "readonly", @placeholder = "Mobile No" })
+                                                        @Html.ValidationMessageFor(m => m.MobileNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-mail"></i>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        @Html.TextBoxFor(m => m.Email, new { @id = "txtEmail", @class = "form-control", autocomplete = "off", @placeholder = "Email" })
+                                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-tax"></i>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        @Html.PasswordFor(m => m.Password, new { @id = "txtPassword", @class = "form-control", autocomplete = "off", @placeholder = "Password" })
+                                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-tax"></i>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        @Html.PasswordFor(m => m.ConfirmPassword, new { @id = "txtConfirmPassword", @class = "form-control", autocomplete = "off", @placeholder = "Confirm Password" })
+                                                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-icon-pro"></i>
+                                                    </div>
+                                                    <div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
+                                                        <h2>Image</h2>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        <div class="fm-cmp-mg">
+                                                            <div style="position:absolute"><div style="position: absolute; left:60px;top:-9px"><a class="fa fa-paperclip logoUploader" style=""></a></div></div>
+                                                            @if (string.IsNullOrWhiteSpace(Model.Image))
+                                                            {
+                                                                <img src="@Url.Content("~/Content/images/noImage.jpg")" class="profile-pic" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="@Url.Content("~/Content/Upload/images/"+Model.Image)" class="profile-pic" />
+
+                                                            }
+                                                            <input class="file-upload" type="file" accept="image/*" style="display:none" id="image" name="image" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane wizard-ctn fixed-height animated flipInX" id="tab2">
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1 col-xs-12">
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-icon-pro"></i>
+                                                    </div>
+                                                    <div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
+                                                        <h2>Designation</h2>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        <div class="chosen-select-act fm-cmp-mg">
+                                                            @Html.DropDownList("DesignationId", null, string.Empty, new { @class = "chosen select-me", @id = "designationId", @data_placeholder = "--Designation--" })
+                                                          
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" hidden id="divRegNumb">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-form"></i>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        @Html.TextBoxFor(m => m.BMDCRegistrationNumber, new { @class = "form-control", @id = "txtBMDCRegnumb", autocomplete = "off", @placeholder = "BMDC Registration number" })
+                                                        @Html.ValidationMessageFor(m => m.BMDCRegistrationNumber, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-icon-pro"></i>
+                                                    </div>
+                                                    <div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
+                                                        <h2>Dental School</h2>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        <div class="chosen-select-act fm-cmp-mg">
+                                                            @Html.DropDownList("DentalSchoolId", null, string.Empty, new { @class = "chosen select-me",@id="dentalSchoolId", @data_placeholder = "--Dental School--" })
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane wizard-ctn fixed-height animated flipInX" id="tab3">
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-support"></i>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        @Html.TextBoxFor(m => m.ClinicName, new { @id="txtClinicName", @class = "form-control", autocomplete = "off", @placeholder = "Clinic" })
+                                                        @Html.ValidationMessageFor(m => m.ClinicName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                <div class="form-group ic-cmp-int">
+                                                    <div class="form-ic-cmp">
+                                                        <i class="notika-icon notika-edit"></i>
+                                                    </div>
+                                                    <div class="nk-int-st">
+                                                        @Html.TextAreaFor(m => m.ClinicAddress, new { @id = "txtClinicAddress", @class = "form-control", @placeholder = "Clinic Address" })
+                                                        @Html.ValidationMessageFor(m => m.ClinicAddress, "", new { @class = "text-danger", @rows = "4", @cols = "20" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="tab-pane wizard-ctn fixed-height animated flipInX" id="tab4">
+                                    <div class="row middle" id="subscriptionDiv">
+                                        @if (Model.Subscriptions != null)
+                                        {
+                                            @Html.Partial("~/Views/Home/_SubscriptionPartial.cshtml", Model.Subscriptions)
+                                        }
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-3 material-design-btn text-center my-2">
+                                            <button type="submit" class="btn notika-btn-cyan waves-effect">
+                                                <i class="notika-icon notika-checked"></i> Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="wizard-action-pro">
+                                    <ul class="wizard-nav-ac">
+                                        @*<li><a class="button-first a-prevent" href="#"><i class="notika-icon notika-more-button"></i></a></li>*@
+                                        <li><a id="previousBtn" class="button-previous a-prevent" href="#"><i class="notika-icon notika-back"></i></a></li>
+                                        <li><a id="nextBtn" class="button-next a-prevent" href="#"><i class="notika-icon notika-next-pro"></i></a></li>
+                                        @*<li><a class="button-last a-prevent" href="#"><i class="notika-icon notika-more-button"></i></a></li>*@
+                                    </ul>
+                                </div>
+
+
+
+
+
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        
+        $(document).ready(function () {
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+                    debugger;
+                    if ($.inArray(input.files[0].type, ValidImageTypes) < 0) {
+                        alert('Please select an image file only.');
+                    }
+                    else {
+
+
+                        var dd = input.files[0].type;
+                        var fileSize = input.files[0].size;
+                        
+                        if (fileSize > 2000000) {
+                            alert('Image size cannot be greater than 2 MB.');
+                        }
+                        else {
+                            reader.onload = function (e) {
+                                $('.profile-pic').attr('src', e.target.result);
+                            }
+
+                            reader.readAsDataURL(input.files[0]);
+                        }
+
+
+                    }
+
+                }
+            }
+
+            $(".file-upload").on('change', function () {
+                readURL(this);
+            });
+
+            $(".logoUploader").on('click', function () {
+                $(".file-upload").click();
+            });
+
+
+
+            var doctorId = $("#doctorId").val();
+            var designationId = $("#designationId").val();
+
+            if (designationId > 0) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("IsStudentOrIntern", "Account")',
+                    data: { designationId: designationId },
+                    success: function (response) {
+                        if (response) {
+
+                            $("#divRegNumb").hide();
+                            $("#txtBMDCRegnumb").val('');
+                        } else {
+                            $("#divRegNumb").show();
+                        }
+                    },
+                    error: function (ex) {
+
+                    }
+                });
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetSubscriptions", "Account")',
+                    data: { designationId: designationId, doctorId: doctorId },
+                    success: function (response) {
+                        $("#subscriptionDiv").html("");
+                        $("#subscriptionDiv").html(response);
+                    },
+                    error: function (ex) {
+
+                    }
+                });
+            } else {
+                $("#divRegNumb").hide();
+                $("#txtBMDCRegnumb").val('');
+            }
+
+            $(document).on("change", "#designationId", function () {
+                var doctorId = $("#doctorId").val();
+                var designationId = $("#designationId").val();
+                if (designationId > 0) {
+                     $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("IsStudentOrIntern", "Account")',
+                    data: { designationId: designationId},
+                    success: function (response) {
+                        if (response) {
+
+                            $("#divRegNumb").hide();
+                            $("#txtBMDCRegnumb").val('');
+                        } else {
+                            $("#divRegNumb").show();
+                        }
+                    },
+                    error: function (ex) {
+
+                    }
+                });
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetSubscriptions", "Account")',
+                        data: { designationId: designationId, doctorId: doctorId},
+                        success: function (response) {
+                            $("#subscriptionDiv").html("");
+                            $("#subscriptionDiv").html(response);
+                        },
+                        error: function (ex) {
+
+                        }
+                    });
+
+                    //$("#tab4").html("");
+                }
+                else {
+                    $("#subscriptionDiv").html("");
+                    $("#divRegNumb").hide();
+                    $("#txtBMDCRegnumb").val('');
+                }
+            })
+        });
+    </script>
+}

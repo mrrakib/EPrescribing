@@ -1,0 +1,239 @@
+﻿@model PagedList.IPagedList<EPrescribing.Web.Models.SubscriptionFees>
+@using PagedList.Mvc;
+@{
+    if (Request.IsAjaxRequest())
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+    ViewBag.Title = "Index";
+
+    int size = 10;
+
+    if (ViewBag.NoOfRows != null)
+    {
+        size = ViewBag.NoOfRows;
+    };
+    int Nopage = 1;
+    if (ViewBag.page != null)
+    {
+        Nopage = ViewBag.page;
+    };
+    int row = size * Nopage;
+    row = row - size;
+}
+
+<style>
+    #formTreatmentRecords {
+        display: inline;
+    }
+
+    .btnActive {
+        color: green;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .btnActive:hover {
+            color: green;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+    .btnInactive {
+        color: red;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .btnInactive:hover {
+            color: red;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+</style>
+<div class="normal-table-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="normal-table-list">
+
+                    <!--Start Table Header-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="breadcomb-list">
+                                <div class="breadcomb-wp">
+                                    <div class="breadcomb-icon">
+                                        <i class="notika-icon notika-form"></i>
+                                    </div>
+                                    <div class="breadcomb-ctn">
+                                        <h2>Subscription Fees Records</h2>
+                                        <p class="text-tagline">List of Subscription Fees records available in system</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 breadcomb-list">
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-teal btn-icon-notika teal-icon-notika waves-effect floatright smallCaps">
+                                <i class="notika-icon notika-plus-symbol"></i> Back to Home
+                            </a>
+                        </div>
+                    </div>
+
+                    <!--End Table Header-->
+                    @using (Ajax.BeginForm("Index", "SubscriptionFees", FormMethod.Get, new AjaxOptions
+                    {
+                        UpdateTargetId = "BodyContainer",
+                        InsertionMode = InsertionMode.Replace
+                    }))
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <tr>
+                                        <td width="3%">
+                                            <i class="fa fa-filter" style="margin-right: 5px; color: #aeaeae; font-size: 22px; padding-top: 12px; "></i>
+                                        </td>
+                                        <td width="4%">
+                                            @Html.TextBox("NoOfRows", ViewBag.NoOfRows as string, new { @type = "number", @min = "3", @max = "100", @class = "form-control " })
+                                        </td>
+                                        <td width="12%">
+                                            @Html.DropDownList("currentFilter", new SelectList(ViewBag.PaymentMethod, "Id", "Name"), "--Payment Methods--", new { @class = "form-control" })
+                                        </td>
+                                        <td width="10%">
+                                            @Html.TextBox("accountNo", ViewBag.accountNo as string, new { @placeholder = "Account No", @class = "form-control " })
+                                        </td>
+                                        <td width="10%">
+                                            @Html.TextBox("transactionNo", ViewBag.transactionNo as string, new { @placeholder = "Transaction No", @class = "form-control " })
+                                        </td>
+                                        <td width="10%">
+                                            @Html.DropDownList("isActive", new SelectList(ViewBag.isActive, "Id", "Name"), "--Active Status--", new { @class = "form-control" })
+                                        </td>
+                                        <td width="10%">
+                                            <button type="submit" class="btn btn-light" style="background-color: #e6e6e6; "><i class="fa fa-search-plus" style="margin-right:5px; color:#808080"></i>Serach</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    <table class="responsive-table subscribed">
+                        <thead>
+                            <tr class="table-header animated flipInX">
+                                <th class="col col-1">#</th>
+                                <th class="col col-2">
+                                    Doctor
+                                </th>
+                                <th class="col col-3">
+                                    Subscription
+                                </th>
+                                <th class="col col-4">
+                                    @Html.DisplayNameFor(model => model.First().PaymentMethod)
+                                </th>
+                                <th class="col col-5">
+                                    @Html.DisplayNameFor(model => model.First().DebitAccount)
+                                </th>
+                                <th class="col col-6">
+                                    @Html.DisplayNameFor(model => model.First().TransactionNo)
+                                </th>
+                                <th class="col col-7">
+                                    @Html.DisplayNameFor(model => model.First().PayableAmount)
+                                </th>
+                                <th class="col col-8 text-center">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                row++;
+                                <tr class="table-row animated flipInX">
+                                    <td class="col col-1" data-label="SL#">@row</td>
+                                    <td class="col col-2" data-label="Doctor">
+                                        @item.Doctor.Name
+                                    </td>
+                                    <td class="col col-3" data-label="Subscription">
+                                        @item.Subscription.Name
+                                    </td>
+                                    <td class="col col-4" data-label="@Html.DisplayNameFor(model => model.First().PaymentMethod)">
+                                        @item.PaymentMethod
+                                    </td>
+                                    <td class="col col-5" data-label="@Html.DisplayNameFor(model => model.First().DebitAccount)">
+                                        @item.DebitAccount
+                                    </td>
+                                    <td class="col col-6" data-label="@Html.DisplayNameFor(model => model.First().TransactionNo)">
+                                        @item.TransactionNo
+                                    </td>
+                                    <td class="col col-7" data-label="@Html.DisplayNameFor(model => model.First().PayableAmount)">
+                                        @item.PayableAmount
+                                    </td>
+                                    <td class="col col-8 text-center" data-label="Actions">
+                                        @if (item.Doctor.IsActive)
+                                        {
+                                            <a style="" href="#" title="Already activated!">
+                                                Active
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a style="" myUrl="@Url.Action("ActivateDoctor", "Subscribed", new { id = item.DoctorId, page = Nopage, currentFilter = ViewBag.CurrentFilter, NoOfRows = ViewBag.NoOfRows })" class="btnInactive" title="Activate ">
+                                                In Active
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="row" style="margin:0px;">
+                        <div class="col-md-12">
+                            <div class="floatright">
+                                @Html.PagedListPager(Model, page => Url.Action("Index",
+                                            new { page, currentFilter = ViewBag.CurrentFilter, NoOfRows = ViewBag.NoOfRows }),
+                                                             PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "BodyContainer" }))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(".btnInactive").click(function (e) {
+            var url = $(this).attr('myUrl');
+            debugger;
+                var appUrl = '@System.Configuration.ConfigurationManager.AppSettings["baseurl"]';
+                $.confirm({
+                    title: 'Are you sure to activate?',
+                    content: '',
+                    animation: 'scale',
+                    icon: 'fa fa-warning',
+                    type: 'red',
+                    closeIcon: true,
+                    boxWidth: '30%',
+                    useBootstrap: false,
+                    buttons: {
+                        Yes: {
+                            btnClass: 'btn-danger',
+                            action: function () {
+                                window.location.href = appUrl + url;
+                            }
+                        },
+                        No: function () {
+
+                        }
+                    }
+                });
+
+
+            })
+    </script>
+}
